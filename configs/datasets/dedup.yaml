@@ -1,0 +1,4 @@
+schema_version: 1
+normalization: {unicode_nfkc: true, whitespace: true, role_separator: true, markdown_noise: false}
+exact: {hash: sha256}
+near: {algorithm: simhash_lsh, hamming_threshold: 3, bucket_bits: 16, sample_strategy: deterministic_hash, max_records: 250000}

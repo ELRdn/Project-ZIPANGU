@@ -1,0 +1,24 @@
+schema_version: 1
+name: c-i-eval-v0
+target_model:
+  candidate: ZIPANGU-C-I-9B
+  reference: llm-jp/llm-jp-4-8b-thinking
+  base: empero-ai/Qwen3.8-9B-Distill
+primary:
+  - {id: japanese_mt_bench, repeat: 3, role: eval_only}
+  - {id: answer_carefully, repeat: 3, role: eval_only}
+  - {id: llm_jp_instruction_eval, repeat: 3, role: eval_only}
+secondary: [english_general_regression, japanese_math_holdout, japanese_writing_holdout, code_reasoning_sanity]
+contamination_gate:
+  exact_hash: true
+  substring: true
+  ngram: true
+  minhash: true
+  manual_review_top_hits: true
+preserve_raw_generations: true
+publish_raw_generations: false
+victory:
+  minimum_primary_wins: 2
+  total_primary: 3
+  require_general_regression_gate: true
+regression_tolerance: null

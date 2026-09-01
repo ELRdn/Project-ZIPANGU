@@ -1,0 +1,28 @@
+schema_version: 1
+dataset_config: configs/datasets/c-i-v0-jp-heavy.yaml
+model_name_or_path: empero-ai/Qwen3.8-9B-Distill
+backend: reference_trl_peft
+method: qlora
+dtype: bfloat16
+seed: 3407
+sequence: {max_length: 4096, packing: true}
+lora:
+  r: 32
+  alpha: 64
+  dropout: 0.05
+  target_policy: auto_review_required
+optimizer:
+  name: adamw_torch
+  learning_rate: 0.00002
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+logging:
+  save_environment_manifest: true
+  save_raw_config: true
+  save_git_commit: true
+safety:
+  require_dataset_registry_validation: true
+  require_budget_preflight_on_runpod: true
+  forbid_eval_only_sources: true
+run_name: c-i-pilot-10m
+target_tokens: 10000000

@@ -1,0 +1,23 @@
+schema_version: 1
+datasets:
+  - {id: extraction_wiki_ja, repo: llm-jp/extraction-wiki-ja, role: train_candidate, category: japanese_instruction_extraction, status: quarantine}
+  - {id: magpie_sft_v1, repo: llm-jp/magpie-sft-v1.0, role: train_candidate, category: japanese_general_instruction, status: quarantine}
+  - {id: nemotron_sft_multilingual_v2, repo: nvidia/Nemotron-SFT-Multilingual-v2, role: train_candidate, category: japanese_stem_code_math, status: quarantine}
+  - {id: math_japanese_8k, repo: awakara/Math-Japanese-8k, role: train_candidate, category: japanese_math, status: quarantine}
+  - {id: ace_reason_math_japanese, repo: SousiOmine/AceReason-Math-Japanese, role: train_candidate, category: japanese_math, status: quarantine}
+  - {id: awesome_japanese_corpus, repo: nakasyou/awesome-japanese-corpus, role: future_cpt_candidate, category: japanese_corpus, status: quarantine}
+  - {id: answer_carefully, repo: llm-jp/AnswerCarefully, role: eval_only, category: japanese_safety_quality, status: locked}
+  - {id: hakusho_bench, repo: llm-jp/HakushoBench, role: eval_only, category: japanese_multimodal_benchmark, status: locked}
+  - {id: gpt_5_6_traces, repo: Manusagents/GPT-5.6-Sol-Luna-Terra-Traces, role: train_candidate, category: frontier_reasoning, status: quarantine}
+  - {id: fable_5_5_distillation, repo: RESMP-DEV/Fable-GPT-5.5-Distillation-Traces, role: train_candidate, category: frontier_reasoning_merged, status: quarantine}
+  - {id: claude_fable_code, repo: armand0e/claude-fable-5-claude-code, role: train_candidate, category: coding_agent, status: quarantine}
+  - {id: frontier_multi_teacher, repo: r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation, role: train_candidate, category: frontier_reasoning, status: quarantine}
+  - {id: anthropic_independent_research, repo: Anthropic/enabling-independent-research, role: reference_only, category: research_metadata, status: locked}
+  - {id: fable_5_premium, repo: saidutta69/fable-5-premium, role: train_candidate, category: frontier_reasoning, status: quarantine}
+  - {id: japanese_mt_bench, repo: null, role: eval_only, category: japanese_conversation_benchmark, status: locked}
+  - {id: llm_jp_instruction_eval, repo: null, role: eval_only, category: japanese_instruction_benchmark, status: locked}
+  - {id: zipangu_private_holdout, repo: null, role: eval_only, category: private_holdout, status: locked}
+  - {id: english_general_regression, repo: null, role: eval_only, category: english_general_regression, status: locked}
+  - {id: japanese_math_holdout, repo: null, role: eval_only, category: japanese_math_holdout, status: locked}
+  - {id: japanese_writing_holdout, repo: null, role: eval_only, category: japanese_writing_holdout, status: locked}
+  - {id: code_reasoning_sanity, repo: null, role: eval_only, category: code_reasoning_sanity, status: locked}

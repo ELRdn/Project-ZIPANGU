@@ -1,0 +1,13 @@
+# Initial reproducibility pins checked on 2026-08-30.
+transformers==5.16.1
+trl==1.12.0
+peft==0.20.0
+datasets==5.0.1
+accelerate==1.14.0
+
+# Resolve and record per RunPod CUDA/PyTorch image:
+# torch
+# flash-linear-attention
+# causal_conv1d
+#
+# Qwen3.8-9B-Distill uses Qwen3.5 architecture and Gated DeltaNet kernels.

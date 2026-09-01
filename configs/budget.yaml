@@ -1,0 +1,18 @@
+currency: JPY
+pilot:
+  hard_cap_jpy: 3000
+  prefer_cheapest: true
+  require_live_hourly_price: true
+  require_fx_rate: true
+runpod:
+  preferred_gpu: "NVIDIA GeForce RTX 4090"
+  preferred_cloud: "COMMUNITY"
+  allow_secure_without_human_go: false
+  allow_gpu_upgrade_without_human_go: false
+  auto_stop_after_run: true
+  destructive_actions_require_human_go: true
+scale_gates:
+  smoke: {requires_human_go: true}
+  1m: {requires_human_go: true}
+  10m: {requires_human_go: true}
+  50m: {requires_human_go: true}

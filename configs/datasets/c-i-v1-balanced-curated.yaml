@@ -1,0 +1,27 @@
+schema_version: 1
+name: c-i-v1-balanced-curated
+model: empero-ai/Qwen3.8-9B-Distill
+objective: sft_reasoning_distillation
+sampling_mass:
+  japanese_instruction: 0.25
+  japanese_math: 0.15
+  japanese_stem: 0.10
+  frontier_reasoning: 0.50
+buckets:
+  japanese_instruction:
+    candidates: [extraction_wiki_ja, magpie_sft_v1]
+    target_weight: 0.25
+  japanese_math:
+    candidates: [math_japanese_8k, ace_reason_math_japanese]
+    target_weight: 0.15
+  japanese_stem:
+    candidates: [nemotron_sft_multilingual_v2]
+    target_weight: 0.10
+  frontier_reasoning:
+    candidates: [frontier_multi_teacher, fable_5_5_distillation, gpt_5_6_traces, claude_fable_code, fable_5_premium]
+    target_weight: 0.50
+english_trace_policy:
+  keep_original_subset: true
+  create_japanese_rewrite_subset: true
+  preserve_pair_provenance: true
+eval_only_forbidden: [answer_carefully, hakusho_bench, japanese_mt_bench, llm_jp_instruction_eval, zipangu_private_holdout, english_general_regression, japanese_math_holdout, japanese_writing_holdout, code_reasoning_sanity]

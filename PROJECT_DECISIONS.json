@@ -1,0 +1,19 @@
+{
+  "project": "Project ZIPANGU",
+  "first_model": "ZIPANGU-C-I-9B",
+  "class": "C = Chū / middleweight",
+  "generation": "I = first ZIPANGU recipe generation",
+  "victory": "2 of 3 primary Japanese evaluations + general capability regression gate",
+  "training_stage_0": "SFT/reasoning distillation; no CPT",
+  "dataset_variants": [
+    "JP-heavy (initial 75/25)",
+    "Balanced (50/50 ablation)"
+  ],
+  "trace_policy": "retain some original English + selected Japanese rewrites with pair provenance",
+  "contamination": "strict",
+  "stack": "TRL/PEFT reference + Unsloth after validation",
+  "gpu": "RTX 4090 cheapest-first",
+  "runpod": "Community Cloud preferred, semi-automatic MCP",
+  "pilot_budget_jpy": 3000,
+  "repo": "public code/docs; weights after review"
+}

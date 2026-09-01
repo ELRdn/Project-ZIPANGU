@@ -1,0 +1,4 @@
+schema_version: 1
+factuality_verified_default: false
+hard_filter: {max_replacement_char_ratio: 0.01, max_control_char_ratio: 0.02, repetition_line_ratio: 0.65, minimum_user_chars: 1, minimum_assistant_chars: 1, refusal_only_max_chars: 240, private_path_match_threshold: 2, benchmark_signal_is_quarantine: true}
+quality: {structural_validity: 20, linguistic_cleanliness: 20, completeness: 20, information_density: 15, task_usefulness: 15, format_tool_integrity: 10}

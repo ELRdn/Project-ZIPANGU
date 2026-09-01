@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>ZIPANGU dataset audit</title>
+<style>
+:root { color-scheme: dark; font-family: system-ui, sans-serif; }
+body { margin: 2rem auto; max-width: 1200px; padding: 0 1rem; background: #10141c; color: #e8edf5; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 2rem; background: #171d28; }
+th,td { padding: .65rem; border: 1px solid #313b4c; text-align: left; vertical-align: top; }
+th { background: #222c3b; } code { white-space: pre-wrap; color: #a9e6c0; }
+.notice { border-left: 4px solid #e1a73a; padding: .8rem 1rem; background: #292318; }
+</style></head><body>
+<h1>ZIPANGU dataset audit</h1>
+<p class="notice">Read-only audit. Scores are heuristic; contamination is not clear until local eval sources and manual review are available. No registry status was changed.</p>
+<h2>Dataset summary</h2>
+<table><thead><tr><th>Dataset</th><th>Scanned rows</th><th>Eligible</th><th>Accepted %</th><th>Quality mean</th><th>Contamination</th></tr></thead><tbody><tr><td>ace_reason_math_japanese</td><td>10,000</td><td>9,989</td><td>99.89%</td><td>78.9148</td><td>not_checked_missing_eval_source</td></tr><tr><td>awesome_japanese_corpus</td><td>0</td><td>0</td><td>0.00%</td><td>None</td><td>not_checked_missing_eval_source</td></tr><tr><td>claude_fable_code</td><td>10</td><td>3</td><td>30.00%</td><td>82.9333</td><td>not_checked_missing_eval_source</td></tr><tr><td>extraction_wiki_ja</td><td>152,719</td><td>151,922</td><td>99.48%</td><td>93.566</td><td>not_checked_missing_eval_source</td></tr><tr><td>fable_5_5_distillation</td><td>0</td><td>0</td><td>0.00%</td><td>None</td><td>not_checked_missing_eval_source</td></tr><tr><td>fable_5_premium</td><td>6,365</td><td>5,469</td><td>85.92%</td><td>72.3091</td><td>not_checked_missing_eval_source</td></tr><tr><td>frontier_multi_teacher</td><td>0</td><td>0</td><td>0.00%</td><td>None</td><td>not_checked_missing_eval_source</td></tr><tr><td>gpt_5_6_traces</td><td>0</td><td>0</td><td>0.00%</td><td>None</td><td>not_checked_missing_eval_source</td></tr><tr><td>magpie_sft_v1</td><td>132,476</td><td>131,337</td><td>99.14%</td><td>90.6974</td><td>not_checked_missing_eval_source</td></tr><tr><td>math_japanese_8k</td><td>8,094</td><td>8,094</td><td>100.00%</td><td>93.8623</td><td>not_checked_missing_eval_source</td></tr><tr><td>nemotron_sft_multilingual_v2</td><td>370,081</td><td>368,950</td><td>99.69%</td><td>87.6127</td><td>not_checked_missing_eval_source</td></tr></tbody></table>
+<h2>Recipe sampling mass</h2>
+<table><thead><tr><th>Recipe</th><th>Configured token mass</th></tr></thead><tbody><tr><td>c-i-v0-balanced</td><td><code>{&quot;japanese&quot;: 0.5, &quot;frontier_reasoning&quot;: 0.5}</code></td></tr><tr><td>c-i-v0-jp-heavy</td><td><code>{&quot;japanese&quot;: 0.75, &quot;frontier_reasoning&quot;: 0.25}</code></td></tr><tr><td>c-i-v1-balanced-curated</td><td><code>{&quot;japanese_instruction&quot;: 0.25, &quot;japanese_math&quot;: 0.15, &quot;japanese_stem&quot;: 0.1, &quot;frontier_reasoning&quot;: 0.5}</code></td></tr><tr><td>c-i-v1-jp-heavy-curated</td><td><code>{&quot;japanese_instruction&quot;: 0.35, &quot;japanese_math&quot;: 0.2, &quot;japanese_stem&quot;: 0.1, &quot;frontier_reasoning&quot;: 0.35}</code></td></tr></tbody></table>
+<h2>Dedup</h2><pre>{
+  &quot;dataset_ids&quot;: [
+    &quot;ace_reason_math_japanese&quot;,
+    &quot;extraction_wiki_ja&quot;,
+    &quot;fable_5_premium&quot;,
+    &quot;magpie_sft_v1&quot;,
+    &quot;math_japanese_8k&quot;,
+    &quot;nemotron_sft_multilingual_v2&quot;
+  ],
+  &quot;eligible_records&quot;: 675761,
+  &quot;exact_unique_records&quot;: 673311,
+  &quot;exact_duplicate_records&quot;: 2450,
+  &quot;near_duplicate_records&quot;: 11809,
+  &quot;near&quot;: {
+    &quot;considered_eligible&quot;: 673311,
+    &quot;inspected&quot;: 250000,
+    &quot;max_records&quot;: 250000,
+    &quot;capped&quot;: true,
+    &quot;algorithm&quot;: &quot;simhash_lsh&quot;,
+    &quot;hamming_threshold&quot;: 3,
+    &quot;bucket_bits&quot;: 16
+  },
+  &quot;artifacts&quot;: [
+    &quot;D:\\VibeCoding\\project-zipangu\\data\\manifests\\_runtime\\dedup\\exact_winners.jsonl.gz&quot;,
+    &quot;D:\\VibeCoding\\project-zipangu\\data\\manifests\\_runtime\\dedup\\near_duplicates.jsonl.gz&quot;,
+    &quot;D:\\VibeCoding\\project-zipangu\\data\\manifests\\_runtime\\dedup\\exact_index.sqlite3&quot;
+  ]
+}</pre>
+</body></html>
