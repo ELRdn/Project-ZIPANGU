@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "model_role": "official_empero_gguf",
+  "hf_repo": "empero-ai/Qwen3.8-4B-Distill-GGUF",
+  "hf_revision": "391fc7d103e3942a408def3e4f51c2f85d464417",
+  "filename": "Qwen3.8-4B-Q4_K_M.gguf",
+  "local_path": "E:\\zipangu-model-cache\\ZIPANGU-K-I-4B-Q4_K_M\\Qwen3.8-4B-Q4_K_M.gguf",
+  "size_bytes": 2783446304,
+  "sha256": "dec96e8cf2e11b613bb46513dec485377f9ca5a351e71712ee0e244f287c6790",
+  "community_quantization": false,
+  "source": {
+    "repo": "ggml-org/llama.cpp",
+    "revision": "159b741427337a2e9a58b08121001545d66b5825",
+    "archive_path": ".cache\\llama.cpp\\llama.cpp-159b741427337a2e9a58b08121001545d66b5825.zip",
+    "archive_sha256": "BAEA724620908BDB826050AD3E754B4B6A65E0F46FA9AB0BFB69C1DB844F19FF",
+    "source_tree": ".envs\\llamacpp\\ggml-org-llama.cpp-159b741"
+  },
+  "builds": {
+    "vulkan": {
+      "status": "PASS",
+      "backend": "Vulkan",
+      "build_dir": ".envs\\llamacpp\\build-vulkan-159b-modern",
+      "llama_cli": ".envs\\llamacpp\\build-vulkan-159b-modern\\bin\\llama-cli.exe",
+      "llama_bench": ".envs\\llamacpp\\build-vulkan-159b-modern\\bin\\llama-bench.exe",
+      "source_revision": "159b741427337a2e9a58b08121001545d66b5825"
+    },
+    "hip": {
+      "status": "PASS",
+      "backend": "HIP/ROCm",
+      "target_architecture": "gfx1102",
+      "build_dir": ".envs\\llamacpp\\build-hip-159b-rocm71-v8",
+      "llama_cli": ".envs\\llamacpp\\build-hip-159b-rocm71-v8\\bin\\llama-cli.exe",
+      "llama_bench": ".envs\\llamacpp\\build-hip-159b-rocm71-v8\\bin\\llama-bench.exe",
+      "rocm_path": "C:\\Program Files\\AMD\\ROCm\\7.1",
+      "device": "ROCm0: AMD Radeon RX 7600",
+      "source_revision": "159b741427337a2e9a58b08121001545d66b5825",
+      "build_compatibility_shim": ".envs\\llamacpp\\hip-macro-compat.h"
+    }
+  }
+}

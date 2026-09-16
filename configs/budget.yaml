@@ -1,18 +1,32 @@
 currency: JPY
-pilot:
-  hard_cap_jpy: 3000
-  prefer_cheapest: true
-  require_live_hourly_price: true
-  require_fx_rate: true
+pilot_cap_jpy: 3000
+remaining_budget_is_hard_boundary: true
+local_first: true
+local_research:
+  gpu: AMD Radeon RX 7600 8GB
+  cpu: AMD Ryzen 9 7900X
+  ram_gb: 96
+  role: local_research_and_ci_gpu
+  production_training: false
 runpod:
-  preferred_gpu: "NVIDIA GeForce RTX 4090"
-  preferred_cloud: "COMMUNITY"
-  allow_secure_without_human_go: false
-  allow_gpu_upgrade_without_human_go: false
-  auto_stop_after_run: true
-  destructive_actions_require_human_go: true
+  preferred_gpu: RTX 4090 Community Cloud
+  require_live_offer_price: true
+  require_exchange_rate: true
+  require_runtime_estimate: true
+  require_budget_preflight: true
+  human_go_required: true
+class_policy:
+  K:
+    first: local_rx7600_diagnostics_and_optional_tiny_smoke
+    fallback: RTX4090
+  C:
+    first: local_validation_only
+    fallback: RTX4090
+  Z:
+    first: future_capacity_review
+    fallback: H100_or_better_after_human_review
 scale_gates:
-  smoke: {requires_human_go: true}
-  1m: {requires_human_go: true}
-  10m: {requires_human_go: true}
-  50m: {requires_human_go: true}
+  - smoke
+  - pilot_1m
+  - pilot_10m
+  - optional_50m

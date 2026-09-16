@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "scope": "first_620000_records_same_source_order",
+  "purpose": "calibrate near-match false positives after fixing eval projections",
+  "projection_fixed_uncalibrated": {
+    "artifact": "E:\\zipangu-temp\\finalization\\contamination-parts-aborted-simhash-threshold-20260905T1529",
+    "rows": 620000,
+    "counts": {
+      "not_checked_missing_eval_source": 296721,
+      "requires_manual_review": 323270,
+      "quarantine_exact": 9
+    },
+    "finding": "random-baseline SimHash similarity was admitted at 0.35 after one shared 13-gram candidate-generation hit"
+  },
+  "calibrated_v2": {
+    "rows": 620000,
+    "formal_config": "configs/pretrain/finalization-k-i-contamination-v2.yaml",
+    "formal_config_sha256": "00cf75665b96b0b8cd0761ef982800781bc8424bc9387a3c65a0a1bdaad6af98",
+    "record_id_status_stream_sha256": "01ea0d8050bd11574c6f67bbc576ad8abb4ee2ad2a0717c62b8007a7bf6d3355",
+    "counts": {
+      "not_checked_missing_eval_source": 619991,
+      "requires_manual_review": 0,
+      "quarantine_exact": 9
+    },
+    "thresholds": {
+      "minimum_normalized_length": 40,
+      "minhash_review": 0.35,
+      "minhash_min_length_ratio": 0.5,
+      "simhash_review": 0.9,
+      "simhash_min_length_ratio": 0.8,
+      "quarantine_near": 0.8
+    }
+  },
+  "reconciliation": {
+    "same_rows": true,
+    "formal_run_matches_calibrated_preview": true,
+    "exact_class_preserved": true,
+    "manual_review_false_positive_candidates_removed": 323270
+  },
+  "contains_raw_text": false,
+  "training_allowed": false
+}

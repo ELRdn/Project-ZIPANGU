@@ -1,0 +1,19 @@
+schema_version: 1
+name: i-quality-thresholds
+recipe_generation: I
+status: draft_recommendation
+approval_required: true
+recommended_threshold: 75
+thresholds: [95, 90, 85, 80, 75]
+minimum_retention:
+  math_japanese_8k: 0.25
+  ace_reason_math_japanese: 0.10
+  magpie_sft_v1: 0.25
+  extraction_wiki_ja: 0.25
+  nemotron_sft_multilingual_v2: 0.20
+  fable_5_premium: 0.10
+policy:
+  diversity_entropy_ratio_min: 0.70
+  contamination_exclusions: [quarantine_exact, quarantine_near]
+  unknown_provenance: BLOCKED
+  auto_approval: false

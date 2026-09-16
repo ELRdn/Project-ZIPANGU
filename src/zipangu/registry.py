@@ -9,6 +9,7 @@ from typing import Any, Iterable, Mapping
 import yaml
 
 from .provenance import canonical_json_hash
+from .models import load_model_spec, validate_model_registry
 
 
 SCHEMA_VERSION = 1
@@ -500,12 +501,38 @@ def validate_recipe_against_registry(
                 recipe_label,
             )
         )
-    for field in ("name", "model", "objective"):
+    for field in ("name", "objective"):
         if not _non_empty_string(recipe.get(field)):
             issues.append(
                 _issue(
                     "recipe_field_missing",
                     f"recipe field must be a non-empty string: {field}",
+                    recipe_label,
+                )
+            )
+
+    recipe_model = recipe.get("model")
+    if not _non_empty_string(recipe_model):
+        issues.append(
+            _issue(
+                "recipe_field_missing",
+                "recipe field must be a non-empty string: model",
+                recipe_label,
+            )
+        )
+    elif recipe_model == "generation-i":
+        scope = recipe.get("model_scope")
+        classes = scope.get("classes") if isinstance(scope, Mapping) else None
+        if (
+            not isinstance(scope, Mapping)
+            or scope.get("generation") != "I"
+            or not isinstance(classes, list)
+            or not {"K", "C", "Z"}.issubset({str(value).upper() for value in classes})
+        ):
+            issues.append(
+                _issue(
+                    "recipe_model_scope_invalid",
+                    "generation-i recipes must declare K/C/Z model scope and generation I",
                     recipe_label,
                 )
             )
@@ -807,12 +834,56 @@ def validate_train_config(
         issues.append(_issue("target_tokens_invalid", "target_tokens must be a positive integer", config_path))
 
     repo_root_path = Path(repo_root)
+    model_spec = None
+    configured_model_id = train_config.get("model_id")
+    if configured_model_id is not None:
+        if not _non_empty_string(configured_model_id):
+            issues.append(_issue("model_id_invalid", "model_id must be a non-empty canonical model id", config_path))
+        else:
+            try:
+                model_spec = load_model_spec(repo_root_path, str(configured_model_id))
+            except (OSError, ValueError) as exc:
+                issues.append(_issue("model_id_invalid", str(exc), config_path))
     recipe, recipe_issues = _load_recipe_for_train_config(train_config, repo_root_path, config_path)
     issues.extend(recipe_issues)
     if recipe is not None:
         recipe_model = recipe.get("model")
-        if _non_empty_string(train_config.get("model_name_or_path")) and train_config.get("model_name_or_path") != recipe_model:
-            issues.append(_issue("model_mismatch", "train model_name_or_path must match dataset recipe model", config_path))
+        configured_base = train_config.get("model_name_or_path")
+        if model_spec is None:
+            if _non_empty_string(configured_base) and configured_base != recipe_model:
+                issues.append(_issue("model_mismatch", "train model_name_or_path must match dataset recipe model", config_path))
+        else:
+            if configured_base != model_spec.base_model_id:
+                issues.append(
+                    _issue(
+                        "base_model_mismatch",
+                        f"train model_name_or_path must match registered base: {model_spec.base_model_id}",
+                        config_path,
+                    )
+                )
+            if recipe_model not in {"generation-i", model_spec.id, model_spec.base_model_id}:
+                issues.append(
+                    _issue(
+                        "model_scope_mismatch",
+                        "train dataset recipe is not compatible with the selected canonical model",
+                        config_path,
+                    )
+                )
+            if recipe_model == "generation-i":
+                scope = recipe.get("model_scope")
+                classes = scope.get("classes") if isinstance(scope, Mapping) else None
+                if (
+                    not isinstance(scope, Mapping)
+                    or model_spec.class_code not in {str(value).upper() for value in classes or []}
+                    or scope.get("generation") != model_spec.generation
+                ):
+                    issues.append(
+                        _issue(
+                            "model_scope_mismatch",
+                            "generation-i recipe does not include the selected model class/generation",
+                            config_path,
+                        )
+                    )
         issues.extend(validate_recipe_against_registry(recipe, registry, repo_root=repo_root_path))
 
     sequence = train_config.get("sequence")
@@ -888,6 +959,34 @@ def validate_train_config(
         for field in required_fields:
             if section.get(field) is not True:
                 issues.append(_issue(f"{section_name}_flag_disabled", f"{section_name}.{field} must be true", config_path))
+        if section_name == "safety":
+            training_allowed = section.get("training_allowed")
+            if training_allowed is True:
+                issues.append(
+                    _issue(
+                        "training_execution_enabled",
+                        "safety.training_allowed must remain false in this research phase",
+                        config_path,
+                    )
+                )
+            elif training_allowed is not False:
+                issues.append(
+                    _issue(
+                        "training_execution_gate_missing",
+                        "safety.training_allowed must be explicitly false",
+                        config_path,
+                        level="blocked",
+                    )
+                )
+            else:
+                issues.append(
+                    _issue(
+                        "training_execution_disabled",
+                        "training execution is intentionally blocked until an explicit human GO",
+                        config_path,
+                        level="blocked",
+                    )
+                )
     return issues
 
 

@@ -263,7 +263,12 @@ def stage_contamination(context: PipelineContext, *, resume: bool = False) -> di
 
 def _load_recipes(context: PipelineContext) -> dict[str, dict[str, Any]]:
     recipes: dict[str, dict[str, Any]] = {}
-    for path in sorted((context.repo_root / "configs" / "datasets").glob("c-i-*.yaml")):
+    paths = [
+        path
+        for pattern in ("i-*.yaml", "c-i-*.yaml")
+        for path in (context.repo_root / "configs" / "datasets").glob(pattern)
+    ]
+    for path in sorted(set(paths)):
         value = _load_yaml(path)
         recipes[path.stem] = value
     return recipes
@@ -333,10 +338,12 @@ def stage_pilot(context: PipelineContext, *, resume: bool = False) -> dict[str, 
 
     from .pilot import build_pilot
 
-    recipe_path = context.repo_root / "configs" / "datasets" / "c-i-v1-jp-heavy-curated.yaml"
+    recipe_path = context.repo_root / "configs" / "datasets" / "i-jp-heavy.yaml"
+    if not recipe_path.is_file():
+        recipe_path = context.repo_root / "configs" / "datasets" / "c-i-v1-jp-heavy-curated.yaml"
     if not recipe_path.is_file():
         recipe_path = context.repo_root / "configs" / "datasets" / "c-i-v0-jp-heavy.yaml"
-    output_dir = context.repo_root / "data" / "processed" / "c-i" / "pilot-1m"
+    output_dir = context.repo_root / "data" / "processed" / "generation-i" / "pilot-1m"
     locations = {location.policy.dataset_id: location for location in context.locations}
     try:
         pilot = build_pilot(
@@ -346,6 +353,7 @@ def stage_pilot(context: PipelineContext, *, resume: bool = False) -> dict[str, 
             target_tokens=1_000_000,
             output_dir=output_dir,
             output_format="parquet",
+            model_id="ZIPANGU-K-I-4B",
         )
     except (OSError, RuntimeError, ValueError) as exc:
         pilot = {

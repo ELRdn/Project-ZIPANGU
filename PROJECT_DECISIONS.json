@@ -1,19 +1,101 @@
 {
   "project": "Project ZIPANGU",
-  "first_model": "ZIPANGU-C-I-9B",
-  "class": "C = Chū / middleweight",
+  "research_question": "Can careful low-cost Japanese adaptation of strong open-weight models compete with Japanese-focused scratch-trained foundation models?",
+  "default_model": "ZIPANGU-K-I-4B",
+  "model_family": {
+    "K": {
+      "name": "Kei / 軽",
+      "id": "ZIPANGU-K-I-4B",
+      "base": "empero-ai/Qwen3.8-4B-Distill",
+      "role": "recipe validation, local AMD research and cheap scaling",
+      "status": "immediate_target"
+    },
+    "C": {
+      "name": "Chū / 中",
+      "id": "ZIPANGU-C-I-9B",
+      "base": "empero-ai/Qwen3.8-9B-Distill",
+      "role": "primary LLM-jp-4-8B Thinking challenge",
+      "status": "configured_followup"
+    },
+    "Z": {
+      "name": "Zyū / 重",
+      "id": "ZIPANGU-Z-I-26B-A4B",
+      "base": "google/gemma-4-26B-A4B-it",
+      "role": "future MoE scale-up and QAT research",
+      "status": "future_only"
+    }
+  },
   "generation": "I = first ZIPANGU recipe generation",
-  "victory": "2 of 3 primary Japanese evaluations + general capability regression gate",
+  "roadmap": ["K recipe validation", "C scale-up and LLM-jp challenge", "Z MoE/QAT research"],
+  "victory_c": "2 of 3 primary Japanese evaluations + general capability regression gate",
+  "success_k": "multiple Japanese improvements + no material general-reasoning collapse + contamination/provenance PASS",
   "training_stage_0": "SFT/reasoning distillation; no CPT",
-  "dataset_variants": [
-    "JP-heavy (initial 75/25)",
-    "Balanced (50/50 ablation)"
-  ],
+  "dataset_recipe": {
+    "jp_heavy": "75% Japanese / 25% frontier-retention token mass",
+    "balanced": "50% Japanese / 50% frontier-retention token mass",
+    "tokenizer": "model-specific pinned revision"
+  },
   "trace_policy": "retain some original English + selected Japanese rewrites with pair provenance",
-  "contamination": "strict",
-  "stack": "TRL/PEFT reference + Unsloth after validation",
-  "gpu": "RTX 4090 cheapest-first",
+  "contamination": "strict; eval_only sources are permanently training-forbidden",
+  "canonical_policy": "clean upstream base plus ZIPANGU adaptation; community Heretic/Abliterated variants stay separate",
+  "local_hardware": {
+    "gpu": "AMD Radeon RX 7600",
+    "vram_gb": 8,
+    "cpu": "Ryzen 9 7900X",
+    "ram_gb": 96,
+    "role": "Local Research / CI GPU",
+    "experimental_rocm": "isolated ROCm 10 track"
+  },
+  "stack": "TRL/PEFT reference + Unsloth validated in isolated RX 7600 QLoRA smoke",
+  "local_validation": {
+    "status": "PASS",
+    "venv": ".envs/rocm-windows-py313",
+    "torch": "2.11.0+rocm7.14.0",
+    "hip": "7.14.60850",
+    "hip_tensor_smoke": "PASS",
+    "vulkan_runtime": "PASS",
+    "unsloth_qlora_smoke": "PASS",
+    "llama_cpp_completion_gate": "PASS",
+    "llama_cpp_same_gguf_matrix": "PASS (CPU/Vulkan/HIP x 2048/4096/8192)",
+    "official_empero_gguf": "PASS (Q4_K_M, SHA-256 recorded)",
+    "unsloth_real_data_path_smoke": "PASS (16 examples, research-only)",
+    "rocm10_official_feasibility": "PASS (local stable runtime preserved)",
+    "production_training": "BLOCKED"
+  },
+  "data_finalization": {
+    "local_execution": "COMPLETE",
+    "canonical_records": 4643875,
+    "raw_candidate_rows": 4662182,
+    "raw_to_canonical_delta": "18307 Claude event rows collapsed by session grouping (18370 events to 63 sessions)",
+    "jp_heavy_candidate_tokens": 208924,
+    "balanced_candidate_tokens": 316249,
+    "candidate_status": "BLOCKED_UNDERFILLED",
+    "format_status": "BLOCKED",
+    "contamination_status": "BLOCKED_REQUIRED_EVAL_MISSING",
+    "contamination_policy": "k-i-contamination-v2",
+    "contamination_available_eval_item": "CLOSED",
+    "contamination_empty_fingerprints_allowed": false,
+    "contamination_exact": 103,
+    "contamination_near": 0,
+    "contamination_manual_review": 5,
+    "contamination_excluded_metadata": 1022950,
+    "contamination_excluded_derivative": 895771,
+    "contamination_record_id_mismatches": 0,
+    "contamination_exact_sample": "100 of 103, metadata-only, seed 3407",
+    "source_package_revisions_known": 10,
+    "source_package_revisions_unknown": 0,
+    "source_evidence_documents_matched": 14,
+    "source_human_decisions_recorded": 0,
+    "source_human_decisions_pending": 10,
+    "source_ai_approval_allowed": false,
+    "source_approval_matrix": "reports/pretrain_finalization/SOURCE_APPROVAL_MATRIX.md",
+    "license_provenance_status": "HUMAN_DECISION_REQUIRED",
+    "human_review_package": "PASS",
+    "one_m_go": "NO_GO"
+  },
+  "gpu_policy": "RX 7600 local first for K, RTX 4090 Community fallback; C uses RTX 4090 Community; Z later",
   "runpod": "Community Cloud preferred, semi-automatic MCP",
   "pilot_budget_jpy": 3000,
-  "repo": "public code/docs; weights after review"
+  "training_allowed": false,
+  "repo": "public code/docs; datasets, adapters and weights after provenance/license/human review"
 }

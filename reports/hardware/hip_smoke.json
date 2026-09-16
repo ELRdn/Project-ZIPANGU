@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "generated_at": "2026-09-02T14:17:47.611033+00:00",
+  "operation": "torch_cuda_matmul_on_hip",
+  "size": 512,
+  "device_policy": "active discrete GPU only; no iGPU selection",
+  "torch": "2.11.0+rocm7.14.0",
+  "hip": "7.14.60850",
+  "device": "AMD Radeon RX 7600",
+  "shape": [
+    512,
+    512
+  ],
+  "dtype": "torch.float32",
+  "finite": true,
+  "checksum": -15708.548828125,
+  "duration_seconds": 2.134
+}

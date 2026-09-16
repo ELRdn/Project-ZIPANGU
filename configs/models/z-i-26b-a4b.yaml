@@ -1,0 +1,27 @@
+schema_version: 1
+id: ZIPANGU-Z-I-26B-A4B
+class: Z
+generation: I
+size: 26B-A4B
+base_model:
+  repo: google/gemma-4-26B-A4B-it
+  revision: null
+architecture:
+  family: gemma4
+  type: moe
+  total_parameters: 26B
+  active_parameters: 4B
+research_role:
+  - heavyweight
+  - moe_adaptation
+  - qat_research
+training:
+  enabled: false
+  preferred_method: qlora
+  execution_policy: future_decision_required
+evaluation:
+  compare_base: true
+  compare_llm_jp: future
+artifact_policy:
+  canonical_release_requires_base_evaluation: true
+  quantization_metadata_separate: true

@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "torch_version": "2.11.0+rocm7.14.0",
+  "hip_version": "7.14.60850",
+  "cuda_available": true,
+  "device_count": 1,
+  "devices": [
+    {
+      "index": 0,
+      "name": "AMD Radeon RX 7600",
+      "capability": [
+        11,
+        0
+      ]
+    }
+  ]
+}

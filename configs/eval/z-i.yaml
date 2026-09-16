@@ -1,0 +1,29 @@
+schema_version: 1
+name: z-i-eval-v0
+model_id: ZIPANGU-Z-I-26B-A4B
+target_model:
+  candidate: ZIPANGU-Z-I-26B-A4B
+  reference: llm-jp/llm-jp-4-8b-thinking
+  base: google/gemma-4-26B-A4B-it
+primary:
+  - {id: japanese_mt_bench, repeat: 3, role: eval_only}
+  - {id: answer_carefully, repeat: 3, role: eval_only}
+  - {id: llm_jp_instruction_eval, repeat: 3, role: eval_only}
+secondary: [english_general_regression, japanese_math_holdout, japanese_writing_holdout, code_reasoning_sanity]
+contamination_gate:
+  exact_hash: true
+  substring: true
+  ngram: true
+  minhash: true
+  manual_review_top_hits: true
+preserve_raw_generations: true
+publish_raw_generations: false
+victory:
+  minimum_primary_wins: 2
+  total_primary: 3
+  require_general_regression_gate: true
+regression_tolerance: null
+execution_policy:
+  future_only: true
+  training_allowed: false
+  publish_weights: false

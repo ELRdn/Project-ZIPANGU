@@ -1,0 +1,491 @@
+{
+  "schema_version": 1,
+  "audit_date": "2026-09-05",
+  "purpose": "Evidence-only license and provenance audit for ten local training-source candidates.",
+  "legal_advice": false,
+  "training_allowed": false,
+  "ai_approval_recorded": false,
+  "decision_manifest": "data/manifests/source_approval_decisions.json",
+  "human_matrix": "reports/pretrain_finalization/SOURCE_APPROVAL_MATRIX.md",
+  "method": {
+    "primary_remote_evidence": "Publisher-controlled Hugging Face dataset API/card/files pinned to the observed package commit, plus official license or provider terms where relevant.",
+    "local_evidence": "Hugging Face cache metadata, README/license/provenance files, local data inventory, row-level source/license fields, and corrected contamination output.",
+    "document_match_rule": "SHA-256 of each named local document equals the corresponding file fetched from the pinned package commit.",
+    "revision_scope": "A package commit identifies the local snapshot. It does not establish upstream corpus/model revisions, contributor rights, or provider-output permissions unless those are separately recorded.",
+    "license_scope": "A Hub card license tag is publisher-provided metadata. It is recorded as evidence, not treated as a legal conclusion or automatic training authorization.",
+    "contamination_scope": "Counts are from the corrected 4,643,875-record scan. AnswerCarefully is still unavailable, so not_checked_missing_eval_source is not equivalent to clean."
+  },
+  "summary": {
+    "sources": 10,
+    "local_snapshots_found": 10,
+    "package_revisions_known": 10,
+    "package_revisions_unknown": 0,
+    "pinned_documents_matched": 14,
+    "card_license_absent_sources": 2,
+    "human_decisions_recorded": 0,
+    "human_decisions_pending": 10
+  },
+  "sources": [
+    {
+      "dataset": "extraction_wiki_ja",
+      "upstream_source": "llm-jp/extraction-wiki-ja",
+      "local_root": "E:/zipangu-datesets/llm-jp__extraction-wiki-ja",
+      "package_revision": "b385b781defb9bf4266175cd8d7e7c53af0290b8",
+      "package_last_modified": "2025-05-30T04:58:55Z",
+      "official_api": "https://huggingface.co/api/datasets/llm-jp/extraction-wiki-ja",
+      "official_card": "https://huggingface.co/datasets/llm-jp/extraction-wiki-ja/blob/b385b781defb9bf4266175cd8d7e7c53af0290b8/README.md",
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 152719,
+        "local_data_files": 3,
+        "configs": ["v0.1", "v0.2", "v0.3"]
+      },
+      "license_evidence": {
+        "card_value": "apache-2.0",
+        "official_license_text": "https://www.apache.org/licenses/LICENSE-2.0",
+        "evidence_state": "publisher_card_declaration"
+      },
+      "provenance_evidence": "Card says the data was built from the Japanese Wikipedia subset of llm-jp-corpus-v3, with Qwen2.5-32B used for instruction/response generation and filtering.",
+      "unresolved_items": [
+        "The exact llm-jp-corpus-v3 revision and row mapping are not pinned in the card.",
+        "The underlying Wikipedia/corpus license and attribution chain are not frozen in a local row-level manifest.",
+        "The teacher-model revision and generation terms are not pinned."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 152719,
+        "quarantine_exact": 0,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "bf74259d2bfb7165cdbc952a119068bd980b98eaab5246db1247fec70523b883",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "magpie_sft_v1",
+      "upstream_source": "llm-jp/magpie-sft-v1.0",
+      "local_root": "E:/zipangu-datesets/llm-jp__magpie-sft-v1.0",
+      "package_revision": "4f949e18cfa01d99abe6f92e5629157d69737e6d",
+      "package_last_modified": "2024-11-13T18:54:02Z",
+      "official_api": "https://huggingface.co/api/datasets/llm-jp/magpie-sft-v1.0",
+      "official_card": "https://huggingface.co/datasets/llm-jp/magpie-sft-v1.0/blob/4f949e18cfa01d99abe6f92e5629157d69737e6d/README.md",
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 132476,
+        "local_data_files": 1
+      },
+      "license_evidence": {
+        "card_value": "apache-2.0",
+        "official_license_text": "https://www.apache.org/licenses/LICENSE-2.0",
+        "evidence_state": "publisher_card_declaration"
+      },
+      "provenance_evidence": "Card describes CALM3-22B-Chat-generated instructions and Qwen2.5-32B-Instruct-generated responses.",
+      "unresolved_items": [
+        "Teacher-model revisions are not pinned.",
+        "Generation-time model/service terms and row-level generation identities are not frozen in a local manifest."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 132473,
+        "quarantine_exact": 3,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "3d500ff31df5473e4b98ef310262e2518d3bc6a4b86444998cf1bf0978670d27",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "nemotron_sft_multilingual_v2",
+      "upstream_source": "nvidia/Nemotron-SFT-Multilingual-v2",
+      "local_root": "E:/zipangu-datesets/nvidia__Nemotron-SFT-Multilingual-v2",
+      "package_revision": "971a252224b75414b1b67c55dbe0446d8b6606a0",
+      "package_last_modified": "2026-06-05T16:16:08Z",
+      "official_api": "https://huggingface.co/api/datasets/nvidia/Nemotron-SFT-Multilingual-v2",
+      "official_card": "https://huggingface.co/datasets/nvidia/Nemotron-SFT-Multilingual-v2/blob/971a252224b75414b1b67c55dbe0446d8b6606a0/README.md",
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 370081,
+        "local_data_files": 12
+      },
+      "license_evidence": {
+        "card_value": ["cc-by-4.0", "cc-by-sa-4.0"],
+        "row_level_counts": {
+          "cc-by-4.0": 241889,
+          "cc-by-sa-4.0": 128192
+        },
+        "official_license_texts": [
+          "https://creativecommons.org/licenses/by/4.0/legalcode",
+          "https://creativecommons.org/licenses/by-sa/4.0/legalcode"
+        ],
+        "evidence_state": "mixed_row_level_license"
+      },
+      "provenance_evidence": "All 370,081 local rows expose one of the two recorded license values; the package card describes the multilingual SFT composition.",
+      "unresolved_items": [
+        "CC-BY and CC-BY-SA obligations differ and must not be collapsed into one blanket source decision without an explicit scope/obligation record.",
+        "Derived-model and redistribution handling for the selected row mix requires human/legal interpretation."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 370075,
+        "quarantine_exact": 6,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "41e21b069e2f61d2897a6422e425ff2890a66981bc00aa18dc84fb65b26bdd11",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "math_japanese_8k",
+      "upstream_source": "awakara/Math-Japanese-8k",
+      "local_root": "E:/zipangu-datesets/awakara__Math-Japanese-8k",
+      "package_revision": "e86bb58896c228e91acec2cbbb768d37f14ecdb3",
+      "package_last_modified": "2026-08-28T08:48:11Z",
+      "official_api": "https://huggingface.co/api/datasets/awakara/Math-Japanese-8k",
+      "official_card": "https://huggingface.co/datasets/awakara/Math-Japanese-8k/blob/e86bb58896c228e91acec2cbbb768d37f14ecdb3/README.md",
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 8094
+      },
+      "license_evidence": {
+        "card_value": null,
+        "license_file_present": false,
+        "evidence_state": "absent"
+      },
+      "provenance_evidence": "Card states that problems were generated by Kimi K2.6/K2.7-code and answers by Gemma4 31B.",
+      "unresolved_items": [
+        "No dataset license or explicit grant is present in the package metadata/card.",
+        "Teacher-model revisions, generation method, row identities, and provider-output terms are not pinned."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 8094,
+        "quarantine_exact": 0,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "49ac144b95c6d9623552465bc9a436e4fb65b8f7d43d7ee47b2d306b264a160b",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "ace_reason_math_japanese",
+      "upstream_source": "SousiOmine/AceReason-Math-Japanese",
+      "local_root": "E:/zipangu-datesets/SousiOmine__AceReason-Math-Japanese",
+      "package_revision": "037b823f6ab85aee4a7de51ca35476c6d1079f0a",
+      "package_last_modified": "2026-08-20T01:33:18Z",
+      "official_api": "https://huggingface.co/api/datasets/SousiOmine/AceReason-Math-Japanese",
+      "official_card": "https://huggingface.co/datasets/SousiOmine/AceReason-Math-Japanese/blob/037b823f6ab85aee4a7de51ca35476c6d1079f0a/README.md",
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 10000
+      },
+      "license_evidence": {
+        "card_value": "cc-by-4.0",
+        "license_file": "LISENCE",
+        "official_license_text": "https://creativecommons.org/licenses/by/4.0/legalcode",
+        "evidence_state": "card_and_license_file"
+      },
+      "provenance_evidence": "Card says the first 10,000 nvidia/AceReason-Math rows were translated with Deepseek-V4-Flash-0731 while answers were left unchanged.",
+      "unresolved_items": [
+        "The upstream AceReason-Math dataset revision and row mapping are not pinned.",
+        "Translator-model revision/provider terms and the translation transform chain are not frozen row by row."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 10000,
+        "quarantine_exact": 0,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "bfc1864fc1a24f701f19d298c53031f777ed363aaf4772e57ca9129b620288a9",
+          "matches_pinned_remote": true
+        },
+        {
+          "path": "LISENCE",
+          "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "gpt_5_6_traces",
+      "upstream_source": "Manusagents/GPT-5.6-Sol-Luna-Terra-Traces",
+      "local_root": "E:/zipangu-datesets/Manusagents__GPT-5.6-Sol-Luna-Terra-Traces",
+      "package_revision": "07e1745da4cb8220c4811e200bfeb97768290e21",
+      "package_last_modified": "2026-07-19T11:54:46Z",
+      "official_api": "https://huggingface.co/api/datasets/Manusagents/GPT-5.6-Sol-Luna-Terra-Traces",
+      "official_card": "https://huggingface.co/datasets/Manusagents/GPT-5.6-Sol-Luna-Terra-Traces/blob/07e1745da4cb8220c4811e200bfeb97768290e21/README.md",
+      "provider_terms": [
+        "https://openai.com/policies/terms-of-use/",
+        "https://openai.com/en-GB/policies/services-agreement/"
+      ],
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 6288,
+        "upstream_source_counts": {
+          "greghavens/gpt-5.6-sol-coding-and-debugging-traces": 5402,
+          "empero-ai/gpt-5.6-luna-sft-900x": 886
+        },
+        "upstream_split_counts": {
+          "train": 5901,
+          "validation": 387
+        }
+      },
+      "license_evidence": {
+        "card_value": "cc-by-4.0",
+        "official_license_text": "https://creativecommons.org/licenses/by/4.0/legalcode",
+        "evidence_state": "publisher_card_declaration_with_provider_terms_question"
+      },
+      "provenance_evidence": "Rows include upstream dataset/config/split/row index and row_hash; the card describes source-asserted and content-verified traces.",
+      "unresolved_items": [
+        "Upstream dataset revisions are not pinned in the rows/card.",
+        "The trace provenance is publisher-asserted rather than cryptographically certified by OpenAI.",
+        "Current provider terms and the planned competing-model training use require human/legal review."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 6288,
+        "quarantine_exact": 0,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "7ea232b4a821d0c26014774bf65bd5f6ea717eb9228b0bfee7d3d2b16102305c",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "fable_5_5_distillation",
+      "upstream_source": "RESMP-DEV/Fable-GPT-5.5-Distillation-Traces",
+      "local_root": "E:/zipangu-datesets/RESMP-DEV__Fable-GPT-5.5-Distillation-Traces",
+      "package_revision": "15ba38ac01b610cc986b728a2d55fcb8db9c2096",
+      "package_last_modified": "2026-07-07T21:36:05Z",
+      "official_api": "https://huggingface.co/api/datasets/RESMP-DEV/Fable-GPT-5.5-Distillation-Traces",
+      "official_card": "https://huggingface.co/datasets/RESMP-DEV/Fable-GPT-5.5-Distillation-Traces/blob/15ba38ac01b610cc986b728a2d55fcb8db9c2096/README.md",
+      "provider_terms": [
+        "https://openai.com/policies/terms-of-use/",
+        "https://openai.com/en-GB/policies/services-agreement/"
+      ],
+      "local_revision_matches_official": true,
+      "inventory": {
+        "local_rows": 1981131,
+        "local_data_files": 20,
+        "publisher_card_rows": 9057143,
+        "local_snapshot_complete_against_card": false
+      },
+      "license_evidence": {
+        "card_value": "cc-by-4.0",
+        "official_license_text": "https://creativecommons.org/licenses/by/4.0/legalcode",
+        "evidence_state": "curation_license_only_upstream_licenses_retained"
+      },
+      "provenance_evidence": "The local subset preserves a source field across many upstream corpora and trace origins; the card says its CC-BY-4.0 declaration applies to curation/merge while upstream licenses remain in force.",
+      "unresolved_items": [
+        "The local 1,981,131-row snapshot is partial relative to the card's 9,057,143 rows.",
+        "A package-level CC-BY-4.0 tag is not a blanket replacement for upstream source licenses.",
+        "The card identifies personal Codex traces as personal-use/not-for-redistribution, while the local subset includes Codex and personal-Codex sources.",
+        "Per-record license values are absent for some upstream origins, and provider-output terms require human/legal review."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 1981089,
+        "quarantine_exact": 37,
+        "quarantine_near": 0,
+        "requires_manual_review": 5
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "7b61f075eb3b881071247f4c52be0e2185e22215e43fd63e81b0d7d7759e8747",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "claude_fable_code",
+      "upstream_source": "armand0e/claude-fable-5-claude-code",
+      "local_root": "E:/zipangu-datesets/armand0e__claude-fable-5-claude-code",
+      "package_revision": "c19fb6831700da833b22d1c9cdac47fe8603685c",
+      "package_last_modified": "2026-06-19T16:23:10Z",
+      "official_api": "https://huggingface.co/api/datasets/armand0e/claude-fable-5-claude-code",
+      "official_card": "https://huggingface.co/datasets/armand0e/claude-fable-5-claude-code/blob/c19fb6831700da833b22d1c9cdac47fe8603685c/README.md",
+      "provider_terms": [
+        "https://www.anthropic.com/legal/commercial-terms",
+        "https://www.anthropic.com/legal/consumer-terms"
+      ],
+      "local_revision_matches_official": true,
+      "inventory": {
+        "raw_events": 18370,
+        "jsonl_files": 63,
+        "canonical_sessions": 63
+      },
+      "license_evidence": {
+        "card_value": null,
+        "license_file_present": false,
+        "evidence_state": "absent"
+      },
+      "provenance_evidence": "Card describes anonymized raw Claude Code traces from two teams and notes overlap with Glint Research/Fable-5-traces.",
+      "unresolved_items": [
+        "No dataset license or explicit contributor-rights grant is present.",
+        "The legal basis for redistributing and training on two teams' traces is not recorded.",
+        "Current Anthropic terms and competing-model restrictions require human/legal review."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 63,
+        "quarantine_exact": 0,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "2a090d783e93372383a7d58c5c14da4f688ddebfebb9fcdcc60c4e99dd75a0b7",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "frontier_multi_teacher",
+      "upstream_source": "r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation",
+      "local_root": "E:/zipangu-datesets/r0b0tlab__qwen3.8-max-glm5.2-kimi-k3-distillation",
+      "package_revision": "7a3473446840bcc397928cd8183d4b3ba3ca13a7",
+      "package_last_modified": "2026-08-02T01:32:23Z",
+      "official_api": "https://huggingface.co/api/datasets/r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation",
+      "official_card": "https://huggingface.co/datasets/r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation/blob/7a3473446840bcc397928cd8183d4b3ba3ca13a7/README.md",
+      "provider_terms": [
+        "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0"
+      ],
+      "local_revision_matches_official": true,
+      "inventory": {
+        "physical_scan_records": 1976658,
+        "authoritative_content_rows": 57937,
+        "authoritative_data_files": 8,
+        "excluded_metadata": 1022950,
+        "excluded_derivative": 895771
+      },
+      "license_evidence": {
+        "card_value": "other",
+        "row_level_counts": {
+          "unknown-see-provenance": 15122,
+          "CC-BY-NC-SA-4.0": 8098,
+          "MIT": 6907,
+          "other; synthetic research corpus": 5854,
+          "ODC-BY-1.0; mixture terms vary": 5395,
+          "other; synthetic research corpus; see provenance": 5307,
+          "CC-BY-NC-3.0": 3947,
+          "Apache-2.0": 3038,
+          "CC-BY-4.0": 1865,
+          "CC-BY-SA-3.0": 1710,
+          "other; synthetic research corpus; K3 thinking traces": 694
+        },
+        "explicit_noncommercial_rows": 12045,
+        "unknown_rows": 15122,
+        "evidence_state": "custom_mixed_row_level_license"
+      },
+      "provenance_evidence": "All 57,937 authoritative rows carry source repository/revision fields; package LICENSE and PROVENANCE files add source-specific restrictions and lineage notes.",
+      "unresolved_items": [
+        "At least 12,045 rows have explicit noncommercial terms and 15,122 rows are unknown-see-provenance.",
+        "The local PROVENANCE.md says distillation-51389 and 51,389 rows, while the current card/canonical package says 57,937 rows.",
+        "The package LICENSE limits use to controlled noncommercial research pending review.",
+        "Alibaba Model Studio output restrictions and other teacher-service terms require source-specific human/legal review."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 57880,
+        "quarantine_exact": 57,
+        "quarantine_near": 0,
+        "requires_manual_review": 0,
+        "excluded_metadata": 1022950,
+        "excluded_derivative": 895771
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "69c9b2776d57c7450aca5ffee91a472631cc931749d32d6ab340fad20fc81cad",
+          "matches_pinned_remote": true
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "3cec953e36c3e8b41b469d1ed6c25590d551c29bf58e09905496a2e24a1be4ec",
+          "matches_pinned_remote": true
+        },
+        {
+          "path": "PROVENANCE.md",
+          "sha256": "e049247f9687fa16e2bb7ca6ccec53f9d51772dde6b7e51d0ebb5c01587d0257",
+          "matches_pinned_remote": true
+        },
+        {
+          "path": "manifest.json",
+          "sha256": "9c9c6404c6e5123fcd3d552710d2d23a94eb294f16031b3aedae29dc40f70cf0",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    },
+    {
+      "dataset": "fable_5_premium",
+      "upstream_source": "saidutta69/fable-5-premium",
+      "local_root": "E:/zipangu-datesets/saidutta69__fable-5-premium",
+      "package_revision": "684cb1f849fe4a1c96f55351e1d7366f9888bb28",
+      "package_last_modified": "2026-08-01T20:49:15Z",
+      "official_api": "https://huggingface.co/api/datasets/saidutta69/fable-5-premium",
+      "official_card": "https://huggingface.co/datasets/saidutta69/fable-5-premium/blob/684cb1f849fe4a1c96f55351e1d7366f9888bb28/README.md",
+      "local_revision_matches_official": true,
+      "inventory": {
+        "logical_rows": 6365,
+        "physical_data_files": 12,
+        "physical_formats": ["jsonl", "parquet"],
+        "card_reported_rows_including_duplicate_formats": 12730
+      },
+      "license_evidence": {
+        "card_value": "mit",
+        "license_file_present": false,
+        "evidence_state": "card_tag_only"
+      },
+      "provenance_evidence": "Current card describes a cross-deduplicated premium trace package, but its source table is empty.",
+      "unresolved_items": [
+        "No LICENSE file is present despite the MIT card tag.",
+        "The current source table is empty, so upstream sources, revisions, teacher rights, and row-level lineage are absent.",
+        "The displayed 12,730 count double-counts the same 6,365 logical rows across JSONL and Parquet formats."
+      ],
+      "contamination": {
+        "not_checked_missing_eval_source": 6365,
+        "quarantine_exact": 0,
+        "quarantine_near": 0,
+        "requires_manual_review": 0
+      },
+      "matched_local_documents": [
+        {
+          "path": "README.md",
+          "sha256": "3e951aa46a9931bcf5fa2eab0ca24bd5beb8cda9663ac429d49754ea4d817527",
+          "matches_pinned_remote": true
+        }
+      ],
+      "human_decision": null
+    }
+  ]
+}

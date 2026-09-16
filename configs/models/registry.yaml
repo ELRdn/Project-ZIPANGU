@@ -1,0 +1,18 @@
+schema_version: 1
+model_family: Project ZIPANGU
+default_model: ZIPANGU-K-I-4B
+default_stage: local_research
+recipe_generation: I
+models:
+  - id: ZIPANGU-K-I-4B
+    config: configs/models/k-i-4b.yaml
+    canonical: true
+    status: immediate_target
+  - id: ZIPANGU-C-I-9B
+    config: configs/models/c-i-9b.yaml
+    canonical: true
+    status: configured_followup
+  - id: ZIPANGU-Z-I-26B-A4B
+    config: configs/models/z-i-26b-a4b.yaml
+    canonical: true
+    status: future_only

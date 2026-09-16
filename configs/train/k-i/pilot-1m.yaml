@@ -1,0 +1,36 @@
+schema_version: 1
+name: k-i-pilot-1m
+experiment_id: ZIPANGU-K-I-4B-pilot-1m
+model_id: ZIPANGU-K-I-4B
+model_name_or_path: empero-ai/Qwen3.8-4B-Distill
+run_name: pilot-1m
+dataset_config: configs/datasets/i-jp-heavy.yaml
+backend: reference_trl_peft
+method: qlora
+dtype: bfloat16
+seed: 3407
+target_tokens: 1000000
+sequence:
+  max_length: 4096
+  packing: true
+lora:
+  r: 32
+  alpha: 64
+  dropout: 0.05
+  target_policy: auto_review_required
+optimizer:
+  name: paged_adamw_8bit
+  learning_rate: 0.0002
+  weight_decay: 0.01
+  warmup_ratio: 0.03
+logging:
+  save_environment_manifest: true
+  save_raw_config: true
+  save_git_commit: true
+  eval_steps: 1000
+  save_steps: 1000
+safety:
+  require_dataset_registry_validation: true
+  require_budget_preflight_on_runpod: true
+  forbid_eval_only_sources: true
+  training_allowed: false

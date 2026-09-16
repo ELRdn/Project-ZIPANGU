@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-04T01:17:54.432917+00:00",
+  "status": "PASS",
+  "target_gpu": "AMD Radeon RX 7600 8GB",
+  "expected_gfx_arch": "gfx1102",
+  "platform": {
+    "system": "Windows",
+    "release": "11",
+    "machine": "AMD64",
+    "python": "3.13.5"
+  },
+  "device_policy": {
+    "exclude_igpu": true,
+    "production_training": false,
+    "local_research_and_ci": true
+  },
+  "devices": [
+    {
+      "name": "AMD Radeon RX 7600",
+      "vram_bytes": null,
+      "pci_id": null,
+      "gfx_arch": null,
+      "device_role": "discrete_gpu",
+      "target_rx7600": true,
+      "exclude_from_primary_benchmark": false,
+      "architecture_match": null,
+      "selection_reason": "target_rx7600"
+    }
+  ],
+  "device_discovery_source": "pytorch_runtime_fallback",
+  "primary_gpu": {
+    "name": "AMD Radeon RX 7600",
+    "vram_bytes": null,
+    "pci_id": null,
+    "gfx_arch": null,
+    "device_role": "discrete_gpu",
+    "target_rx7600": true,
+    "exclude_from_primary_benchmark": false,
+    "architecture_match": null,
+    "selection_reason": "target_rx7600"
+  },
+  "runtime": {
+    "rocminfo": {
+      "command": [
+        "rocminfo"
+      ],
+      "status": "HARD_BLOCKED",
+      "reason": "executable_not_found"
+    },
+    "hipconfig": {
+      "command": [
+        "hipconfig",
+        "--version"
+      ],
+      "status": "HARD_BLOCKED",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Warning: HIP version file: \"C:\\\\Users\\\\hiron\\\\Documents\\\\ComfyUI\\\\.venv\\\\Lib\\\\site-packages\\\\torch\\\\lib\\\\bin/.hipVersion\" not found.  Cannot give HIP version information.\nWarning: HIP version file: \"C:\\\\Users\\\\hiron\\\\Documents\\\\ComfyUI\\\\.venv\\\\Lib\\\\site-packages\\\\torch\\\\lib\\\\bin/.hipVersion\" not found.  Cannot give HIP version information.\nThe system cannot find the path specified.\nThe system cannot find the path specified.\n'nvcc' is not recognized as an internal or external command,\noperable program or batch file.\nDevice not supported - Defaulting to AMD\n",
+      "reason": "global_hipconfig_environment_points_to_incomplete_ComfyUI_runtime"
+    },
+    "rocm_smi": {
+      "command": [
+        "rocm-smi",
+        "--showproductname",
+        "--showmeminfo",
+        "vram"
+      ],
+      "status": "HARD_BLOCKED",
+      "reason": "executable_not_found"
+    },
+    "vulkaninfo": {
+      "command": [
+        "vulkaninfo",
+        "--summary"
+      ],
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "==========\nVULKANINFO\n==========\n\nVulkan Instance Version: 1.4.341\n\n\nInstance Extensions: count = 14\n-------------------------------\nVK_EXT_debug_report                    : extension revision 10\nVK_EXT_debug_utils                     : extension revision 2\nVK_EXT_swapchain_colorspace            : extension revision 5\nVK_KHR_device_group_creation           : extension revision 1\nVK_KHR_external_fence_capabilities     : extension revision 1\nVK_KHR_external_memory_capabilities    : extension revision 1\nVK_KHR_external_semaphore_capabilities : extension revision 1\nVK_KHR_get_physical_device_properties2 : extension revision 2\nVK_KHR_get_surface_capabilities2       : extension revision 1\nVK_KHR_portability_enumeration         : extension revision 1\nVK_KHR_surface                         : extension revision 25\nVK_KHR_surface_maintenance1            : extension revision 1\nVK_KHR_win32_surface                   : extension revision 6\nVK_LUNARG_direct_driver_loading        : extension revision 1\n\nInstance Layers: count = 5\n--------------------------\nVK_LAYER_AMD_switchable_graphics AMD switchable graphics layer                 1.4.315  version 1\nVK_LAYER_EOS_Overlay             Vulkan overlay layer for Epic Online Services 1.2.136  version 1\nVK_LAYER_OBS_HOOK                Open Broadcaster Software hook                1.3.216  version 1\nVK_LAYER_VALVE_steam_fossilize   Steam Pipeline Caching Layer                  1.4.303  version 1\nVK_LAYER_VALVE_steam_overlay     Steam Overlay Layer                           1.3.207  version 1\n\nDevices:\n========\nGPU0:\n\tapiVersion         = 1.4.349\n\tdriverVersion      = 2.0.395\n\tvendorID           = 0x1002\n\tdeviceID           = 0x7480\n\tdeviceType         = PHYSICAL_DEVICE_TYPE_DISCRETE_GPU\n\tdeviceName         = AMD Radeon RX 7600\n\tdriverID           = DRIVER_ID_AMD_PROPRIETARY\n\tdriverName         = AMD proprietary driver\n\tdriverInfo         = 26.8.1 (LLPC)\n\tconformanceVersion = 1.4.3.3\n\tdeviceUUID         = 00000000-0300-0000-0000-000000000000\n\tdriverUUID         = 414d442d-5749-4e2d-4452-560000000000\nGPU1:\n\tapiVersion         = 1.4.315\n\tdriverVersion      = 2.0.353\n\tvendorID           = 0x1002\n\tdeviceID           = 0x164e\n\tdeviceType         = PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU\n\tdeviceName         = AMD Radeon(TM) Graphics\n\tdriverID           = DRIVER_ID_AMD_PROPRIETARY\n\tdriverName         = AMD proprietary driver\n\tdriverInfo         = 26.8.1 (AMD proprietary shader compiler)\n\tconformanceVersion = 1.4.0.0\n\tdeviceUUID         = 00000000-1100-0000-0000-000000000000\n\tdriverUUID         = 414d442d-5749-4e2d-4452-560000000000\n",
+      "stderr": "WARNING: [Loader Message] Code 0 : windows_read_data_files_in_registry: Registry lookup failed to get layer manifest files.\nWARNING: [Loader Message] Code 0 : Removing layer VK_LAYER_AMD_switchable_graphics (C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\amdvlk.inf_amd64_914ba89eaaafdf60\\amd-vulkan64.json) because it is a duplicate of VK_LAYER_AMD_switchable_graphics (C:\\WINDOWS\\System32\\DriverStore\\FileRepository\\u0203303.inf_amd64_e5876a26758f154c\\B026363\\amd-vulkan64.json)\nWARNING: [Loader Message] Code 0 : Layer VK_LAYER_OBS_HOOK uses API version 1.3 which is older than the application specified API version of 1.4. May cause issues.\n"
+    },
+    "llama_cli": {
+      "status": "PASS",
+      "evidence": "reports\\hardware\\llamacpp_completion_gate.json",
+      "reason": "validated_by_actual_vulkan_and_hip_inference"
+    },
+    "llama_bench": {
+      "status": "PASS",
+      "evidence": "reports\\hardware\\llamacpp_completion_gate.json",
+      "reason": "validated_by_same_gguf_backend_benchmarks"
+    }
+  },
+  "pytorch": {
+    "status": "PASS",
+    "torch_version": "2.11.0+rocm7.14.0",
+    "hip_version": "7.14.60850",
+    "cuda_available": true,
+    "device_count": 1,
+    "devices": [
+      {
+        "index": 0,
+        "name": "AMD Radeon RX 7600",
+        "capability": [
+          11,
+          0
+        ]
+      }
+    ]
+  },
+  "unsloth": {
+    "status": "PASS",
+    "source": "reports\\hardware\\unsloth_qlora_smoke.json",
+    "note": "isolated QLoRA smoke evidence"
+  },
+  "hip_smoke": {
+    "status": "PASS",
+    "manifest_path": "reports\\hardware\\hip_smoke.json"
+  },
+  "benchmark": {
+    "status": "PASS",
+    "manifest_path": "reports\\hardware\\benchmark_manifest.json"
+  },
+  "llamacpp_completion_gate": {
+    "status": "PASS",
+    "manifest_path": "reports\\hardware\\llamacpp_completion_gate.json"
+  },
+  "rocm10_feasibility": {
+    "status": "PASS",
+    "report_path": "reports\\hardware\\ROCM10_FEASIBILITY.md"
+  }
+}

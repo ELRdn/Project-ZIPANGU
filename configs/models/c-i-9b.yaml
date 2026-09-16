@@ -1,0 +1,26 @@
+schema_version: 1
+id: ZIPANGU-C-I-9B
+class: C
+generation: I
+size: 9B
+base_model:
+  repo: empero-ai/Qwen3.8-9B-Distill
+  revision: null
+architecture:
+  family: qwen3.5
+  type: dense
+  parameters: 9B
+research_role:
+  - primary_japanese_model
+  - llm_jp_4_8b_challenge
+  - k_recipe_scale_up
+training:
+  enabled: false
+  preferred_method: qlora
+  execution_policy: runpod_only_after_k_human_go
+evaluation:
+  compare_base: true
+  compare_llm_jp: required
+artifact_policy:
+  canonical_release_requires_base_evaluation: true
+  quantization_metadata_separate: true

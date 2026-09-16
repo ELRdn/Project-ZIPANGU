@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-09-03T08:55:00+09:00",
+  "status": "PASS",
+  "policy": {
+    "same_model": true,
+    "same_prompt": true,
+    "same_context_matrix": true,
+    "warmup": 1,
+    "measurements": 3,
+    "exclude_igpu": true,
+    "no_implicit_download": true,
+    "seed": 3407,
+    "threads": 8,
+    "batch_size": 128,
+    "generation_tokens": 32
+  },
+  "model": {
+    "path": "E:\\zipangu-model-cache\\ZIPANGU-K-I-4B-Q4_K_M\\Qwen3.8-4B-Q4_K_M.gguf",
+    "hf_repo": "empero-ai/Qwen3.8-4B-Distill-GGUF",
+    "hf_revision": "391fc7d103e3942a408def3e4f51c2f85d464417",
+    "size_bytes": 2783446304,
+    "sha256": "dec96e8cf2e11b613bb46513dec485377f9ca5a351e71712ee0e244f287c6790"
+  },
+  "source": {
+    "repo": "ggml-org/llama.cpp",
+    "revision": "159b741427337a2e9a58b08121001545d66b5825",
+    "vulkan_executable": "D:\\VibeCoding\\project-zipangu\\.envs\\llamacpp\\build-vulkan-159b-modern\\bin\\llama-cli.exe",
+    "hip_executable": "D:\\VibeCoding\\project-zipangu\\.envs\\llamacpp\\build-hip-159b-rocm71-v8\\bin\\llama-cli.exe",
+    "vulkan_bench": "D:\\VibeCoding\\project-zipangu\\.envs\\llamacpp\\build-vulkan-159b-modern\\bin\\llama-bench.exe",
+    "hip_bench": "D:\\VibeCoding\\project-zipangu\\.envs\\llamacpp\\build-hip-159b-rocm71-v8\\bin\\llama-bench.exe"
+  },
+  "matrix": [
+    {"backend": "cpu", "context_length": 2048, "device": "none", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "cpu", "context_length": 4096, "device": "none", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "cpu", "context_length": 8192, "device": "none", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "vulkan", "context_length": 2048, "device": "Vulkan0", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "vulkan", "context_length": 4096, "device": "Vulkan0", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "vulkan", "context_length": 8192, "device": "Vulkan0", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "rocm", "context_length": 2048, "device": "ROCm0", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "rocm", "context_length": 4096, "device": "ROCm0", "warmup": 1, "measurements": 3, "status": "PASS"},
+    {"backend": "rocm", "context_length": 8192, "device": "ROCm0", "warmup": 1, "measurements": 3, "status": "PASS"}
+  ],
+  "result_source": "reports/hardware/llamacpp_completion_gate.json",
+  "telemetry": {
+    "peak_vram": "unavailable: no stable Windows ROCm telemetry provider used",
+    "gpu_utilization": "unavailable: no stable Windows ROCm telemetry provider used",
+    "ttft": "unavailable: this llama.cpp CLI build did not emit prompt eval time"
+  },
+  "runtime_smoke_evidence": {
+    "vulkan_runtime": {"status": "PASS", "source": "reports/hardware/results.json:runtime.vulkaninfo"},
+    "hip_tensor": {"status": "PASS", "source": "reports/hardware/hip_smoke.json"},
+    "unsloth_qlora": {"status": "PASS", "source": "reports/hardware/unsloth_qlora_smoke.json"},
+    "unsloth_real_data_path": {"status": "PASS", "source": "reports/hardware/unsloth_real_data_smoke.json"}
+  }
+}

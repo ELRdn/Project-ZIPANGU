@@ -1,0 +1,27 @@
+schema_version: 1
+id: ZIPANGU-K-I-4B
+class: K
+generation: I
+size: 4B
+base_model:
+  repo: empero-ai/Qwen3.8-4B-Distill
+  revision: c83cb7aa2999d2f35c43e9ae0634a30eb8985a1e
+architecture:
+  family: qwen3.5
+  type: dense
+  parameters: 4B
+research_role:
+  - recipe_validation
+  - local_research
+  - amd_gpu_validation
+  - cheap_scaling
+training:
+  enabled: false
+  preferred_method: qlora
+  execution_policy: local_smoke_only_until_human_go
+evaluation:
+  compare_base: true
+  compare_llm_jp: optional
+artifact_policy:
+  canonical_release_requires_base_evaluation: true
+  quantization_metadata_separate: true

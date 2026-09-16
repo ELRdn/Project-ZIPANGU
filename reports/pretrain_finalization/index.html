@@ -1,0 +1,1622 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>ZIPANGU pre-training finalization</title>
+<style>
+:root { color-scheme: dark; font-family: system-ui, sans-serif; }
+body { margin: 2rem auto; max-width: 1280px; padding: 0 1rem; background: #10141c; color: #e8edf5; }
+h1 { margin-bottom: .25rem; } h2 { margin-top: 2rem; }
+.state { display: inline-block; padding: .4rem .75rem; border-radius: .4rem; background: #5f291f; color: #ffd6c7; font-weight: 700; }
+.notice { border-left: 4px solid #e1a73a; padding: .8rem 1rem; background: #292318; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0 2rem; background: #171d28; }
+th,td { padding: .55rem; border: 1px solid #313b4c; text-align: left; vertical-align: top; }
+th { background: #222c3b; } code,pre { white-space: pre-wrap; color: #a9e6c0; }
+</style></head><body>
+<h1>ZIPANGU overnight pre-training finalization</h1>
+<p>Model: <code>ZIPANGU-K-I-4B</code>; base: <code>empero-ai/Qwen3.8-4B-Distill</code></p>
+<p class="state">BLOCKED</p>
+<p class="notice"><strong>TRAINING_ALLOWED=false</strong>. Metadata-only dashboard; registry status, human approval, training, RunPod, paid APIs, and official judge execution remain outside this runner.</p>
+<h2>Stage status</h2><table><thead><tr><th>Stage</th><th>Status</th></tr></thead><tbody><tr><td>baseline</td><td>BLOCKED</td></tr><tr><td>candidate</td><td>BLOCKED</td></tr><tr><td>contamination</td><td>BLOCKED</td></tr><tr><td>eval</td><td>BLOCKED</td></tr><tr><td>fable</td><td>BLOCKED</td></tr><tr><td>format</td><td>BLOCKED</td></tr><tr><td>license</td><td>PASS</td></tr><tr><td>nemotron</td><td>PASS</td></tr><tr><td>preflight</td><td>PASS</td></tr><tr><td>quality</td><td>PASS</td></tr><tr><td>reports</td><td>PASS</td></tr><tr><td>tokenize</td><td>PASS</td></tr></tbody></table>
+<h2>Eval status</h2><table><thead><tr><th>ID</th><th>Version</th><th>Availability</th><th>Rows</th><th>Aggregate content hash</th></tr></thead><tbody><tr><td>japanese_mt_bench</td><td>v2.0.0</td><td>available</td><td>430</td><td>3d043dbb0b5c5ab22e724875405723926341d9055a60f40b9bc23637373dcc52</td></tr><tr><td>llm_jp_instruction_eval</td><td>v1.0</td><td>available</td><td>400</td><td>f042d1caf4eb9188556ede239bb9213cde44ec5c1845297e11984ffd8945eba0</td></tr><tr><td>answer_carefully</td><td>v2.0</td><td>blocked_access_denied</td><td>0</td><td>n/a</td></tr><tr><td>zipangu_private_holdout</td><td>local</td><td>unavailable_not_provided</td><td>0</td><td>n/a</td></tr><tr><td>english_general_regression</td><td>local</td><td>unavailable_not_provided</td><td>0</td><td>n/a</td></tr><tr><td>japanese_math_holdout</td><td>local</td><td>unavailable_not_provided</td><td>0</td><td>n/a</td></tr><tr><td>japanese_writing_holdout</td><td>local</td><td>unavailable_not_provided</td><td>0</td><td>n/a</td></tr><tr><td>code_reasoning_sanity</td><td>local</td><td>unavailable_not_provided</td><td>0</td><td>n/a</td></tr></tbody></table>
+<h2>Contamination</h2><pre>{
+  &quot;status&quot;: &quot;not_checked_missing_eval_source&quot;,
+  &quot;eval_rows_indexed&quot;: 830,
+  &quot;candidate_rows_scanned&quot;: 4643875,
+  &quot;candidate_rows_fingerprinted&quot;: 2725154,
+  &quot;candidate_rows_excluded&quot;: 1918721,
+  &quot;excluded_counts&quot;: {
+    &quot;excluded_derivative&quot;: 895771,
+    &quot;excluded_metadata&quot;: 1022950
+  },
+  &quot;review_required_rows&quot;: 108,
+  &quot;counts&quot;: {
+    &quot;not_checked_missing_eval_source&quot;: 2725046,
+    &quot;quarantine_exact&quot;: 103,
+    &quot;requires_manual_review&quot;: 5,
+    &quot;excluded_derivative&quot;: 895771,
+    &quot;excluded_metadata&quot;: 1022950
+  },
+  &quot;reasons&quot;: {
+    &quot;required_eval_source_missing&quot;: 2725046,
+    &quot;schema_adapter:conversation_pairs_v1&quot;: 285195,
+    &quot;long_substring_ge_80&quot;: 103,
+    &quot;schema_adapter:messages_v1&quot;: 2357577,
+    &quot;schema_adapter:instruction_output_v1&quot;: 8094,
+    &quot;schema_adapter:problem_answer_v1&quot;: 10000,
+    &quot;schema_adapter:row_json_v1&quot;: 6288,
+    &quot;benchmark_or_source_metadata_signal&quot;: 5,
+    &quot;schema_adapter:grouped_event_stream_v1&quot;: 63,
+    &quot;schema_adapter:frontier_messages_json_v1&quot;: 57937,
+    &quot;frontier_non_authoritative_materialized_view&quot;: 895771,
+    &quot;schema_adapter:frontier_derivative_excluded_v1&quot;: 895771,
+    &quot;frontier_metadata_view_not_trainable_text&quot;: 1022950,
+    &quot;schema_adapter:frontier_metadata_excluded_v1&quot;: 1022950
+  },
+  &quot;missing_required_eval&quot;: true,
+  &quot;algorithm&quot;: &quot;exact+prompt+long-substring+calibrated-13gram-minhash-lsh-simhash-v2&quot;,
+  &quot;empty_fingerprints_allowed&quot;: false,
+  &quot;policy&quot;: {
+    &quot;policy_version&quot;: &quot;k-i-contamination-v2&quot;,
+    &quot;candidate_schema_registry&quot;: &quot;explicit_required&quot;,
+    &quot;eval_schema_registry&quot;: &quot;explicit_required&quot;,
+    &quot;empty_normalized_eval_fingerprint&quot;: &quot;error&quot;,
+    &quot;empty_normalized_candidate_projection&quot;: &quot;excluded_empty_projection&quot;,
+    &quot;metadata_disposition&quot;: &quot;excluded_metadata&quot;,
+    &quot;derivative_disposition&quot;: &quot;excluded_derivative&quot;,
+    &quot;authoritative_frontier_views&quot;: [
+      &quot;data/canonical/train-*-of-00006.parquet&quot;,
+      &quot;data/canonical/validation-00000-of-00001.parquet&quot;,
+      &quot;data/canonical/test-00000-of-00001.parquet&quot;
+    ],
+    &quot;minimum_normalized_length&quot;: 40,
+    &quot;minhash_review_threshold&quot;: 0.35,
+    &quot;minhash_min_length_ratio&quot;: 0.5,
+    &quot;simhash_review_threshold&quot;: 0.9,
+    &quot;simhash_min_length_ratio&quot;: 0.8,
+    &quot;quarantine_near_threshold&quot;: 0.8,
+    &quot;exact_reasons&quot;: [
+      &quot;full_content_sha256&quot;,
+      &quot;prompt_sha256&quot;,
+      &quot;long_substring_ge_80&quot;
+    ]
+  },
+  &quot;eval_schema_adapters&quot;: {
+    &quot;llm_jp_text_output_v1&quot;: 400,
+    &quot;mt_bench_turns_and_choices_v1&quot;: 430
+  },
+  &quot;workers&quot;: 20,
+  &quot;resumed_rows&quot;: 1300000
+}</pre>
+<h2>Contamination rescan audit</h2><pre>{
+  &quot;schema_version&quot;: 1,
+  &quot;scope&quot;: &quot;post_rescan_old_vs_new&quot;,
+  &quot;inputs&quot;: {
+    &quot;old&quot;: {
+      &quot;path&quot;: &quot;E:\\zipangu-temp\\finalization\\contamination_results-old-empty-extractor.parquet&quot;,
+      &quot;sha256&quot;: &quot;4ec7f0b97ac5186d59653503c328cae4958b1a95d0e4064bcf515dfb112f1b9a&quot;,
+      &quot;parquet_rows&quot;: 4643875
+    },
+    &quot;new&quot;: {
+      &quot;path&quot;: &quot;D:\\VibeCoding\\project-zipangu\\data\\manifests\\contamination_results.parquet&quot;,
+      &quot;sha256&quot;: &quot;ccd18839cc565c08d58ca510e3532c2a91da4254ecc0404cf1fdfcbd8f44ebbb&quot;,
+      &quot;parquet_rows&quot;: 4643875
+    }
+  },
+  &quot;expected_rows&quot;: 4643875,
+  &quot;row_identity&quot;: {
+    &quot;method&quot;: &quot;record_id equality in source order&quot;,
+    &quot;rows_compared&quot;: 4643875,
+    &quot;mismatches&quot;: 0
+  },
+  &quot;column_mapping&quot;: {
+    &quot;old&quot;: {
+      &quot;record_id&quot;: &quot;record_id&quot;,
+      &quot;status&quot;: &quot;status&quot;,
+      &quot;content_sha256&quot;: &quot;content_hash&quot;,
+      &quot;prompt_sha256&quot;: &quot;prompt_hash&quot;,
+      &quot;reasons&quot;: &quot;reasons&quot;,
+      &quot;source_dataset&quot;: &quot;source_dataset&quot;,
+      &quot;source_row_id&quot;: &quot;source_row_id&quot;,
+      &quot;matched_eval_ids&quot;: &quot;matched_eval_ids&quot;
+    },
+    &quot;new&quot;: {
+      &quot;record_id&quot;: &quot;record_id&quot;,
+      &quot;status&quot;: &quot;status&quot;,
+      &quot;content_sha256&quot;: &quot;content_hash&quot;,
+      &quot;prompt_sha256&quot;: &quot;prompt_hash&quot;,
+      &quot;reasons&quot;: &quot;reasons&quot;,
+      &quot;source_dataset&quot;: &quot;source_dataset&quot;,
+      &quot;source_row_id&quot;: &quot;source_row_id&quot;,
+      &quot;matched_eval_ids&quot;: &quot;matched_eval_ids&quot;
+    }
+  },
+  &quot;warnings&quot;: [],
+  &quot;status_counts&quot;: {
+    &quot;old&quot;: {
+      &quot;not_checked_missing_eval_source&quot;: 3025828,
+      &quot;quarantine_exact&quot;: 1393704,
+      &quot;requires_manual_review&quot;: 224343
+    },
+    &quot;new&quot;: {
+      &quot;excluded_derivative&quot;: 895771,
+      &quot;excluded_metadata&quot;: 1022950,
+      &quot;not_checked_missing_eval_source&quot;: 2725046,
+      &quot;quarantine_exact&quot;: 103,
+      &quot;requires_manual_review&quot;: 5
+    }
+  },
+  &quot;waterfall&quot;: [
+    {
+      &quot;old_status&quot;: &quot;not_checked_missing_eval_source&quot;,
+      &quot;new_status&quot;: &quot;not_checked_missing_eval_source&quot;,
+      &quot;count&quot;: 2479865
+    },
+    {
+      &quot;old_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;new_status&quot;: &quot;excluded_metadata&quot;,
+      &quot;count&quot;: 1022950
+    },
+    {
+      &quot;old_status&quot;: &quot;not_checked_missing_eval_source&quot;,
+      &quot;new_status&quot;: &quot;excluded_derivative&quot;,
+      &quot;count&quot;: 545919
+    },
+    {
+      &quot;old_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;new_status&quot;: &quot;excluded_derivative&quot;,
+      &quot;count&quot;: 312817
+    },
+    {
+      &quot;old_status&quot;: &quot;requires_manual_review&quot;,
+      &quot;new_status&quot;: &quot;not_checked_missing_eval_source&quot;,
+      &quot;count&quot;: 187301
+    },
+    {
+      &quot;old_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;new_status&quot;: &quot;not_checked_missing_eval_source&quot;,
+      &quot;count&quot;: 57880
+    },
+    {
+      &quot;old_status&quot;: &quot;requires_manual_review&quot;,
+      &quot;new_status&quot;: &quot;excluded_derivative&quot;,
+      &quot;count&quot;: 37035
+    },
+    {
+      &quot;old_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;new_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;count&quot;: 57
+    },
+    {
+      &quot;old_status&quot;: &quot;not_checked_missing_eval_source&quot;,
+      &quot;new_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;count&quot;: 44
+    },
+    {
+      &quot;old_status&quot;: &quot;requires_manual_review&quot;,
+      &quot;new_status&quot;: &quot;requires_manual_review&quot;,
+      &quot;count&quot;: 5
+    },
+    {
+      &quot;old_status&quot;: &quot;requires_manual_review&quot;,
+      &quot;new_status&quot;: &quot;quarantine_exact&quot;,
+      &quot;count&quot;: 2
+    }
+  ],
+  &quot;genuine_exact&quot;: {
+    &quot;definition&quot;: &quot;status=quarantine_exact with non-empty content_sha256 excluding empty-sha256 plus exact full-content, prompt, or 80-character substring evidence&quot;,
+    &quot;old_rows&quot;: 0,
+    &quot;new_rows&quot;: 103,
+    &quot;empty_sha256_exact_new_excluded&quot;: 0
+  },
+  &quot;sample&quot;: {
+    &quot;method&quot;: &quot;deterministic hash-priority stratified sample of new genuine exact rows across source_dataset, eval_corpus, reason, hash cluster&quot;,
+    &quot;seed&quot;: 3407,
+    &quot;population&quot;: 103,
+    &quot;target_size&quot;: 100,
+    &quot;actual_size&quot;: 100,
+    &quot;stratum_counts&quot;: {
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:0085f593d7a9d28ddf8f19ac5dafc2ab49ac8e1bd3f4ef7df167840b53e07224&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:01d3d05628a51492e663fa9fea3c5d7915560781040e0c31c84a0d585bc3f360&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:0240ec3b8be3ee682926f929b84721854e17c64b72bb00328b6e9d5f3cec2c49&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:066a56278c1e9e54aef756194178e79666f9cf0327f8e331efa6e389d27cf4de&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:11be7851a05007c08c02e3020bc61b911c2a8922b0bfed5d30154703e2b71e6f&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:17cf615f781d8d897f6a616c22bde46316905a9dee7a31b68a0ba8b6918964b2&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:1c114ab1791cb35a8af27bb20bced1dec635af1898bd37714248699590b953f9&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:1cb85c7ff7ceb77bbfccbc3df108f9329d802e69d98bee7d2ad7c9fe11513779&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:2107519ba68d927bc823c02cccdf7501c803426857fe7abac9d9b35c685a4d2f&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:39814cbdfb5f51e3486b0d81a20d1da878927cae4756ee4b86db902c1cac3c73&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:4160172aa26acab51680e98d6712b72cd0ec59b35a65c6734a6b1f8010fc80ab&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:44ff81c4169facb53532697f4b0a1eb6a238bb85c72e1e100ca4e9e21beae97c&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:47979f7fb5eb35f7b7369305c30affb9a96dd4d2827ee920a2839ba4ba04efa4&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:49096f93e09477cb30f5f9176b95f5bf11f20beac3177b3cb3742d005bbaf788&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:4b1514624351498e05797247b93ce41a4c8add393821083721c80bee8c616483&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:4ffdfd06e06f42efa74e4e96ca5e62438cd745db04b1e5a4724fb94f1e231f09&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:615856da1dbe7c6fd241a29be1acc031111bcfd1e91aba9b987e51c9d4608693&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:755297fd856c23da78e3631e73e9a45dae283355eb524ad1c4f4253455c3760d&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:8a4e5508d87c67c35bc965739497d15c40ba5b933105d837c7dff348d7dc78f7&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:92d881c57d5af903f8beb45ec36336bb0b4f15cbc91318987e1906e7cab2f8c1&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:9510b2cf57a6c1b3cc57dbebd8d7b73b1d22a78895a3beaf9401c3706bfc76c5&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:a086ff9b0113d327381cd6874fd9b9b5952d7fe639ba5ce1d452d154a6888547&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:a2467d75b7a47c34b424073b8802dc04db1fe149763183f93ee8054c5eff3374&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:a7317a5456e073f2dbb6935268afae907263532b8651fcd1614e3ed9cff0ed71&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:ae08e7dfec65bb46ebccb6882af1527e079e6d5d44f4b773f556485dba3d2d50&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:b0fc4876e17a0c3d6597dd9eff15ba81ef4f8eb4afd796a89fcd5bf8eebfa1bd&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:bb6c4070aedef315c9023b6b334111697003d426bac90e69e7bdb6ddf942d14a&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:beaec7b62d52a7d23f24cdcb1612f15b895772a05f9eb13bcade2e9773438a38&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:c0a083673c9fe579799484c4cff151eaee7e57263cda884587b0267c51248a32&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:c6b0b6f9f4ed3360594062c717e736d75f4e4c8608ec25f69f9663f03a4c00fc&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:ce82285d96fff9b559ec3fb3eddffe62ae4837d7d9bebd255dd73ceb10709343&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:db8df3a1119ff7e3986c9678afc1b9b142f2d648d33e3f7152824ee50f82d6a7&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:dc1c4f266e31802f6a74b12941fb80ff39e98e6c4feff4d482735c65c4d03313&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:dc304c7239509491f25ee35ee08a4aea9aa2412ed3dd09799ddea49855b16a84&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:e8acb4820b7419ea09f3f28a89465e3dfddfb4dff10e8176bae27345b33d9b31&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:fa5a4b95b73b5bb4479a44e298c064d9d1b3e2cd398fdf533f4c42ca0ccb3292&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:ffc548587c108a079d71a83d0217aa95a41b25c318359960302c42074e5cc578&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:06c76cb03d50b2ca94984e582ec712f2502615acd511d430928641dcb3e1a9d0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:06f540e4fb80395ba34e11f1f91b0d38fece0368df3cc34bcdcee656df31649d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:0c61fbf749b636370562dbd965836de21867987ac97cd4bc51c056229ea33c89&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:17edada4d6da08637d37b6b43137dd80a45e8a57842a1deffa28293e714c351d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:19d636023b9819ab438f34bc98ab6a52bc9ef26ea0b69872a730a1acb496d201&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:1a92a64279f9cff4b23a696010217fee44c86ee6aec87ba74a2b79f616371bda&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:212e8a396f468b59ca80cf8c7d17e08c9b1f5247ec67de749fa9fab5ec7e2012&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:25e8846ea522f2742cabe979fa69227ad88a3da8f2a0e4bd340312492dac2eb3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:271503fda712ef9515b2f4cafb1565c6b97938d32a3c16b108b0ee945a0cf5e3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:2841c60f404783b379fc93b75267e77e6141962771b482a9f8418110d03b02ca&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:398a75ece3a0bd7f09dccad9dc451362c3f2bb677cdd4aafbaa96575eac82599&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:3bbd3ac887f0b555e6ecdf8cba8477887b6fdba44b79921b11e527f6c95847cd&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:4f207c2b456f00c54146b7a5c219446a734e43481735c5b026411a4323685696&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:50f8a9d6df471ccc004a0c167355390d483dc418167d52d7f5c7f78159953a81&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:51978c8b0040781a7470fd5352883823edae7270ab3c910d155423ddd1c0b881&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:57290ec844d01df5db9d6eab8e83d4d8af07cf6a1ec2d04636b763d678bf0a51&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:5a75b79e21257b44105583194231b1af4a2f7d8938aecb401b1e817713f21384&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:5f42789e9127c4b9aeee50e1b7f645b4a1f48f97725c1c3f8b7857d4f883f48c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:6039fcc27909a21197cd2bf929ac9c7b9ade5e9724fb5987fc47d1e06d7ddfa6&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:622e619d0c2bcc29371311516030b1ded1d0de1fcfe0c55382e8f15238c8e48b&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:6a67ab3600aba440a172d67f5052b3d23529afb31cf4b4d2c67f68ef8892e855&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:6bbe3ac094eb956c1c57a2ae5353efdd0b038373bbee298ea62c7f315326cf0d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:7631570e366a5b8b3a04a20ea306b1bfb4ee616c0ac5a3d6068886bcd99ce080&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:7f83529fb3d1f0dd0e237a7d91133fbc96e764b46f501fd2f9eef89cd3eb804b&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:845eafb2a6b51686d1de0647dd9d13c79cd47ec690a43dc659536a725a9d7afb&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:89bce3c9afbcd426d282f600cdc96e65e0c65d39930ac796724fffb513b3e847&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:8dc4d89b761d120bba79e93e59b6136df46d5abece925dc1d3e9a973e0326161&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:92903de24afe524fc78bfedd26e5c3626b364df8bafb3cdb6a3bcfe05a43cf2d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:9429b543eb50f38e3d6c0cb6422fadc2844366fd7c928c8b12048611f182a5b3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:965a92c59cb8b7d8dc6abc9267eeb9eade36c7be3f4699f5e3e756a31e96f08a&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:976cff26a5bf486fcc90d613f6aec839a64a14f7cd832e832fc69095965d09df&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:977cc3b64b47644b9aa4fd466a211267a403ff47c8deb5e30e788bbd01ffb65c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:97f6fe3d23b8b3d74012ece7746f941f520daa6da24c85699a71f9d54a6e56a8&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:9f2c3a1e0c9339a09279915d8d1fa6e944bc619ad3b7c3a852e693a8e2eef787&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:a11d522259d80c99aa6314d3261b939887b2ac851b81a6ed03411053a77a9dd1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:a294ff3da357923edddacbb28a6aed2f697750ecc96cd192570a10980b20f4a0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:abb12f519cc3cc06435a454d0dd8942f0f6cde7f3305cec6b2d716158f47bfc1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:b148be9d6511a24a6e602b54701bf12ef01d9058bcb4432038936eaf324222b0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:b3bea59fb22526858884e95d79272fcd76f069f2172ef7271eebe290f5ad38b1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:b5f5d0fceba0f745e351503f88a4cd1bc21ff7bef4a026ba5e07d16d4ee1e43a&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:bac67e4121dd5a2c0de175c074a4e2fc84d2d0ec456a1f7f1e1b0257fcb92db8&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:c5b9cab33563c5e5cb115afc9bdf710d2efbbe1ae92976ba2c206a995ad4dd1d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:c9d73aba144558e36d12156c58ccf14318371d61aa3272e715f63600660a21a0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:ce3c095465848a8dd8db9779baaf47974375a9965cfe7528e6e0218989b1cdfe&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d338a1c2bf040940b4ed7d2d49015cb6bf9acec0b78fc7684a591215418fb711&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d568120798a92fefb9263060a6033f21eacf55fcf4ed9f3f6badc1a724316e2c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d637801f2ff33b530b6ccd3f77828aea441727641d8e626f38231b1b2d14f5a1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d6cefc3f2237059589e4ca1ffe4ba761cbf75bc168e04b845849dd50ed474d5c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d9f4838eb4abc755a6d4a2612a6099de6ddf25e8951982e602daaeb28f67997d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e016ddb7bcd11a354f5e7388381d8d2896506d336738b6c8bc0220c6eb0b939c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e09c08f2da0787930ed06784327c600860e45f3aaba441e222f47469be4e404e&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e236f4565d4e46f584089fd97ed072b17a0327c89da999cdd69f0a7c39b8697a&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e6ec44313f8592cfb94caab5b8ae20050d8a0f7e13fcc1874f6115208d5f3fd8&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e9507336297dd093dcb10b8b7b3e61f2e49551770491581c90071d8dd5365256&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:ef124b7530a1f94675841ea50133a23c50a49a40b51e15f37c696857a9bdc5b1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:f196fde359d0a35ae1382787a78864ec30bc9ee953f8330abd27084f460353b3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:feb9b618d3efa96e678214d414befa8cf49aa0aa9465cb5c5d29f6a47c253694&quot;: 1,
+      &quot;magpie_sft_v1|japanese_mt_bench|long_substring_ge_80|content:1ae6ae07b965d9134777d97650c89064c377bf26bbf05b7ff4653911281ab9dd&quot;: 1,
+      &quot;magpie_sft_v1|japanese_mt_bench|long_substring_ge_80|content:792f62b70042b9eeccceef6a28c72383383682ef4ba3b670a991eb0b214724e5&quot;: 1,
+      &quot;magpie_sft_v1|japanese_mt_bench|long_substring_ge_80|content:f5b481f38538b3e4df3788f29281883845d63330ffd2993b1a44e8425864846e&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:1970aea2caa6b821c8e804ef005012151bb6937bfeb92f081942e7468ec66474&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:99ee71ff79056051963bc9a464004ff8cbb92aab7b003c05a56c6d9502119a13&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:ccb437457bb54d0dff2e1fad5308729c36c50bb215c553d8be75ccd1938d1cfe&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:f18319985d8ced7619ed135a67efb9fa9bbadd849f8859a6229c37ee890f8066&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:fa7dbfeee92a880c325d23dfd1d2dffb609c7260e7c817793c81bc6ade39f37b&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:fc489753904a8fbb502da4e691b43e98515966e92b3bb49454282c51bd786497&quot;: 1
+    },
+    &quot;allocation&quot;: {
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:0085f593d7a9d28ddf8f19ac5dafc2ab49ac8e1bd3f4ef7df167840b53e07224&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:01d3d05628a51492e663fa9fea3c5d7915560781040e0c31c84a0d585bc3f360&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:0240ec3b8be3ee682926f929b84721854e17c64b72bb00328b6e9d5f3cec2c49&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:066a56278c1e9e54aef756194178e79666f9cf0327f8e331efa6e389d27cf4de&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:11be7851a05007c08c02e3020bc61b911c2a8922b0bfed5d30154703e2b71e6f&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:17cf615f781d8d897f6a616c22bde46316905a9dee7a31b68a0ba8b6918964b2&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:1c114ab1791cb35a8af27bb20bced1dec635af1898bd37714248699590b953f9&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:1cb85c7ff7ceb77bbfccbc3df108f9329d802e69d98bee7d2ad7c9fe11513779&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:2107519ba68d927bc823c02cccdf7501c803426857fe7abac9d9b35c685a4d2f&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:39814cbdfb5f51e3486b0d81a20d1da878927cae4756ee4b86db902c1cac3c73&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:4160172aa26acab51680e98d6712b72cd0ec59b35a65c6734a6b1f8010fc80ab&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:44ff81c4169facb53532697f4b0a1eb6a238bb85c72e1e100ca4e9e21beae97c&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:47979f7fb5eb35f7b7369305c30affb9a96dd4d2827ee920a2839ba4ba04efa4&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:49096f93e09477cb30f5f9176b95f5bf11f20beac3177b3cb3742d005bbaf788&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:4b1514624351498e05797247b93ce41a4c8add393821083721c80bee8c616483&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:4ffdfd06e06f42efa74e4e96ca5e62438cd745db04b1e5a4724fb94f1e231f09&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:615856da1dbe7c6fd241a29be1acc031111bcfd1e91aba9b987e51c9d4608693&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:755297fd856c23da78e3631e73e9a45dae283355eb524ad1c4f4253455c3760d&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:8a4e5508d87c67c35bc965739497d15c40ba5b933105d837c7dff348d7dc78f7&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:92d881c57d5af903f8beb45ec36336bb0b4f15cbc91318987e1906e7cab2f8c1&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:9510b2cf57a6c1b3cc57dbebd8d7b73b1d22a78895a3beaf9401c3706bfc76c5&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:a086ff9b0113d327381cd6874fd9b9b5952d7fe639ba5ce1d452d154a6888547&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:a2467d75b7a47c34b424073b8802dc04db1fe149763183f93ee8054c5eff3374&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:a7317a5456e073f2dbb6935268afae907263532b8651fcd1614e3ed9cff0ed71&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:ae08e7dfec65bb46ebccb6882af1527e079e6d5d44f4b773f556485dba3d2d50&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:b0fc4876e17a0c3d6597dd9eff15ba81ef4f8eb4afd796a89fcd5bf8eebfa1bd&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:bb6c4070aedef315c9023b6b334111697003d426bac90e69e7bdb6ddf942d14a&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:beaec7b62d52a7d23f24cdcb1612f15b895772a05f9eb13bcade2e9773438a38&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:c0a083673c9fe579799484c4cff151eaee7e57263cda884587b0267c51248a32&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:c6b0b6f9f4ed3360594062c717e736d75f4e4c8608ec25f69f9663f03a4c00fc&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:ce82285d96fff9b559ec3fb3eddffe62ae4837d7d9bebd255dd73ceb10709343&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:db8df3a1119ff7e3986c9678afc1b9b142f2d648d33e3f7152824ee50f82d6a7&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:dc1c4f266e31802f6a74b12941fb80ff39e98e6c4feff4d482735c65c4d03313&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:dc304c7239509491f25ee35ee08a4aea9aa2412ed3dd09799ddea49855b16a84&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:e8acb4820b7419ea09f3f28a89465e3dfddfb4dff10e8176bae27345b33d9b31&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:fa5a4b95b73b5bb4479a44e298c064d9d1b3e2cd398fdf533f4c42ca0ccb3292&quot;: 1,
+      &quot;fable_5_5_distillation|japanese_mt_bench|long_substring_ge_80|content:ffc548587c108a079d71a83d0217aa95a41b25c318359960302c42074e5cc578&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:06c76cb03d50b2ca94984e582ec712f2502615acd511d430928641dcb3e1a9d0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:06f540e4fb80395ba34e11f1f91b0d38fece0368df3cc34bcdcee656df31649d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:0c61fbf749b636370562dbd965836de21867987ac97cd4bc51c056229ea33c89&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:17edada4d6da08637d37b6b43137dd80a45e8a57842a1deffa28293e714c351d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:19d636023b9819ab438f34bc98ab6a52bc9ef26ea0b69872a730a1acb496d201&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:1a92a64279f9cff4b23a696010217fee44c86ee6aec87ba74a2b79f616371bda&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:212e8a396f468b59ca80cf8c7d17e08c9b1f5247ec67de749fa9fab5ec7e2012&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:25e8846ea522f2742cabe979fa69227ad88a3da8f2a0e4bd340312492dac2eb3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:271503fda712ef9515b2f4cafb1565c6b97938d32a3c16b108b0ee945a0cf5e3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:2841c60f404783b379fc93b75267e77e6141962771b482a9f8418110d03b02ca&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:398a75ece3a0bd7f09dccad9dc451362c3f2bb677cdd4aafbaa96575eac82599&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:3bbd3ac887f0b555e6ecdf8cba8477887b6fdba44b79921b11e527f6c95847cd&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:4f207c2b456f00c54146b7a5c219446a734e43481735c5b026411a4323685696&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:50f8a9d6df471ccc004a0c167355390d483dc418167d52d7f5c7f78159953a81&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:51978c8b0040781a7470fd5352883823edae7270ab3c910d155423ddd1c0b881&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:57290ec844d01df5db9d6eab8e83d4d8af07cf6a1ec2d04636b763d678bf0a51&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:5a75b79e21257b44105583194231b1af4a2f7d8938aecb401b1e817713f21384&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:5f42789e9127c4b9aeee50e1b7f645b4a1f48f97725c1c3f8b7857d4f883f48c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:6039fcc27909a21197cd2bf929ac9c7b9ade5e9724fb5987fc47d1e06d7ddfa6&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:622e619d0c2bcc29371311516030b1ded1d0de1fcfe0c55382e8f15238c8e48b&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:6a67ab3600aba440a172d67f5052b3d23529afb31cf4b4d2c67f68ef8892e855&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:6bbe3ac094eb956c1c57a2ae5353efdd0b038373bbee298ea62c7f315326cf0d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:7631570e366a5b8b3a04a20ea306b1bfb4ee616c0ac5a3d6068886bcd99ce080&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:7f83529fb3d1f0dd0e237a7d91133fbc96e764b46f501fd2f9eef89cd3eb804b&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:845eafb2a6b51686d1de0647dd9d13c79cd47ec690a43dc659536a725a9d7afb&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:89bce3c9afbcd426d282f600cdc96e65e0c65d39930ac796724fffb513b3e847&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:8dc4d89b761d120bba79e93e59b6136df46d5abece925dc1d3e9a973e0326161&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:92903de24afe524fc78bfedd26e5c3626b364df8bafb3cdb6a3bcfe05a43cf2d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:9429b543eb50f38e3d6c0cb6422fadc2844366fd7c928c8b12048611f182a5b3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:965a92c59cb8b7d8dc6abc9267eeb9eade36c7be3f4699f5e3e756a31e96f08a&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:976cff26a5bf486fcc90d613f6aec839a64a14f7cd832e832fc69095965d09df&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:977cc3b64b47644b9aa4fd466a211267a403ff47c8deb5e30e788bbd01ffb65c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:97f6fe3d23b8b3d74012ece7746f941f520daa6da24c85699a71f9d54a6e56a8&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:9f2c3a1e0c9339a09279915d8d1fa6e944bc619ad3b7c3a852e693a8e2eef787&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:a11d522259d80c99aa6314d3261b939887b2ac851b81a6ed03411053a77a9dd1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:a294ff3da357923edddacbb28a6aed2f697750ecc96cd192570a10980b20f4a0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:abb12f519cc3cc06435a454d0dd8942f0f6cde7f3305cec6b2d716158f47bfc1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:b148be9d6511a24a6e602b54701bf12ef01d9058bcb4432038936eaf324222b0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:b3bea59fb22526858884e95d79272fcd76f069f2172ef7271eebe290f5ad38b1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:b5f5d0fceba0f745e351503f88a4cd1bc21ff7bef4a026ba5e07d16d4ee1e43a&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:bac67e4121dd5a2c0de175c074a4e2fc84d2d0ec456a1f7f1e1b0257fcb92db8&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:c5b9cab33563c5e5cb115afc9bdf710d2efbbe1ae92976ba2c206a995ad4dd1d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:c9d73aba144558e36d12156c58ccf14318371d61aa3272e715f63600660a21a0&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:ce3c095465848a8dd8db9779baaf47974375a9965cfe7528e6e0218989b1cdfe&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d338a1c2bf040940b4ed7d2d49015cb6bf9acec0b78fc7684a591215418fb711&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d568120798a92fefb9263060a6033f21eacf55fcf4ed9f3f6badc1a724316e2c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d637801f2ff33b530b6ccd3f77828aea441727641d8e626f38231b1b2d14f5a1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d6cefc3f2237059589e4ca1ffe4ba761cbf75bc168e04b845849dd50ed474d5c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:d9f4838eb4abc755a6d4a2612a6099de6ddf25e8951982e602daaeb28f67997d&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e016ddb7bcd11a354f5e7388381d8d2896506d336738b6c8bc0220c6eb0b939c&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e09c08f2da0787930ed06784327c600860e45f3aaba441e222f47469be4e404e&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e236f4565d4e46f584089fd97ed072b17a0327c89da999cdd69f0a7c39b8697a&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e6ec44313f8592cfb94caab5b8ae20050d8a0f7e13fcc1874f6115208d5f3fd8&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:e9507336297dd093dcb10b8b7b3e61f2e49551770491581c90071d8dd5365256&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:ef124b7530a1f94675841ea50133a23c50a49a40b51e15f37c696857a9bdc5b1&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:f196fde359d0a35ae1382787a78864ec30bc9ee953f8330abd27084f460353b3&quot;: 1,
+      &quot;frontier_multi_teacher|japanese_mt_bench|long_substring_ge_80|content:feb9b618d3efa96e678214d414befa8cf49aa0aa9465cb5c5d29f6a47c253694&quot;: 1,
+      &quot;magpie_sft_v1|japanese_mt_bench|long_substring_ge_80|content:1ae6ae07b965d9134777d97650c89064c377bf26bbf05b7ff4653911281ab9dd&quot;: 1,
+      &quot;magpie_sft_v1|japanese_mt_bench|long_substring_ge_80|content:792f62b70042b9eeccceef6a28c72383383682ef4ba3b670a991eb0b214724e5&quot;: 1,
+      &quot;magpie_sft_v1|japanese_mt_bench|long_substring_ge_80|content:f5b481f38538b3e4df3788f29281883845d63330ffd2993b1a44e8425864846e&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:1970aea2caa6b821c8e804ef005012151bb6937bfeb92f081942e7468ec66474&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:99ee71ff79056051963bc9a464004ff8cbb92aab7b003c05a56c6d9502119a13&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:ccb437457bb54d0dff2e1fad5308729c36c50bb215c553d8be75ccd1938d1cfe&quot;: 1,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:f18319985d8ced7619ed135a67efb9fa9bbadd849f8859a6229c37ee890f8066&quot;: 0,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:fa7dbfeee92a880c325d23dfd1d2dffb609c7260e7c817793c81bc6ade39f37b&quot;: 0,
+      &quot;nemotron_sft_multilingual_v2|japanese_mt_bench|long_substring_ge_80|content:fc489753904a8fbb502da4e691b43e98515966e92b3bb49454282c51bd786497&quot;: 0
+    },
+    &quot;contains_raw_text&quot;: false
+  },
+  &quot;artifacts&quot;: {
+    &quot;waterfall_csv&quot;: &quot;D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_rescan_waterfall.csv&quot;,
+    &quot;sample_csv&quot;: &quot;D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_rescan_genuine_exact_sample.csv&quot;,
+    &quot;summary_json&quot;: &quot;D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_rescan_audit.json&quot;,
+    &quot;waterfall_sha256&quot;: &quot;e414c1bce1a4914a3191b1fe78e80abcaf19fce0182927ee6c0e4d18854e445c&quot;,
+    &quot;sample_sha256&quot;: &quot;fac952a0096981bd9f9b4abffc51ad1aa09a03afd318a76a474a6d3001bf9214&quot;
+  },
+  &quot;safety&quot;: {
+    &quot;training_allowed&quot;: false,
+    &quot;contains_raw_text&quot;: false
+  }
+}</pre>
+<h2>Token statistics</h2><table><thead><tr><th>Dataset</th><th>Category</th><th>Rows</th><th>Formatted tokens</th><th>P95</th></tr></thead><tbody><tr><td>ace_reason_math_japanese</td><td>japanese_math</td><td>10000</td><td>891646</td><td>164.0</td></tr><tr><td>claude_fable_code</td><td>coding_agent</td><td>43</td><td>1032283</td><td>63187.9</td></tr><tr><td>extraction_wiki_ja</td><td>japanese_instruction_extraction</td><td>152719</td><td>85133153</td><td>1108.0</td></tr><tr><td>fable_5_5_distillation</td><td>frontier_reasoning_merged</td><td>1978248</td><td>10495856438</td><td>17029.0</td></tr><tr><td>fable_5_premium</td><td>frontier_reasoning</td><td>6365</td><td>117270622</td><td>32115.0</td></tr><tr><td>frontier_multi_teacher</td><td>frontier_reasoning</td><td>582954</td><td>508986050</td><td>2254.0</td></tr><tr><td>gpt_5_6_traces</td><td>frontier_reasoning</td><td>6288</td><td>24017823</td><td>10262.0</td></tr><tr><td>magpie_sft_v1</td><td>japanese_general_instruction</td><td>132473</td><td>42736969</td><td>509.0</td></tr><tr><td>math_japanese_8k</td><td>japanese_math</td><td>8094</td><td>3303751</td><td>636.35</td></tr><tr><td>nemotron_sft_multilingual_v2</td><td>japanese_stem_code_math</td><td>370081</td><td>468178923</td><td>3079.05</td></tr></tbody></table>
+<h2>Nemotron composition</h2><pre>{
+  &quot;status&quot;: &quot;PASS&quot;,
+  &quot;rows&quot;: 370081,
+  &quot;japanese_rows&quot;: 75449,
+  &quot;row_counts&quot;: {
+    &quot;nemotron_non_ja&quot;: 294632,
+    &quot;nemotron_ja_code&quot;: 34358,
+    &quot;nemotron_ja_math&quot;: 34926,
+    &quot;nemotron_ja_stem&quot;: 6165
+  },
+  &quot;token_mass&quot;: {
+    &quot;nemotron_non_ja&quot;: 361369072,
+    &quot;nemotron_ja_code&quot;: 62653027,
+    &quot;nemotron_ja_math&quot;: 41725383,
+    &quot;nemotron_ja_stem&quot;: 2431441
+  },
+  &quot;quality_mean&quot;: {
+    &quot;nemotron_non_ja&quot;: 87.05324233959534,
+    &quot;nemotron_ja_code&quot;: 90.73597630828307,
+    &quot;nemotron_ja_math&quot;: 90.40330255397198,
+    &quot;nemotron_ja_stem&quot;: 82.21171922141117
+  },
+  &quot;reasoning_languages&quot;: {
+    &quot;unknown&quot;: 370081
+  },
+  &quot;final_languages&quot;: {
+    &quot;unknown&quot;: 57516,
+    &quot;code-heavy&quot;: 199537,
+    &quot;english&quot;: 45390,
+    &quot;mixed&quot;: 56696,
+    &quot;japanese&quot;: 10942
+  },
+  &quot;exact_duplicate_rows&quot;: 0
+}</pre>
+<h2>Fable length distribution</h2><pre>{
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;rows&quot;: 6365,
+  &quot;bucket_counts&quot;: {
+    &quot;long&quot;: 4729,
+    &quot;short&quot;: 1306,
+    &quot;extra_long&quot;: 280,
+    &quot;medium&quot;: 50
+  },
+  &quot;invalid_errors&quot;: {
+    &quot;tool_without_preceding_assistant&quot;: 206394,
+    &quot;trace_ends_with_tool_result&quot;: 3650,
+    &quot;assistant_missing&quot;: 248
+  },
+  &quot;segmentation&quot;: {
+    &quot;long_trace_unsegmented&quot;: 5009
+  },
+  &quot;extra_long_allowed_for_raw_candidate&quot;: false
+}</pre>
+<h2>License/provenance queue</h2><pre>{
+  &quot;schema_version&quot;: 2,
+  &quot;approval_required&quot;: true,
+  &quot;ai_may_set_human_decision&quot;: false,
+  &quot;sources&quot;: [
+    {
+      &quot;dataset&quot;: &quot;extraction_wiki_ja&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;llm-jp/extraction-wiki-ja&quot;,
+      &quot;revision&quot;: &quot;b385b781defb9bf4266175cd8d7e7c53af0290b8&quot;,
+      &quot;license_raw&quot;: &quot;apache-2.0&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;magpie_sft_v1&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;llm-jp/magpie-sft-v1.0&quot;,
+      &quot;revision&quot;: &quot;4f949e18cfa01d99abe6f92e5629157d69737e6d&quot;,
+      &quot;license_raw&quot;: &quot;apache-2.0&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;nemotron_sft_multilingual_v2&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;nvidia/Nemotron-SFT-Multilingual-v2&quot;,
+      &quot;revision&quot;: &quot;971a252224b75414b1b67c55dbe0446d8b6606a0&quot;,
+      &quot;license_raw&quot;: [
+        &quot;cc-by-4.0&quot;,
+        &quot;cc-by-sa-4.0&quot;
+      ],
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: true,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;incomplete&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;math_japanese_8k&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;awakara/Math-Japanese-8k&quot;,
+      &quot;revision&quot;: &quot;e86bb58896c228e91acec2cbbb768d37f14ecdb3&quot;,
+      &quot;license_raw&quot;: &quot;unknown&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: true,
+      &quot;evidence_completeness&quot;: &quot;incomplete&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;ace_reason_math_japanese&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;SousiOmine/AceReason-Math-Japanese&quot;,
+      &quot;revision&quot;: &quot;037b823f6ab85aee4a7de51ca35476c6d1079f0a&quot;,
+      &quot;license_raw&quot;: &quot;cc-by-4.0&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;gpt_5_6_traces&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;Manusagents/GPT-5.6-Sol-Luna-Terra-Traces&quot;,
+      &quot;revision&quot;: &quot;07e1745da4cb8220c4811e200bfeb97768290e21&quot;,
+      &quot;license_raw&quot;: &quot;cc-by-4.0&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;fable_5_5_distillation&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;RESMP-DEV/Fable-GPT-5.5-Distillation-Traces&quot;,
+      &quot;revision&quot;: &quot;15ba38ac01b610cc986b728a2d55fcb8db9c2096&quot;,
+      &quot;license_raw&quot;: &quot;cc-by-4.0&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;claude_fable_code&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;armand0e/claude-fable-5-claude-code&quot;,
+      &quot;revision&quot;: &quot;c19fb6831700da833b22d1c9cdac47fe8603685c&quot;,
+      &quot;license_raw&quot;: &quot;unknown&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: true,
+      &quot;evidence_completeness&quot;: &quot;incomplete&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;frontier_multi_teacher&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation&quot;,
+      &quot;revision&quot;: &quot;7a3473446840bcc397928cd8183d4b3ba3ca13a7&quot;,
+      &quot;license_raw&quot;: &quot;other&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    },
+    {
+      &quot;dataset&quot;: &quot;fable_5_premium&quot;,
+      &quot;subset&quot;: &quot;dataset_root&quot;,
+      &quot;upstream_source&quot;: &quot;saidutta69/fable-5-premium&quot;,
+      &quot;revision&quot;: &quot;684cb1f849fe4a1c96f55351e1d7366f9888bb28&quot;,
+      &quot;license_raw&quot;: &quot;mit&quot;,
+      &quot;license_url_if_metadata_contains&quot;: null,
+      &quot;redistribution_notes&quot;: &quot;Human review required; no license conclusion is inferred by this runner.&quot;,
+      &quot;derivative_model_notes&quot;: &quot;Training use is not authorized by this artifact.&quot;,
+      &quot;attribution_required&quot;: &quot;unknown&quot;,
+      &quot;mixed_license&quot;: false,
+      &quot;unknown_license&quot;: false,
+      &quot;evidence_completeness&quot;: &quot;package_metadata_present&quot;,
+      &quot;human_decision&quot;: null,
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;decision_rationale&quot;: null,
+      &quot;recommended_action&quot;: &quot;HUMAN_DECISION_REQUIRED&quot;
+    }
+  ]
+}</pre>
+<h2>License/provenance evidence audit</h2><pre>{
+  &quot;schema_version&quot;: 1,
+  &quot;audit_date&quot;: &quot;2026-09-05&quot;,
+  &quot;purpose&quot;: &quot;Evidence-only license and provenance audit for ten local training-source candidates.&quot;,
+  &quot;legal_advice&quot;: false,
+  &quot;training_allowed&quot;: false,
+  &quot;ai_approval_recorded&quot;: false,
+  &quot;decision_manifest&quot;: &quot;data/manifests/source_approval_decisions.json&quot;,
+  &quot;human_matrix&quot;: &quot;reports/pretrain_finalization/SOURCE_APPROVAL_MATRIX.md&quot;,
+  &quot;method&quot;: {
+    &quot;primary_remote_evidence&quot;: &quot;Publisher-controlled Hugging Face dataset API/card/files pinned to the observed package commit, plus official license or provider terms where relevant.&quot;,
+    &quot;local_evidence&quot;: &quot;Hugging Face cache metadata, README/license/provenance files, local data inventory, row-level source/license fields, and corrected contamination output.&quot;,
+    &quot;document_match_rule&quot;: &quot;SHA-256 of each named local document equals the corresponding file fetched from the pinned package commit.&quot;,
+    &quot;revision_scope&quot;: &quot;A package commit identifies the local snapshot. It does not establish upstream corpus/model revisions, contributor rights, or provider-output permissions unless those are separately recorded.&quot;,
+    &quot;license_scope&quot;: &quot;A Hub card license tag is publisher-provided metadata. It is recorded as evidence, not treated as a legal conclusion or automatic training authorization.&quot;,
+    &quot;contamination_scope&quot;: &quot;Counts are from the corrected 4,643,875-record scan. AnswerCarefully is still unavailable, so not_checked_missing_eval_source is not equivalent to clean.&quot;
+  },
+  &quot;summary&quot;: {
+    &quot;sources&quot;: 10,
+    &quot;local_snapshots_found&quot;: 10,
+    &quot;package_revisions_known&quot;: 10,
+    &quot;package_revisions_unknown&quot;: 0,
+    &quot;pinned_documents_matched&quot;: 14,
+    &quot;card_license_absent_sources&quot;: 2,
+    &quot;human_decisions_recorded&quot;: 0,
+    &quot;human_decisions_pending&quot;: 10
+  },
+  &quot;sources&quot;: [
+    {
+      &quot;dataset&quot;: &quot;extraction_wiki_ja&quot;,
+      &quot;upstream_source&quot;: &quot;llm-jp/extraction-wiki-ja&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/llm-jp__extraction-wiki-ja&quot;,
+      &quot;package_revision&quot;: &quot;b385b781defb9bf4266175cd8d7e7c53af0290b8&quot;,
+      &quot;package_last_modified&quot;: &quot;2025-05-30T04:58:55Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/llm-jp/extraction-wiki-ja&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/llm-jp/extraction-wiki-ja/blob/b385b781defb9bf4266175cd8d7e7c53af0290b8/README.md&quot;,
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 152719,
+        &quot;local_data_files&quot;: 3,
+        &quot;configs&quot;: [
+          &quot;v0.1&quot;,
+          &quot;v0.2&quot;,
+          &quot;v0.3&quot;
+        ]
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;apache-2.0&quot;,
+        &quot;official_license_text&quot;: &quot;https://www.apache.org/licenses/LICENSE-2.0&quot;,
+        &quot;evidence_state&quot;: &quot;publisher_card_declaration&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Card says the data was built from the Japanese Wikipedia subset of llm-jp-corpus-v3, with Qwen2.5-32B used for instruction/response generation and filtering.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;The exact llm-jp-corpus-v3 revision and row mapping are not pinned in the card.&quot;,
+        &quot;The underlying Wikipedia/corpus license and attribution chain are not frozen in a local row-level manifest.&quot;,
+        &quot;The teacher-model revision and generation terms are not pinned.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 152719,
+        &quot;quarantine_exact&quot;: 0,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;bf74259d2bfb7165cdbc952a119068bd980b98eaab5246db1247fec70523b883&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;magpie_sft_v1&quot;,
+      &quot;upstream_source&quot;: &quot;llm-jp/magpie-sft-v1.0&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/llm-jp__magpie-sft-v1.0&quot;,
+      &quot;package_revision&quot;: &quot;4f949e18cfa01d99abe6f92e5629157d69737e6d&quot;,
+      &quot;package_last_modified&quot;: &quot;2024-11-13T18:54:02Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/llm-jp/magpie-sft-v1.0&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/llm-jp/magpie-sft-v1.0/blob/4f949e18cfa01d99abe6f92e5629157d69737e6d/README.md&quot;,
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 132476,
+        &quot;local_data_files&quot;: 1
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;apache-2.0&quot;,
+        &quot;official_license_text&quot;: &quot;https://www.apache.org/licenses/LICENSE-2.0&quot;,
+        &quot;evidence_state&quot;: &quot;publisher_card_declaration&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Card describes CALM3-22B-Chat-generated instructions and Qwen2.5-32B-Instruct-generated responses.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;Teacher-model revisions are not pinned.&quot;,
+        &quot;Generation-time model/service terms and row-level generation identities are not frozen in a local manifest.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 132473,
+        &quot;quarantine_exact&quot;: 3,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;3d500ff31df5473e4b98ef310262e2518d3bc6a4b86444998cf1bf0978670d27&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;nemotron_sft_multilingual_v2&quot;,
+      &quot;upstream_source&quot;: &quot;nvidia/Nemotron-SFT-Multilingual-v2&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/nvidia__Nemotron-SFT-Multilingual-v2&quot;,
+      &quot;package_revision&quot;: &quot;971a252224b75414b1b67c55dbe0446d8b6606a0&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-06-05T16:16:08Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/nvidia/Nemotron-SFT-Multilingual-v2&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/nvidia/Nemotron-SFT-Multilingual-v2/blob/971a252224b75414b1b67c55dbe0446d8b6606a0/README.md&quot;,
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 370081,
+        &quot;local_data_files&quot;: 12
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: [
+          &quot;cc-by-4.0&quot;,
+          &quot;cc-by-sa-4.0&quot;
+        ],
+        &quot;row_level_counts&quot;: {
+          &quot;cc-by-4.0&quot;: 241889,
+          &quot;cc-by-sa-4.0&quot;: 128192
+        },
+        &quot;official_license_texts&quot;: [
+          &quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;,
+          &quot;https://creativecommons.org/licenses/by-sa/4.0/legalcode&quot;
+        ],
+        &quot;evidence_state&quot;: &quot;mixed_row_level_license&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;All 370,081 local rows expose one of the two recorded license values; the package card describes the multilingual SFT composition.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;CC-BY and CC-BY-SA obligations differ and must not be collapsed into one blanket source decision without an explicit scope/obligation record.&quot;,
+        &quot;Derived-model and redistribution handling for the selected row mix requires human/legal interpretation.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 370075,
+        &quot;quarantine_exact&quot;: 6,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;41e21b069e2f61d2897a6422e425ff2890a66981bc00aa18dc84fb65b26bdd11&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;math_japanese_8k&quot;,
+      &quot;upstream_source&quot;: &quot;awakara/Math-Japanese-8k&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/awakara__Math-Japanese-8k&quot;,
+      &quot;package_revision&quot;: &quot;e86bb58896c228e91acec2cbbb768d37f14ecdb3&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-08-28T08:48:11Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/awakara/Math-Japanese-8k&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/awakara/Math-Japanese-8k/blob/e86bb58896c228e91acec2cbbb768d37f14ecdb3/README.md&quot;,
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 8094
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: null,
+        &quot;license_file_present&quot;: false,
+        &quot;evidence_state&quot;: &quot;absent&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Card states that problems were generated by Kimi K2.6/K2.7-code and answers by Gemma4 31B.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;No dataset license or explicit grant is present in the package metadata/card.&quot;,
+        &quot;Teacher-model revisions, generation method, row identities, and provider-output terms are not pinned.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 8094,
+        &quot;quarantine_exact&quot;: 0,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;49ac144b95c6d9623552465bc9a436e4fb65b8f7d43d7ee47b2d306b264a160b&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;ace_reason_math_japanese&quot;,
+      &quot;upstream_source&quot;: &quot;SousiOmine/AceReason-Math-Japanese&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/SousiOmine__AceReason-Math-Japanese&quot;,
+      &quot;package_revision&quot;: &quot;037b823f6ab85aee4a7de51ca35476c6d1079f0a&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-08-20T01:33:18Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/SousiOmine/AceReason-Math-Japanese&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/SousiOmine/AceReason-Math-Japanese/blob/037b823f6ab85aee4a7de51ca35476c6d1079f0a/README.md&quot;,
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 10000
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;cc-by-4.0&quot;,
+        &quot;license_file&quot;: &quot;LISENCE&quot;,
+        &quot;official_license_text&quot;: &quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;,
+        &quot;evidence_state&quot;: &quot;card_and_license_file&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Card says the first 10,000 nvidia/AceReason-Math rows were translated with Deepseek-V4-Flash-0731 while answers were left unchanged.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;The upstream AceReason-Math dataset revision and row mapping are not pinned.&quot;,
+        &quot;Translator-model revision/provider terms and the translation transform chain are not frozen row by row.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 10000,
+        &quot;quarantine_exact&quot;: 0,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;bfc1864fc1a24f701f19d298c53031f777ed363aaf4772e57ca9129b620288a9&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        },
+        {
+          &quot;path&quot;: &quot;LISENCE&quot;,
+          &quot;sha256&quot;: &quot;9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;gpt_5_6_traces&quot;,
+      &quot;upstream_source&quot;: &quot;Manusagents/GPT-5.6-Sol-Luna-Terra-Traces&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/Manusagents__GPT-5.6-Sol-Luna-Terra-Traces&quot;,
+      &quot;package_revision&quot;: &quot;07e1745da4cb8220c4811e200bfeb97768290e21&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-07-19T11:54:46Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/Manusagents/GPT-5.6-Sol-Luna-Terra-Traces&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/Manusagents/GPT-5.6-Sol-Luna-Terra-Traces/blob/07e1745da4cb8220c4811e200bfeb97768290e21/README.md&quot;,
+      &quot;provider_terms&quot;: [
+        &quot;https://openai.com/policies/terms-of-use/&quot;,
+        &quot;https://openai.com/en-GB/policies/services-agreement/&quot;
+      ],
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 6288,
+        &quot;upstream_source_counts&quot;: {
+          &quot;greghavens/gpt-5.6-sol-coding-and-debugging-traces&quot;: 5402,
+          &quot;empero-ai/gpt-5.6-luna-sft-900x&quot;: 886
+        },
+        &quot;upstream_split_counts&quot;: {
+          &quot;train&quot;: 5901,
+          &quot;validation&quot;: 387
+        }
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;cc-by-4.0&quot;,
+        &quot;official_license_text&quot;: &quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;,
+        &quot;evidence_state&quot;: &quot;publisher_card_declaration_with_provider_terms_question&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Rows include upstream dataset/config/split/row index and row_hash; the card describes source-asserted and content-verified traces.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;Upstream dataset revisions are not pinned in the rows/card.&quot;,
+        &quot;The trace provenance is publisher-asserted rather than cryptographically certified by OpenAI.&quot;,
+        &quot;Current provider terms and the planned competing-model training use require human/legal review.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 6288,
+        &quot;quarantine_exact&quot;: 0,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;7ea232b4a821d0c26014774bf65bd5f6ea717eb9228b0bfee7d3d2b16102305c&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;fable_5_5_distillation&quot;,
+      &quot;upstream_source&quot;: &quot;RESMP-DEV/Fable-GPT-5.5-Distillation-Traces&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/RESMP-DEV__Fable-GPT-5.5-Distillation-Traces&quot;,
+      &quot;package_revision&quot;: &quot;15ba38ac01b610cc986b728a2d55fcb8db9c2096&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-07-07T21:36:05Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/RESMP-DEV/Fable-GPT-5.5-Distillation-Traces&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/RESMP-DEV/Fable-GPT-5.5-Distillation-Traces/blob/15ba38ac01b610cc986b728a2d55fcb8db9c2096/README.md&quot;,
+      &quot;provider_terms&quot;: [
+        &quot;https://openai.com/policies/terms-of-use/&quot;,
+        &quot;https://openai.com/en-GB/policies/services-agreement/&quot;
+      ],
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;local_rows&quot;: 1981131,
+        &quot;local_data_files&quot;: 20,
+        &quot;publisher_card_rows&quot;: 9057143,
+        &quot;local_snapshot_complete_against_card&quot;: false
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;cc-by-4.0&quot;,
+        &quot;official_license_text&quot;: &quot;https://creativecommons.org/licenses/by/4.0/legalcode&quot;,
+        &quot;evidence_state&quot;: &quot;curation_license_only_upstream_licenses_retained&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;The local subset preserves a source field across many upstream corpora and trace origins; the card says its CC-BY-4.0 declaration applies to curation/merge while upstream licenses remain in force.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;The local 1,981,131-row snapshot is partial relative to the card&#x27;s 9,057,143 rows.&quot;,
+        &quot;A package-level CC-BY-4.0 tag is not a blanket replacement for upstream source licenses.&quot;,
+        &quot;The card identifies personal Codex traces as personal-use/not-for-redistribution, while the local subset includes Codex and personal-Codex sources.&quot;,
+        &quot;Per-record license values are absent for some upstream origins, and provider-output terms require human/legal review.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 1981089,
+        &quot;quarantine_exact&quot;: 37,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 5
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;7b61f075eb3b881071247f4c52be0e2185e22215e43fd63e81b0d7d7759e8747&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;claude_fable_code&quot;,
+      &quot;upstream_source&quot;: &quot;armand0e/claude-fable-5-claude-code&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/armand0e__claude-fable-5-claude-code&quot;,
+      &quot;package_revision&quot;: &quot;c19fb6831700da833b22d1c9cdac47fe8603685c&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-06-19T16:23:10Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/armand0e/claude-fable-5-claude-code&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/armand0e/claude-fable-5-claude-code/blob/c19fb6831700da833b22d1c9cdac47fe8603685c/README.md&quot;,
+      &quot;provider_terms&quot;: [
+        &quot;https://www.anthropic.com/legal/commercial-terms&quot;,
+        &quot;https://www.anthropic.com/legal/consumer-terms&quot;
+      ],
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;raw_events&quot;: 18370,
+        &quot;jsonl_files&quot;: 63,
+        &quot;canonical_sessions&quot;: 63
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: null,
+        &quot;license_file_present&quot;: false,
+        &quot;evidence_state&quot;: &quot;absent&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Card describes anonymized raw Claude Code traces from two teams and notes overlap with Glint Research/Fable-5-traces.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;No dataset license or explicit contributor-rights grant is present.&quot;,
+        &quot;The legal basis for redistributing and training on two teams&#x27; traces is not recorded.&quot;,
+        &quot;Current Anthropic terms and competing-model restrictions require human/legal review.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 63,
+        &quot;quarantine_exact&quot;: 0,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;2a090d783e93372383a7d58c5c14da4f688ddebfebb9fcdcc60c4e99dd75a0b7&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;frontier_multi_teacher&quot;,
+      &quot;upstream_source&quot;: &quot;r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/r0b0tlab__qwen3.8-max-glm5.2-kimi-k3-distillation&quot;,
+      &quot;package_revision&quot;: &quot;7a3473446840bcc397928cd8183d4b3ba3ca13a7&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-08-02T01:32:23Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/r0b0tlab/qwen3.8-max-glm5.2-kimi-k3-distillation/blob/7a3473446840bcc397928cd8183d4b3ba3ca13a7/README.md&quot;,
+      &quot;provider_terms&quot;: [
+        &quot;https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0&quot;
+      ],
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;physical_scan_records&quot;: 1976658,
+        &quot;authoritative_content_rows&quot;: 57937,
+        &quot;authoritative_data_files&quot;: 8,
+        &quot;excluded_metadata&quot;: 1022950,
+        &quot;excluded_derivative&quot;: 895771
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;other&quot;,
+        &quot;row_level_counts&quot;: {
+          &quot;unknown-see-provenance&quot;: 15122,
+          &quot;CC-BY-NC-SA-4.0&quot;: 8098,
+          &quot;MIT&quot;: 6907,
+          &quot;other; synthetic research corpus&quot;: 5854,
+          &quot;ODC-BY-1.0; mixture terms vary&quot;: 5395,
+          &quot;other; synthetic research corpus; see provenance&quot;: 5307,
+          &quot;CC-BY-NC-3.0&quot;: 3947,
+          &quot;Apache-2.0&quot;: 3038,
+          &quot;CC-BY-4.0&quot;: 1865,
+          &quot;CC-BY-SA-3.0&quot;: 1710,
+          &quot;other; synthetic research corpus; K3 thinking traces&quot;: 694
+        },
+        &quot;explicit_noncommercial_rows&quot;: 12045,
+        &quot;unknown_rows&quot;: 15122,
+        &quot;evidence_state&quot;: &quot;custom_mixed_row_level_license&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;All 57,937 authoritative rows carry source repository/revision fields; package LICENSE and PROVENANCE files add source-specific restrictions and lineage notes.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;At least 12,045 rows have explicit noncommercial terms and 15,122 rows are unknown-see-provenance.&quot;,
+        &quot;The local PROVENANCE.md says distillation-51389 and 51,389 rows, while the current card/canonical package says 57,937 rows.&quot;,
+        &quot;The package LICENSE limits use to controlled noncommercial research pending review.&quot;,
+        &quot;Alibaba Model Studio output restrictions and other teacher-service terms require source-specific human/legal review.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 57880,
+        &quot;quarantine_exact&quot;: 57,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0,
+        &quot;excluded_metadata&quot;: 1022950,
+        &quot;excluded_derivative&quot;: 895771
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;69c9b2776d57c7450aca5ffee91a472631cc931749d32d6ab340fad20fc81cad&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        },
+        {
+          &quot;path&quot;: &quot;LICENSE&quot;,
+          &quot;sha256&quot;: &quot;3cec953e36c3e8b41b469d1ed6c25590d551c29bf58e09905496a2e24a1be4ec&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        },
+        {
+          &quot;path&quot;: &quot;PROVENANCE.md&quot;,
+          &quot;sha256&quot;: &quot;e049247f9687fa16e2bb7ca6ccec53f9d51772dde6b7e51d0ebb5c01587d0257&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        },
+        {
+          &quot;path&quot;: &quot;manifest.json&quot;,
+          &quot;sha256&quot;: &quot;9c9c6404c6e5123fcd3d552710d2d23a94eb294f16031b3aedae29dc40f70cf0&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;fable_5_premium&quot;,
+      &quot;upstream_source&quot;: &quot;saidutta69/fable-5-premium&quot;,
+      &quot;local_root&quot;: &quot;E:/zipangu-datesets/saidutta69__fable-5-premium&quot;,
+      &quot;package_revision&quot;: &quot;684cb1f849fe4a1c96f55351e1d7366f9888bb28&quot;,
+      &quot;package_last_modified&quot;: &quot;2026-08-01T20:49:15Z&quot;,
+      &quot;official_api&quot;: &quot;https://huggingface.co/api/datasets/saidutta69/fable-5-premium&quot;,
+      &quot;official_card&quot;: &quot;https://huggingface.co/datasets/saidutta69/fable-5-premium/blob/684cb1f849fe4a1c96f55351e1d7366f9888bb28/README.md&quot;,
+      &quot;local_revision_matches_official&quot;: true,
+      &quot;inventory&quot;: {
+        &quot;logical_rows&quot;: 6365,
+        &quot;physical_data_files&quot;: 12,
+        &quot;physical_formats&quot;: [
+          &quot;jsonl&quot;,
+          &quot;parquet&quot;
+        ],
+        &quot;card_reported_rows_including_duplicate_formats&quot;: 12730
+      },
+      &quot;license_evidence&quot;: {
+        &quot;card_value&quot;: &quot;mit&quot;,
+        &quot;license_file_present&quot;: false,
+        &quot;evidence_state&quot;: &quot;card_tag_only&quot;
+      },
+      &quot;provenance_evidence&quot;: &quot;Current card describes a cross-deduplicated premium trace package, but its source table is empty.&quot;,
+      &quot;unresolved_items&quot;: [
+        &quot;No LICENSE file is present despite the MIT card tag.&quot;,
+        &quot;The current source table is empty, so upstream sources, revisions, teacher rights, and row-level lineage are absent.&quot;,
+        &quot;The displayed 12,730 count double-counts the same 6,365 logical rows across JSONL and Parquet formats.&quot;
+      ],
+      &quot;contamination&quot;: {
+        &quot;not_checked_missing_eval_source&quot;: 6365,
+        &quot;quarantine_exact&quot;: 0,
+        &quot;quarantine_near&quot;: 0,
+        &quot;requires_manual_review&quot;: 0
+      },
+      &quot;matched_local_documents&quot;: [
+        {
+          &quot;path&quot;: &quot;README.md&quot;,
+          &quot;sha256&quot;: &quot;3e951aa46a9931bcf5fa2eab0ca24bd5beb8cda9663ac429d49754ea4d817527&quot;,
+          &quot;matches_pinned_remote&quot;: true
+        }
+      ],
+      &quot;human_decision&quot;: null
+    }
+  ]
+}</pre>
+<h2>Human source decisions</h2><pre>{
+  &quot;schema_version&quot;: 1,
+  &quot;owner&quot;: &quot;human_reviewer&quot;,
+  &quot;training_allowed&quot;: false,
+  &quot;ai_may_choose_or_apply_decision&quot;: false,
+  &quot;allowed_decisions&quot;: [
+    &quot;APPROVE_AS_IS&quot;,
+    &quot;APPROVE_WITH_OBLIGATIONS&quot;,
+    &quot;APPROVE_SCOPED_SUBSET&quot;,
+    &quot;DEFER_PENDING_EVIDENCE&quot;,
+    &quot;EXCLUDE&quot;
+  ],
+  &quot;decision_definitions&quot;: {
+    &quot;APPROVE_AS_IS&quot;: &quot;Human accepts the recorded evidence for the proposed source scope without additional source-specific conditions.&quot;,
+    &quot;APPROVE_WITH_OBLIGATIONS&quot;: &quot;Human accepts the source only with recorded attribution, share-alike, redistribution, notice, or other obligations.&quot;,
+    &quot;APPROVE_SCOPED_SUBSET&quot;: &quot;Human accepts only explicitly recorded configs, files, rows, licenses, teachers, or use conditions.&quot;,
+    &quot;DEFER_PENDING_EVIDENCE&quot;: &quot;Human makes no approval decision until named evidence gaps are resolved.&quot;,
+    &quot;EXCLUDE&quot;: &quot;Human excludes the source from the training-data pool.&quot;
+  },
+  &quot;application_policy&quot;: &quot;Recording a source decision does not modify the dataset registry, authorize training, authorize paid compute, or set TRAINING_ALLOWED=true. Any application requires a separate reviewed manifest/config change and explicit human GO.&quot;,
+  &quot;sources&quot;: [
+    {
+      &quot;dataset&quot;: &quot;extraction_wiki_ja&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;magpie_sft_v1&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;nemotron_sft_multilingual_v2&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;math_japanese_8k&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;ace_reason_math_japanese&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;gpt_5_6_traces&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;fable_5_5_distillation&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;claude_fable_code&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;frontier_multi_teacher&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    },
+    {
+      &quot;dataset&quot;: &quot;fable_5_premium&quot;,
+      &quot;decision&quot;: null,
+      &quot;approved_scope&quot;: null,
+      &quot;obligations&quot;: [],
+      &quot;accepted_evidence&quot;: [],
+      &quot;decided_by&quot;: null,
+      &quot;decided_at&quot;: null,
+      &quot;rationale&quot;: null
+    }
+  ]
+}</pre>
+<h2>1M candidate mix</h2><pre>{
+  &quot;jp_heavy&quot;: {
+    &quot;target_tokens&quot;: 1000000,
+    &quot;seed&quot;: 3407,
+    &quot;buckets&quot;: {
+      &quot;general_japanese&quot;: {
+        &quot;target_tokens&quot;: 300000,
+        &quot;selected_rows&quot;: 0,
+        &quot;selected_tokens&quot;: 0,
+        &quot;underfilled&quot;: true,
+        &quot;template_mass&quot;: {}
+      },
+      &quot;instruction_extraction&quot;: {
+        &quot;target_tokens&quot;: 150000,
+        &quot;selected_rows&quot;: 43,
+        &quot;selected_tokens&quot;: 26507,
+        &quot;underfilled&quot;: true,
+        &quot;template_mass&quot;: {
+          &quot;0586541c0d3fd7e2&quot;: 7500,
+          &quot;b6f7402ccf1a44d7&quot;: 7432,
+          &quot;2a7cab787d2bb1cd&quot;: 7486,
+          &quot;4676b54f6a86328e&quot;: 4089
+        }
+      },
+      &quot;japanese_math_reasoning&quot;: {
+        &quot;target_tokens&quot;: 200000,
+        &quot;selected_rows&quot;: 13,
+        &quot;selected_tokens&quot;: 9992,
+        &quot;underfilled&quot;: true,
+        &quot;template_mass&quot;: {
+          &quot;0586541c0d3fd7e2&quot;: 9992
+        }
+      },
+      &quot;japanese_stem_code&quot;: {
+        &quot;target_tokens&quot;: 100000,
+        &quot;selected_rows&quot;: 6,
+        &quot;selected_tokens&quot;: 9880,
+        &quot;underfilled&quot;: true,
+        &quot;template_mass&quot;: {
+          &quot;0586541c0d3fd7e2&quot;: 4991,
+          &quot;a7ef41822cde72ab&quot;: 4889
+        }
+      },
+      &quot;frontier_reasoning&quot;: {
+        &quot;target_tokens&quot;: 150000,
+        &quot;selected_rows&quot;: 73,
+        &quot;selected_tokens&quot;: 149997,
+        &quot;underfilled&quot;: true,
+        &quot;template_mass&quot;: {
+          &quot;0586541c0d3fd7e2&quot;: 7425,
+          &quot;bd768dbb5da8a6d1&quot;: 7284,
+          &quot;a83dcbd4ec9ac00a&quot;: 7371,
+          &quot;07bc8aa6a54b22d1&quot;: 6891,
+          &quot;5be5822687a6045c&quot;: 6734,
+          &quot;6f9897c3ae6688f9&quot;: 3328,
+          &quot;7927eed2aebde116&quot;: 6613,
+          &quot;90ae4a35201ba3bc&quot;: 6929,
+          &quot;b42158e1f1071e74&quot;: 3236,
+          &quot;c04f3548cf444a44&quot;: 6689,
+          &quot;c5dcbc73ae538c65&quot;: 6538,
+          &quot;c7e15862f5304a0b&quot;: 6058,
+          &quot;f700918a5f5073be&quot;: 3343,
+          &quot;fb290ded5becbe24&quot;: 6967,
+          &quot;fc63f3fde167ff04&quot;: 6910,
+          &quot;fc7374f1289206ba&quot;: 7336,
+          &quot;1b422c075f86b66b&quot;: 3552,
+          &quot;462a03aa3ca93126&quot;: 4136,
+          &quot;4b5bc98d23ad1869&quot;: 3644,
+          &quot;4f53d6e265c90169&quot;: 3350,
+          &quot;6be7f64208879c05&quot;: 3213,
+          &quot;f0050b066fac5920&quot;: 3196,
+          &quot;2c8d562f3d40f004&quot;: 1587,
+          &quot;bef7961e92a5f27c&quot;: 2101,
+          &quot;23de94e33ea7af86&quot;: 2672,
+          &quot;4676b54f6a86328e&quot;: 431,
+          &quot;65d83f99873dd4c5&quot;: 907,
+          &quot;80bbc99a831378af&quot;: 244,
+          &quot;d7d4bcacdc36cf34&quot;: 526,
+          &quot;9444601226737c37&quot;: 357,
+          &quot;b6f7402ccf1a44d7&quot;: 5198,
+          &quot;fa7b60608811cf55&quot;: 4505,
+          &quot;98e81229c6372933&quot;: 2818,
+          &quot;2de94e2a937eee70&quot;: 3889,
+          &quot;478f8aab3a2dacae&quot;: 4019
+        }
+      },
+      &quot;agent_code_retention&quot;: {
+        &quot;target_tokens&quot;: 100000,
+        &quot;selected_rows&quot;: 9,
+        &quot;selected_tokens&quot;: 12548,
+        &quot;underfilled&quot;: true,
+        &quot;template_mass&quot;: {
+          &quot;c277062425c13bb5&quot;: 1390,
+          &quot;8799eef206f77fc7&quot;: 1125,
+          &quot;8cbeebc71842b40d&quot;: 1542,
+          &quot;bf0f2182a8a06885&quot;: 1220,
+          &quot;e37d271ca3c5b4ac&quot;: 2359,
+          &quot;0586541c0d3fd7e2&quot;: 341,
+          &quot;b33bedf9c643639b&quot;: 2329,
+          &quot;f728e522ac6bf65a&quot;: 2242
+        }
+      }
+    },
+    &quot;underfilled_buckets&quot;: [
+      &quot;general_japanese&quot;,
+      &quot;instruction_extraction&quot;,
+      &quot;japanese_math_reasoning&quot;,
+      &quot;japanese_stem_code&quot;,
+      &quot;frontier_reasoning&quot;,
+      &quot;agent_code_retention&quot;
+    ]
+  },
+  &quot;jp_heavy_fill&quot;: {
+    &quot;target_tokens&quot;: 1000000,
+    &quot;selected_tokens&quot;: 208924,
+    &quot;fill_ratio&quot;: 0.208924,
+    &quot;severely_underfilled_buckets&quot;: [
+      &quot;general_japanese&quot;,
+      &quot;instruction_extraction&quot;,
+      &quot;japanese_math_reasoning&quot;,
+      &quot;japanese_stem_code&quot;,
+      &quot;agent_code_retention&quot;
+    ],
+    &quot;status&quot;: &quot;BLOCKED&quot;
+  },
+  &quot;balanced&quot;: {
+    &quot;japanese_pool_tokens&quot;: 16652299,
+    &quot;frontier_pool_tokens&quot;: 33737026,
+    &quot;target_each_side&quot;: 500000,
+    &quot;selection&quot;: {
+      &quot;target_tokens&quot;: 1000000,
+      &quot;seed&quot;: 3407,
+      &quot;buckets&quot;: {
+        &quot;general_japanese&quot;: {
+          &quot;target_tokens&quot;: 250000,
+          &quot;selected_rows&quot;: 0,
+          &quot;selected_tokens&quot;: 0,
+          &quot;underfilled&quot;: true,
+          &quot;template_mass&quot;: {}
+        },
+        &quot;instruction_extraction&quot;: {
+          &quot;target_tokens&quot;: 150000,
+          &quot;selected_rows&quot;: 43,
+          &quot;selected_tokens&quot;: 26507,
+          &quot;underfilled&quot;: true,
+          &quot;template_mass&quot;: {
+            &quot;0586541c0d3fd7e2&quot;: 7500,
+            &quot;b6f7402ccf1a44d7&quot;: 7432,
+            &quot;2a7cab787d2bb1cd&quot;: 7486,
+            &quot;4676b54f6a86328e&quot;: 4089
+          }
+        },
+        &quot;japanese_math_reasoning&quot;: {
+          &quot;target_tokens&quot;: 100000,
+          &quot;selected_rows&quot;: 9,
+          &quot;selected_tokens&quot;: 4892,
+          &quot;underfilled&quot;: true,
+          &quot;template_mass&quot;: {
+            &quot;0586541c0d3fd7e2&quot;: 4892
+          }
+        },
+        &quot;japanese_stem_code&quot;: {
+          &quot;target_tokens&quot;: 100000,
+          &quot;selected_rows&quot;: 6,
+          &quot;selected_tokens&quot;: 9880,
+          &quot;underfilled&quot;: true,
+          &quot;template_mass&quot;: {
+            &quot;0586541c0d3fd7e2&quot;: 4991,
+            &quot;a7ef41822cde72ab&quot;: 4889
+          }
+        },
+        &quot;frontier_reasoning&quot;: {
+          &quot;target_tokens&quot;: 250000,
+          &quot;selected_rows&quot;: 99,
+          &quot;selected_tokens&quot;: 249976,
+          &quot;underfilled&quot;: true,
+          &quot;template_mass&quot;: {
+            &quot;0586541c0d3fd7e2&quot;: 12399,
+            &quot;bd768dbb5da8a6d1&quot;: 7284,
+            &quot;a83dcbd4ec9ac00a&quot;: 12426,
+            &quot;07bc8aa6a54b22d1&quot;: 11280,
+            &quot;5be5822687a6045c&quot;: 12042,
+            &quot;6f9897c3ae6688f9&quot;: 6533,
+            &quot;7927eed2aebde116&quot;: 9955,
+            &quot;90ae4a35201ba3bc&quot;: 10551,
+            &quot;b42158e1f1071e74&quot;: 11927,
+            &quot;c04f3548cf444a44&quot;: 10591,
+            &quot;c5dcbc73ae538c65&quot;: 10078,
+            &quot;c7e15862f5304a0b&quot;: 10269,
+            &quot;f700918a5f5073be&quot;: 7112,
+            &quot;fb290ded5becbe24&quot;: 11146,
+            &quot;fc63f3fde167ff04&quot;: 12447,
+            &quot;fc7374f1289206ba&quot;: 10650,
+            &quot;1b422c075f86b66b&quot;: 7598,
+            &quot;462a03aa3ca93126&quot;: 8099,
+            &quot;4b5bc98d23ad1869&quot;: 7545,
+            &quot;4f53d6e265c90169&quot;: 3350,
+            &quot;6be7f64208879c05&quot;: 6865,
+            &quot;f0050b066fac5920&quot;: 6942,
+            &quot;2c8d562f3d40f004&quot;: 3170,
+            &quot;bef7961e92a5f27c&quot;: 2101,
+            &quot;23de94e33ea7af86&quot;: 2672,
+            &quot;4676b54f6a86328e&quot;: 431,
+            &quot;65d83f99873dd4c5&quot;: 907,
+            &quot;80bbc99a831378af&quot;: 439,
+            &quot;d7d4bcacdc36cf34&quot;: 355,
+            &quot;9444601226737c37&quot;: 357,
+            &quot;b6f7402ccf1a44d7&quot;: 5198,
+            &quot;fa7b60608811cf55&quot;: 4505,
+            &quot;98e81229c6372933&quot;: 2818,
+            &quot;2de94e2a937eee70&quot;: 3889,
+            &quot;478f8aab3a2dacae&quot;: 4019,
+            &quot;60edab188e48b726&quot;: 3802,
+            &quot;6d56cde9eb3f103f&quot;: 4218,
+            &quot;f500e283fcbabda0&quot;: 4006
+          }
+        },
+        &quot;agent_code_retention&quot;: {
+          &quot;target_tokens&quot;: 150000,
+          &quot;selected_rows&quot;: 11,
+          &quot;selected_tokens&quot;: 24994,
+          &quot;underfilled&quot;: true,
+          &quot;template_mass&quot;: {
+            &quot;c277062425c13bb5&quot;: 1390,
+            &quot;8799eef206f77fc7&quot;: 1125,
+            &quot;5cea7e685c2a7c3a&quot;: 6224,
+            &quot;a37b45c693e05557&quot;: 6222,
+            &quot;8cbeebc71842b40d&quot;: 1542,
+            &quot;bf0f2182a8a06885&quot;: 1220,
+            &quot;e37d271ca3c5b4ac&quot;: 2359,
+            &quot;0586541c0d3fd7e2&quot;: 341,
+            &quot;b33bedf9c643639b&quot;: 2329,
+            &quot;f728e522ac6bf65a&quot;: 2242
+          }
+        }
+      },
+      &quot;underfilled_buckets&quot;: [
+        &quot;general_japanese&quot;,
+        &quot;instruction_extraction&quot;,
+        &quot;japanese_math_reasoning&quot;,
+        &quot;japanese_stem_code&quot;,
+        &quot;frontier_reasoning&quot;,
+        &quot;agent_code_retention&quot;
+      ]
+    },
+    &quot;fill&quot;: {
+      &quot;target_tokens&quot;: 1000000,
+      &quot;selected_tokens&quot;: 316249,
+      &quot;fill_ratio&quot;: 0.316249,
+      &quot;severely_underfilled_buckets&quot;: [
+        &quot;general_japanese&quot;,
+        &quot;instruction_extraction&quot;,
+        &quot;japanese_math_reasoning&quot;,
+        &quot;japanese_stem_code&quot;,
+        &quot;agent_code_retention&quot;
+      ],
+      &quot;status&quot;: &quot;BLOCKED&quot;
+    },
+    &quot;status&quot;: &quot;BLOCKED&quot;,
+    &quot;reason&quot;: &quot;candidate_target_underfilled&quot;
+  }
+}</pre>
+<h2>Baseline progress</h2><pre>{
+  &quot;schema_version&quot;: 1,
+  &quot;model_id&quot;: &quot;ZIPANGU-K-I-4B&quot;,
+  &quot;model&quot;: &quot;empero-ai/Qwen3.8-4B-Distill&quot;,
+  &quot;tokenizer&quot;: &quot;empero-ai/Qwen3.8-4B-Distill&quot;,
+  &quot;revision&quot;: null,
+  &quot;generation&quot;: {
+    &quot;temperature&quot;: 0.6,
+    &quot;top_p&quot;: 0.95,
+    &quot;top_k&quot;: 20,
+    &quot;do_sample&quot;: true,
+    &quot;max_new_tokens&quot;: 16384,
+    &quot;round_seeds&quot;: [
+      3407,
+      3408,
+      3409
+    ]
+  },
+  &quot;baseline_type&quot;: &quot;untouched_vanilla&quot;,
+  &quot;official_judge_required&quot;: true,
+  &quot;judge_executed&quot;: false,
+  &quot;training_allowed&quot;: false,
+  &quot;preflight&quot;: {
+    &quot;model_root&quot;: &quot;E:\\zipangu-models&quot;,
+    &quot;cache_root&quot;: &quot;E:\\zipangu-cache&quot;,
+    &quot;free_bytes&quot;: 1242529087488,
+    &quot;reserve_bytes&quot;: 26843545600,
+    &quot;allowed&quot;: true
+  },
+  &quot;status&quot;: &quot;BLOCKED&quot;,
+  &quot;blocked_reason&quot;: &quot;required_eval_sources_missing:answer_carefully&quot;,
+  &quot;required_eval_sources_missing&quot;: [
+    &quot;answer_carefully&quot;
+  ]
+}</pre>
+<h2>Remaining blockers</h2><pre>[
+  &quot;eval:BLOCKED&quot;,
+  &quot;contamination:BLOCKED&quot;,
+  &quot;fable:BLOCKED&quot;,
+  &quot;candidate:BLOCKED&quot;,
+  &quot;format:BLOCKED&quot;,
+  &quot;baseline:BLOCKED&quot;
+]</pre>
+</body></html>

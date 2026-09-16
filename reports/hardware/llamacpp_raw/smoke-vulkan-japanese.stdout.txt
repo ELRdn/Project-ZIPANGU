@@ -1,0 +1,36 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-e3fa55c
+model      : E:\zipangu-model-cache\ZIPANGU-K-I-4B-Q4_K_M\Qwen3.8-4B-Q4_K_M.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> 日本の四季を、それぞれの特徴が分かるように短く説明してください。
+日本の四季は、北緯 35 度付近の気候に特徴があります。
+
+**春（3 月〜5 月）**
+寒暖の差が激しく、桜や新緑が美しい季節です
+
+[ Prompt: 24.5 t/s | Generation: 50.3 t/s ]
+
+
+Exiting...

@@ -249,7 +249,7 @@ def write_final_recommendation(
         "",
         "## Executive summary",
         "",
-        "Use the Japanese instruction, extraction and math sources as the first review priorities; keep frontier traces as a small support bucket. Do not approve or train yet: the registry remains quarantine, the local evaluation sources are unavailable for contamination clearance, and the base-model LoRA target policy is still pending.",
+        "Generation-I recipes are shared across K/C/Z, while tokenization remains model-specific. Use the Japanese instruction, extraction and math sources as the first review priorities; keep frontier traces as a small support bucket. Do not approve or train yet: the registry remains quarantine, the local evaluation sources are unavailable for contamination clearance, and the base-model LoRA target policy is still pending.",
         "",
         "## Dataset tier list",
         "",
@@ -403,7 +403,8 @@ def write_html_dashboard(
     recipe_rows = []
     for name, recipe in sorted(recipes.items()):
         mass = recipe.get("sampling_mass", {})
-        recipe_rows.append(f"<tr><td>{html.escape(name)}</td><td><code>{html.escape(json.dumps(mass, ensure_ascii=False))}</code></td></tr>")
+        generation = recipe.get("recipe_generation", "legacy")
+        recipe_rows.append(f"<tr><td>{html.escape(name)}</td><td>{html.escape(str(generation))}</td><td><code>{html.escape(json.dumps(mass, ensure_ascii=False))}</code></td></tr>")
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>ZIPANGU dataset audit</title>
 <style>
@@ -419,7 +420,7 @@ th {{ background: #222c3b; }} code {{ white-space: pre-wrap; color: #a9e6c0; }}
 <h2>Dataset summary</h2>
 <table><thead><tr><th>Dataset</th><th>Scanned rows</th><th>Eligible</th><th>Accepted %</th><th>Quality mean</th><th>Contamination</th></tr></thead><tbody>{''.join(rows)}</tbody></table>
 <h2>Recipe sampling mass</h2>
-<table><thead><tr><th>Recipe</th><th>Configured token mass</th></tr></thead><tbody>{''.join(recipe_rows)}</tbody></table>
+<table><thead><tr><th>Recipe</th><th>Generation</th><th>Configured token mass</th></tr></thead><tbody>{''.join(recipe_rows)}</tbody></table>
 <h2>Dedup</h2><pre>{html.escape(json.dumps(dedup_summary or {}, ensure_ascii=False, indent=2))}</pre>
 </body></html>"""
     path = reports / "index.html"

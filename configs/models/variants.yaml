@@ -1,0 +1,28 @@
+schema_version: 1
+canonical_policy:
+  canonical_base_only: true
+  variant_order: japanese_post_training_then_optional_heretic
+  community_variants_are_not_official_releases: true
+  overwrite_canonical: false
+variants:
+  - id: ZIPANGU-K-I-4B-Heretic
+    canonical_id: ZIPANGU-K-I-4B
+    source: insraq/Qwen3.5-4B-EmperoAI-Qwen3.8-Distill-Heretic-Abliterated
+    variant_type: heretic_abliterated
+    canonical: false
+    official: false
+    release_policy: separate_artifact_after_canonical_evaluation
+  - id: ZIPANGU-C-I-9B-Heretic
+    canonical_id: ZIPANGU-C-I-9B
+    source: petruhonk/Qwen3.8-9B-Distill-uncensored-heretic
+    variant_type: heretic_abliterated
+    canonical: false
+    official: false
+    release_policy: separate_artifact_after_canonical_evaluation
+  - id: ZIPANGU-Z-I-26B-A4B-Heretic
+    canonical_id: ZIPANGU-Z-I-26B-A4B
+    source: TrevorJS/gemma-4-26B-A4B-it-uncensored
+    variant_type: heretic_abliterated
+    canonical: false
+    official: false
+    release_policy: separate_artifact_after_canonical_evaluation

@@ -1,0 +1,10 @@
+backend,context,status,device,prompt_tokens_per_second_median,generation_tokens_per_second_median,ttft_seconds_median,wall_seconds_median,peak_ram_bytes_max,peak_vram_bytes,gpu_utilization_percent,reason
+cpu,2048,PASS,none,79.3,13.0,,4.719,4688949248,,,
+cpu,4096,PASS,none,82.6,13.3,,4.721,4755599360,,,
+cpu,8192,PASS,none,79.8,13.0,,4.923,4893401088,,,
+vulkan,2048,PASS,Vulkan0,25.6,35.6,,6.224,2995179520,,,
+vulkan,4096,PASS,Vulkan0,25.5,35.6,,6.228,2996998144,,,
+vulkan,8192,PASS,Vulkan0,25.8,36.2,,6.225,3001106432,,,
+hip,2048,PASS,ROCm0,76.5,4.3,,8.135,5556047872,,,
+hip,4096,PASS,ROCm0,77.0,4.3,,8.133,5515882496,,,
+hip,8192,PASS,ROCm0,78.3,4.3,,8.134,5770899456,,,

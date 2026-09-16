@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "owner": "human_reviewer",
+  "training_allowed": false,
+  "ai_may_choose_or_apply_decision": false,
+  "allowed_decisions": [
+    "APPROVE_AS_IS",
+    "APPROVE_WITH_OBLIGATIONS",
+    "APPROVE_SCOPED_SUBSET",
+    "DEFER_PENDING_EVIDENCE",
+    "EXCLUDE"
+  ],
+  "decision_definitions": {
+    "APPROVE_AS_IS": "Human accepts the recorded evidence for the proposed source scope without additional source-specific conditions.",
+    "APPROVE_WITH_OBLIGATIONS": "Human accepts the source only with recorded attribution, share-alike, redistribution, notice, or other obligations.",
+    "APPROVE_SCOPED_SUBSET": "Human accepts only explicitly recorded configs, files, rows, licenses, teachers, or use conditions.",
+    "DEFER_PENDING_EVIDENCE": "Human makes no approval decision until named evidence gaps are resolved.",
+    "EXCLUDE": "Human excludes the source from the training-data pool."
+  },
+  "application_policy": "Recording a source decision does not modify the dataset registry, authorize training, authorize paid compute, or set TRAINING_ALLOWED=true. Any application requires a separate reviewed manifest/config change and explicit human GO.",
+  "sources": [
+    {
+      "dataset": "extraction_wiki_ja",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "magpie_sft_v1",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "nemotron_sft_multilingual_v2",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "math_japanese_8k",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "ace_reason_math_japanese",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "gpt_5_6_traces",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "fable_5_5_distillation",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "claude_fable_code",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "frontier_multi_teacher",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    },
+    {
+      "dataset": "fable_5_premium",
+      "decision": null,
+      "approved_scope": null,
+      "obligations": [],
+      "accepted_evidence": [],
+      "decided_by": null,
+      "decided_at": null,
+      "rationale": null
+    }
+  ]
+}

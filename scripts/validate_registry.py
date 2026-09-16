@@ -12,6 +12,7 @@ from zipangu.registry import (
     load_yaml,
     split_issues,
     validate_eval_config,
+    validate_model_registry,
     validate_recipe_against_registry,
     validate_registry,
     validate_train_config,
@@ -48,11 +49,12 @@ def _paths_or_defaults(
     raw_paths: list[str] | None,
     *,
     root: Path,
-    pattern: str,
+    pattern: str | tuple[str, ...],
 ) -> list[Path]:
     if raw_paths:
         return [_resolve_path(raw_path, root) for raw_path in raw_paths]
-    return sorted(root.glob(pattern))
+    patterns = (pattern,) if isinstance(pattern, str) else pattern
+    return sorted({path for item in patterns for path in root.glob(item)})
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -95,16 +97,25 @@ def main() -> int:
         return 1
 
     issues.extend(validate_registry(registry))
+    for message in validate_model_registry(root):
+        issues.append(
+            ValidationIssue(
+                code="model_registry_issue",
+                message=message,
+                path="configs/models/registry.yaml",
+                level="error",
+            )
+        )
 
     recipe_paths = _paths_or_defaults(
         args.recipes,
         root=root,
-        pattern="configs/datasets/c-i-*.yaml",
+        pattern=("configs/datasets/i-jp-*.yaml", "configs/datasets/i-balanced.yaml", "configs/datasets/c-i-*.yaml"),
     )
     train_paths = _paths_or_defaults(
         args.train_configs,
         root=root,
-        pattern="configs/train/*.yaml",
+        pattern="configs/train/**/*.yaml",
     )
     eval_paths = _paths_or_defaults(
         args.eval_configs,

@@ -311,15 +311,26 @@ def read_local_revision(dataset_path: Path | None) -> str:
     for metadata_path in _metadata_candidates(dataset_path):
         try:
             text = metadata_path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        try:
             payload = json.loads(text)
-        except (OSError, json.JSONDecodeError):
+        except json.JSONDecodeError:
+            payload = None
+        if isinstance(payload, Mapping):
+            for key in ("commit_hash", "revision", "commit"):
+                value = payload.get(key)
+                if isinstance(value, str) and value.strip():
+                    revisions.add(value.strip())
             continue
-        if not isinstance(payload, Mapping):
-            continue
-        for key in ("commit_hash", "revision", "commit"):
-            value = payload.get(key)
-            if isinstance(value, str) and value.strip():
-                revisions.add(value.strip())
+
+        # Current huggingface_hub cache sidecars are line-oriented rather
+        # than JSON: commit hash, ETag, then timestamp.  Only accept a full
+        # hexadecimal revision so an ETag or arbitrary first line cannot be
+        # mistaken for immutable provenance.
+        first_line = next((line.strip() for line in text.splitlines() if line.strip()), "")
+        if re.fullmatch(r"[0-9a-fA-F]{40,64}", first_line):
+            revisions.add(first_line)
     if len(revisions) == 1:
         return next(iter(revisions))
     if len(revisions) > 1:

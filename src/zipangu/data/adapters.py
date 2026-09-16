@@ -40,11 +40,18 @@ def _open_text(path: Path):
     return path.open("r", encoding="utf-8", errors="replace")
 
 
-def _read_jsonl(file: DataFile, location: DatasetLocation) -> Iterator[SourceRow]:
+def _read_jsonl(
+    file: DataFile,
+    location: DatasetLocation,
+    *,
+    start_after_index: int = 0,
+) -> Iterator[SourceRow]:
     config = infer_config(file.relative_path)
     split = infer_split(file.relative_path)
     with _open_text(file.path) as handle:
         for line_number, line in enumerate(handle, start=1):
+            if line_number <= start_after_index:
+                continue
             if not line.strip():
                 continue
             try:
@@ -65,7 +72,12 @@ def _read_jsonl(file: DataFile, location: DatasetLocation) -> Iterator[SourceRow
             )
 
 
-def _read_json(file: DataFile, location: DatasetLocation) -> Iterator[SourceRow]:
+def _read_json(
+    file: DataFile,
+    location: DatasetLocation,
+    *,
+    start_after_index: int = 0,
+) -> Iterator[SourceRow]:
     config = infer_config(file.relative_path)
     split = infer_split(file.relative_path)
     try:
@@ -75,6 +87,8 @@ def _read_json(file: DataFile, location: DatasetLocation) -> Iterator[SourceRow]
         value = {"_parse_error": f"JSONDecodeError: {exc}"}
     values = value if isinstance(value, list) else [value]
     for index, item in enumerate(values):
+        if index + 1 <= start_after_index:
+            continue
         raw = item if isinstance(item, Mapping) else {"_invalid_row": item}
         yield SourceRow(
             dataset_id=location.policy.dataset_id,
@@ -116,26 +130,43 @@ def parquet_metadata(path: Path) -> tuple[int, dict[str, str], list[dict[str, An
     return row_count, schema, samples
 
 
-def _read_parquet(file: DataFile, location: DatasetLocation, *, batch_size: int) -> Iterator[SourceRow]:
+def _read_parquet(
+    file: DataFile,
+    location: DatasetLocation,
+    *,
+    batch_size: int,
+    start_after_index: int = 0,
+) -> Iterator[SourceRow]:
     parquet = _pyarrow_parquet()
     parquet_file = parquet.ParquetFile(file.path)
     config = infer_config(file.relative_path)
     split = infer_split(file.relative_path)
     row_index = 0
-    for batch in parquet_file.iter_batches(batch_size=batch_size):
-        for value in batch.to_pylist():
-            raw = value if isinstance(value, Mapping) else {"_invalid_row": value}
-            yield SourceRow(
-                dataset_id=location.policy.dataset_id,
-                repo=location.policy.repo,
-                source_path=file.relative_path,
-                source_row_id=f"{file.relative_path}#{row_index + 1}",
-                source_config=config,
-                source_split=split,
-                row_index=row_index,
-                raw=raw,
-            )
-            row_index += 1
+    for group_index in range(parquet_file.num_row_groups):
+        group_rows = int(parquet_file.metadata.row_group(group_index).num_rows)
+        if row_index + group_rows <= start_after_index:
+            row_index += group_rows
+            continue
+        for batch in parquet_file.iter_batches(
+            batch_size=batch_size,
+            row_groups=[group_index],
+        ):
+            for value in batch.to_pylist():
+                if row_index < start_after_index:
+                    row_index += 1
+                    continue
+                raw = value if isinstance(value, Mapping) else {"_invalid_row": value}
+                yield SourceRow(
+                    dataset_id=location.policy.dataset_id,
+                    repo=location.policy.repo,
+                    source_path=file.relative_path,
+                    source_row_id=f"{file.relative_path}#{row_index + 1}",
+                    source_config=config,
+                    source_split=split,
+                    row_index=row_index,
+                    raw=raw,
+                )
+                row_index += 1
 
 
 def iter_raw_rows(
@@ -143,27 +174,58 @@ def iter_raw_rows(
     *,
     batch_size: int = 512,
     max_rows: int | None = None,
+    after_source_row_id: str | None = None,
 ) -> Iterator[SourceRow]:
     """Yield raw rows without loading a dataset into memory."""
 
     yielded = 0
     if not location.found:
         return
+    cursor_path = ""
+    cursor_index = 0
+    cursor_found = after_source_row_id is None
+    if after_source_row_id is not None:
+        try:
+            cursor_path, cursor_raw_index = after_source_row_id.rsplit("#", 1)
+            cursor_index = int(cursor_raw_index)
+        except (ValueError, TypeError) as exc:
+            raise AdapterUnavailable(
+                f"invalid source-row resume cursor: {after_source_row_id}"
+            ) from exc
     for file in iter_data_files(location.path):
-        if file.suffix in {".jsonl", ".jsonl.gz"}:
-            rows = _read_jsonl(file, location)
-        elif file.suffix == ".parquet":
-            rows = _read_parquet(file, location, batch_size=batch_size)
+        if not cursor_found:
+            if file.relative_path != cursor_path:
+                continue
+            cursor_found = True
+            start_after_index = cursor_index
         else:
-            rows = _read_json(file, location)
+            start_after_index = 0
+        if file.suffix in {".jsonl", ".jsonl.gz"}:
+            rows = _read_jsonl(file, location, start_after_index=start_after_index)
+        elif file.suffix == ".parquet":
+            rows = _read_parquet(
+                file,
+                location,
+                batch_size=batch_size,
+                start_after_index=start_after_index,
+            )
+        else:
+            rows = _read_json(file, location, start_after_index=start_after_index)
         for row in rows:
             yield row
             yielded += 1
             if max_rows is not None and yielded >= max_rows:
                 return
+    if after_source_row_id is not None and not cursor_found:
+        raise AdapterUnavailable(f"source-row resume cursor was not found: {after_source_row_id}")
 
 
-def _event_stream_rows(location: DatasetLocation, *, batch_size: int) -> Iterator[SourceRow]:
+def _event_stream_rows(
+    location: DatasetLocation,
+    *,
+    batch_size: int,
+    after_source_row_id: str | None = None,
+) -> Iterator[SourceRow]:
     """Group small Claude Code event files into one conversation unit.
 
     The source contains metadata and message events rather than one canonical
@@ -174,8 +236,13 @@ def _event_stream_rows(location: DatasetLocation, *, batch_size: int) -> Iterato
 
     if not location.found:
         return
+    cursor_found = after_source_row_id is None
     for file in iter_data_files(location.path):
         if file.suffix not in {".jsonl", ".jsonl.gz"}:
+            continue
+        if not cursor_found:
+            if file.relative_path == after_source_row_id:
+                cursor_found = True
             continue
         events = [row.raw for row in _read_jsonl(file, location)]
         if not events:
@@ -190,6 +257,8 @@ def _event_stream_rows(location: DatasetLocation, *, batch_size: int) -> Iterato
             row_index=0,
             raw={"_event_stream": events},
         )
+    if after_source_row_id is not None and not cursor_found:
+        raise AdapterUnavailable(f"event-stream resume cursor was not found: {after_source_row_id}")
 
 
 def iter_source_rows(
@@ -198,11 +267,21 @@ def iter_source_rows(
     batch_size: int = 512,
     max_rows: int | None = None,
     group_event_streams: bool = True,
+    after_source_row_id: str | None = None,
 ) -> Iterator[SourceRow]:
     if group_event_streams and location.policy.dataset_id == "claude_fable_code":
-        rows = _event_stream_rows(location, batch_size=batch_size)
+        rows = _event_stream_rows(
+            location,
+            batch_size=batch_size,
+            after_source_row_id=after_source_row_id,
+        )
     else:
-        rows = iter_raw_rows(location, batch_size=batch_size, max_rows=max_rows)
+        rows = iter_raw_rows(
+            location,
+            batch_size=batch_size,
+            max_rows=max_rows,
+            after_source_row_id=after_source_row_id,
+        )
     yielded = 0
     for row in rows:
         yield row

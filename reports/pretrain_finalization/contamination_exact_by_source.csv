@@ -1,0 +1,11 @@
+source_dataset,candidate_rows_scanned,quarantine_exact_rows,exact_rate_pct,exact_cluster_count,primary_eval_corpora,false_positive_candidate_rows,false_positive_share_pct,sample_allocation
+ace_reason_math_japanese,10000,0,0.0,0,,0,0.0,0
+claude_fable_code,63,0,0.0,0,,0,0.0,0
+extraction_wiki_ja,152719,0,0.0,0,,0,0.0,0
+fable_5_5_distillation,1981131,0,0.0,0,,0,0.0,0
+fable_5_premium,6365,0,0.0,0,,0,0.0,0
+frontier_multi_teacher,1976658,1393704,70.5081,1,japanese_mt_bench,1393704,100.0,100
+gpt_5_6_traces,6288,0,0.0,0,,0,0.0,0
+magpie_sft_v1,132476,0,0.0,0,,0,0.0,0
+math_japanese_8k,8094,0,0.0,0,,0,0.0,0
+nemotron_sft_multilingual_v2,370081,0,0.0,0,,0,0.0,0

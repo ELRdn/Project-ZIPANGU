@@ -1,0 +1,34 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-e3fa55c
+model      : E:\zipangu-model-cache\ZIPANGU-K-I-4B-Q4_K_M\Qwen3.8-4B-Q4_K_M.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> 次の問いに日本語と英語で短く答えてください。日本の首都はどこですか？ What is the capital of Japan?
+日本語：日本の首都は東京です。
+英語：The capital of Japan is Tokyo.
+
+[ Prompt: 75.4 t/s | Generation: 4.3 t/s ]
+
+
+Exiting...

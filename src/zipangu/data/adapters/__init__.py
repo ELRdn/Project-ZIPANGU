@@ -48,13 +48,32 @@ def _logical_files(location: DatasetLocation, files: list[Any] | None = None) ->
     return physical_files
 
 
-def _iter_file_rows(file: Any, location: Any, *, batch_size: int) -> Iterator[SourceRow]:
+def _iter_file_rows(
+    file: Any,
+    location: Any,
+    *,
+    batch_size: int,
+    start_after_index: int = 0,
+) -> Iterator[SourceRow]:
     if file.suffix in {".jsonl", ".jsonl.gz"}:
-        yield from _legacy._read_jsonl(file, location)
+        yield from _legacy._read_jsonl(
+            file,
+            location,
+            start_after_index=start_after_index,
+        )
     elif file.suffix == ".parquet":
-        yield from _legacy._read_parquet(file, location, batch_size=batch_size)
+        yield from _legacy._read_parquet(
+            file,
+            location,
+            batch_size=batch_size,
+            start_after_index=start_after_index,
+        )
     else:
-        yield from _legacy._read_json(file, location)
+        yield from _legacy._read_json(
+            file,
+            location,
+            start_after_index=start_after_index,
+        )
 
 
 def iter_raw_rows(
@@ -62,16 +81,42 @@ def iter_raw_rows(
     *,
     batch_size: int = 512,
     max_rows: int | None = None,
+    after_source_row_id: str | None = None,
 ) -> Iterator[SourceRow]:
     yielded = 0
     if not location.found:
         return
+    cursor_path = ""
+    cursor_index = 0
+    cursor_found = after_source_row_id is None
+    if after_source_row_id is not None:
+        try:
+            cursor_path, cursor_raw_index = after_source_row_id.rsplit("#", 1)
+            cursor_index = int(cursor_raw_index)
+        except (ValueError, TypeError) as exc:
+            raise AdapterUnavailable(
+                f"invalid source-row resume cursor: {after_source_row_id}"
+            ) from exc
     for file in _logical_files(location):
-        for row in _iter_file_rows(file, location, batch_size=batch_size):
+        if not cursor_found:
+            if file.relative_path != cursor_path:
+                continue
+            cursor_found = True
+            start_after_index = cursor_index
+        else:
+            start_after_index = 0
+        for row in _iter_file_rows(
+            file,
+            location,
+            batch_size=batch_size,
+            start_after_index=start_after_index,
+        ):
             yield row
             yielded += 1
             if max_rows is not None and yielded >= max_rows:
                 return
+    if after_source_row_id is not None and not cursor_found:
+        raise AdapterUnavailable(f"source-row resume cursor was not found: {after_source_row_id}")
 
 
 def iter_source_rows(
@@ -80,11 +125,21 @@ def iter_source_rows(
     batch_size: int = 512,
     max_rows: int | None = None,
     group_event_streams: bool = True,
+    after_source_row_id: str | None = None,
 ) -> Iterator[SourceRow]:
     if group_event_streams and location.policy.dataset_id == "claude_fable_code":
-        rows = _legacy._event_stream_rows(location, batch_size=batch_size)
+        rows = _legacy._event_stream_rows(
+            location,
+            batch_size=batch_size,
+            after_source_row_id=after_source_row_id,
+        )
     else:
-        rows = iter_raw_rows(location, batch_size=batch_size, max_rows=max_rows)
+        rows = iter_raw_rows(
+            location,
+            batch_size=batch_size,
+            max_rows=max_rows,
+            after_source_row_id=after_source_row_id,
+        )
     yielded = 0
     for row in rows:
         yield row

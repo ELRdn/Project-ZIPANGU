@@ -1,0 +1,125 @@
+schema_version: 1
+status: draft_recommendation
+approval_required: true
+seed: 3407
+thresholds:
+- threshold: 95
+  rows: 186233
+  formatted_token_mass: 78406804
+  retention_by_source:
+    ace_reason_math_japanese: 0.0
+    claude_fable_code: 0.0
+    extraction_wiki_ja: 0.433916
+    fable_5_5_distillation: 7.5e-05
+    fable_5_premium: 0.0
+    frontier_multi_teacher: 0.006024
+    gpt_5_6_traces: 1.2e-05
+    magpie_sft_v1: 0.863429
+    math_japanese_8k: 0.092469
+    nemotron_sft_multilingual_v2: 0.001486
+  missing_minimum_sources:
+  - math_japanese_8k
+  - ace_reason_math_japanese
+  - nemotron_sft_multilingual_v2
+  - fable_5_premium
+  diversity_entropy: 0.829704
+  eligible_entropy: 2.193521
+  diversity_entropy_ratio: 0.378252
+  passes: false
+- threshold: 90
+  rows: 1481541
+  formatted_token_mass: 5896680298
+  retention_by_source:
+    ace_reason_math_japanese: 0.0
+    claude_fable_code: 0.0
+    extraction_wiki_ja: 0.931039
+    fable_5_5_distillation: 0.550555
+    fable_5_premium: 0.000869
+    frontier_multi_teacher: 0.38488
+    gpt_5_6_traces: 0.026015
+    magpie_sft_v1: 0.974375
+    math_japanese_8k: 0.999023
+    nemotron_sft_multilingual_v2: 0.405686
+  missing_minimum_sources:
+  - ace_reason_math_japanese
+  - fable_5_premium
+  diversity_entropy: 0.252032
+  eligible_entropy: 2.193521
+  diversity_entropy_ratio: 0.114898
+  passes: false
+- threshold: 85
+  rows: 2511537
+  formatted_token_mass: 8972460509
+  retention_by_source:
+    ace_reason_math_japanese: 0.0
+    claude_fable_code: 0.005921
+    extraction_wiki_ja: 0.973689
+    fable_5_5_distillation: 0.822744
+    fable_5_premium: 0.030036
+    frontier_multi_teacher: 0.77093
+    gpt_5_6_traces: 0.048427
+    magpie_sft_v1: 0.999224
+    math_japanese_8k: 1.0
+    nemotron_sft_multilingual_v2: 0.86656
+  missing_minimum_sources:
+  - ace_reason_math_japanese
+  - fable_5_premium
+  diversity_entropy: 1.70912
+  eligible_entropy: 2.193521
+  diversity_entropy_ratio: 0.779168
+  passes: false
+- threshold: 80
+  rows: 2617826
+  formatted_token_mass: 9153409067
+  retention_by_source:
+    ace_reason_math_japanese: 0.000391
+    claude_fable_code: 0.542841
+    extraction_wiki_ja: 0.986532
+    fable_5_5_distillation: 0.83698
+    fable_5_premium: 0.031166
+    frontier_multi_teacher: 0.818937
+    gpt_5_6_traces: 0.300924
+    magpie_sft_v1: 0.99996
+    math_japanese_8k: 1.0
+    nemotron_sft_multilingual_v2: 0.889749
+  missing_minimum_sources:
+  - ace_reason_math_japanese
+  - fable_5_premium
+  diversity_entropy: 1.790461
+  eligible_entropy: 2.193521
+  diversity_entropy_ratio: 0.81625
+  passes: false
+- threshold: 75
+  rows: 2774846
+  formatted_token_mass: 9495636396
+  retention_by_source:
+    ace_reason_math_japanese: 0.98858
+    claude_fable_code: 1.0
+    extraction_wiki_ja: 0.998064
+    fable_5_5_distillation: 0.853002
+    fable_5_premium: 0.931347
+    frontier_multi_teacher: 0.956414
+    gpt_5_6_traces: 0.995964
+    magpie_sft_v1: 1.0
+    math_japanese_8k: 1.0
+    nemotron_sft_multilingual_v2: 0.902716
+  missing_minimum_sources: []
+  diversity_entropy: 1.963136
+  eligible_entropy: 2.193521
+  diversity_entropy_ratio: 0.894971
+  passes: true
+recommended_threshold: 75
+minimum_retention:
+  math_japanese_8k: 0.25
+  ace_reason_math_japanese: 0.1
+  magpie_sft_v1: 0.25
+  extraction_wiki_ja: 0.25
+  nemotron_sft_multilingual_v2: 0.2
+  fable_5_premium: 0.1
+policy:
+  diversity_entropy_ratio_min: 0.7
+  contamination_exclusions:
+  - quarantine_exact
+  - quarantine_near
+  fable_extra_long_direct_inclusion: false
+  ace_reasoning_sft_ready_required: true

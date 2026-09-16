@@ -1,0 +1,11 @@
+dataset,category,rows,raw_content_tokens,training_formatted_tokens,supervised_assistant_tokens,supervised_rows,quantile_sample_size,quantile_method,total_tokens,median,mean,p75,p90,p95,p99,max,<=1k,1k-4k,4k-8k,8k-32k,>32k
+ace_reason_math_japanese,japanese_math,10000,761734,891646,,0,10000,exact_or_deterministic_reservoir,891646,80.0,89.165,107.0,139.0,164.0,230.0,771,10000,0,0,0,0
+claude_fable_code,coding_agent,43,1025120,1032283,,0,43,exact_or_deterministic_reservoir,1032283,16962,24006.581,26754.5,58453.0,63187.9,123487.48,142642,2,7,3,21,10
+extraction_wiki_ja,japanese_instruction_extraction,152719,82442246,85133153,,0,100000,exact_or_deterministic_reservoir,85133153,449.0,557.45,664.0,910.0,1108.0,1761.01,7578,140884,11791,44,0,0
+fable_5_5_distillation,frontier_reasoning_merged,1978248,10449204739,10495856438,,0,100000,exact_or_deterministic_reservoir,10495856438,4844.0,5305.632,9601.0,14819.0,17029.0,26306.15,1367165,440867,797163,356748,356757,26713
+fable_5_premium,frontier_reasoning,6365,115607720,117270622,,0,6365,exact_or_deterministic_reservoir,117270622,20987,18424.293,25067,29100.8,32115.0,38839.72,48949,636,667,51,4687,324
+frontier_multi_teacher,frontier_reasoning,582954,503983044,508986050,,0,100000,exact_or_deterministic_reservoir,508986050,426.0,873.115,800.0,1367.0,2254.0,6176.01,64337,465128,99904,14941,2317,664
+gpt_5_6_traces,frontier_reasoning,6288,23724535,24017823,,0,6288,exact_or_deterministic_reservoir,24017823,3138.0,3819.628,5267.0,8010.5,10262.0,16259.21,49790,1706,2141,1810,621,10
+magpie_sft_v1,japanese_general_instruction,132473,41014820,42736969,,0,100000,exact_or_deterministic_reservoir,42736969,322.0,322.609,383.0,452.0,509.0,648.0,4077,132426,46,1,0,0
+math_japanese_8k,japanese_math,8094,3198529,3303751,,0,8094,exact_or_deterministic_reservoir,3303751,397.0,408.173,472.0,564.0,636.35,810.21,3228,8070,24,0,0,0
+nemotron_sft_multilingual_v2,japanese_stem_code_math,370081,463276410,468178923,,0,100000,exact_or_deterministic_reservoir,468178923,1329.0,1265.071,1865.0,2526.0,3079.05,6268.01,52508,164742,200319,3680,1314,26

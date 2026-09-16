@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED",
+  "official_judge_required": true,
+  "judge_executed": false,
+  "judge": "llm-jp-judge v2.0.0",
+  "judge_execution_policy": "not executed by finalization runner",
+  "pending_prompts": 0,
+  "reason": "required_eval_sources_missing:answer_carefully"
+}

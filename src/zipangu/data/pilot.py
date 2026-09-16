@@ -152,6 +152,7 @@ def build_pilot(
     target_tokens: int,
     output_dir: str | Path | None = None,
     output_format: str = "parquet",
+    model_id: str = "ZIPANGU-K-I-4B",
 ) -> dict[str, Any]:
     root = Path(repo_root).resolve()
     recipe = _load_yaml(Path(recipe_path))
@@ -159,6 +160,8 @@ def build_pilot(
     status: dict[str, Any] = {
         "status": gate,
         "recipe": str(recipe_path),
+        "model_id": model_id,
+        "recipe_generation": "I",
         "target_tokens": target_tokens,
         "records_selected": 0,
         "issues": issues,
@@ -173,7 +176,7 @@ def build_pilot(
         status["status"] = "BLOCKED"
         status["issues"] = ["no approved, contamination-clear audit records available"]
         return status
-    destination = Path(output_dir) if output_dir else root / "data" / "processed" / "c-i" / f"pilot-{target_tokens}"
+    destination = Path(output_dir) if output_dir else root / "data" / "processed" / "generation-i" / model_id.casefold().replace("-", "_") / f"pilot-{target_tokens}"
     suffix = ".jsonl.gz" if output_format == "jsonl.gz" else ".parquet"
     output_path = destination / f"candidate{suffix}"
     _write_output(records, output_path, output_format)

@@ -1,4 +1,5 @@
 .venv/
+.envs/
 __pycache__/
 *.pyc
 .pytest_cache/
@@ -16,6 +17,7 @@ private_eval/**
 checkpoints/
 outputs/
 wandb/
+unsloth_compiled_cache/
 *.safetensors
 *.bin
 *.gguf
@@ -30,3 +32,16 @@ data/manifests/raw_sources.json
 data/processed/
 reports/dataset_audit/_artifacts/
 *.egg-info/
+!data/manifests/eval_registry.json
+!data/manifests/source_approval_candidates.json
+!data/manifests/source_approval_decisions.json
+!data/manifests/source_license_provenance_audit.json
+data/manifests/contamination_results.parquet
+data/manifests/.contamination_results.parquet.partial
+reports/pretrain_finalization/_artifacts/
+reports/pretrain_finalization/*.jsonl
+reports/pretrain_finalization/raw/
+baselines/**
+!baselines/**/
+!baselines/**/manifest.json
+!baselines/**/pending_judge.json

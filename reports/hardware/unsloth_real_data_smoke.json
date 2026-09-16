@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "status": "PASS",
+  "phase": "k_i_real_data_path_smoke",
+  "generated_at": "2026-09-03T00:06:29.188596+00:00",
+  "K_I_REAL_DATA_PATH_SMOKE": "PASS",
+  "TRAINING_ALLOWED": false,
+  "scope": {
+    "research_only": true,
+    "evaluation_run": false,
+    "paid_compute": false,
+    "registry_approval_changed": false,
+    "raw_dataset_mutated": false,
+    "examples_requested": 16,
+    "steps_requested": 2
+  },
+  "model": {
+    "path": "D:\\VibeCoding\\project-zipangu\\.cache\\models\\ZIPANGU-K-I-4B-base",
+    "revision": "c83cb7aa2999d2f35c43e9ae0634a30eb8985a1e",
+    "load_in_4bit": true,
+    "full_finetuning": false,
+    "class": "PeftModelForCausalLM",
+    "tokenizer_class": "Qwen3VLProcessor",
+    "first_parameter_device": "cuda:0",
+    "first_parameter_dtype": "torch.bfloat16",
+    "trainable_parameters": 5308416,
+    "total_parameters": 2609033728
+  },
+  "training": {
+    "max_steps": 2,
+    "max_seq_length": 256,
+    "per_device_train_batch_size": 1,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 0.0002,
+    "optimizer": "adamw_torch",
+    "lora_r": 4,
+    "lora_alpha": 8,
+    "lora_target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "assistant_only_loss": true
+  },
+  "pipeline": {
+    "canonical_dataset": {
+      "status": "PASS",
+      "dataset_id": "math_japanese_8k",
+      "dataset_path": "E:\\zipangu-datesets\\awakara__Math-Japanese-8k",
+      "repo": "awakara/Math-Japanese-8k",
+      "source_role": "train_candidate",
+      "source_revision": "unknown",
+      "license_metadata": "unknown",
+      "audit_records_seen": 128,
+      "audit_candidates_after_safety_filters": 128,
+      "source_rows_scanned": 16,
+      "selected_records": 16,
+      "eval_fingerprint_files_read": [
+        "E:\\zipangu-eval\\_fingerprints\\japanese_mt_bench.jsonl",
+        "E:\\zipangu-eval\\_fingerprints\\llm_jp_instruction_eval.jsonl"
+      ],
+      "available_eval_fingerprint_count": 401,
+      "exact_fingerprint_matches_excluded": 0,
+      "answer_carefully_data_present": false,
+      "contamination_status_in_audit": [
+        "not_checked_missing_eval_source"
+      ],
+      "research_only": true,
+      "serious_training_allowed": false
+    },
+    "chat_template_tokenize_collator": {
+      "status": "PASS",
+      "formatted_examples": 16,
+      "assistant_supervised_examples": 16,
+      "assistant_label_tokens_min": 152,
+      "assistant_label_tokens_max": 210,
+      "assistant_label_tokens_total": 2905,
+      "max_length": 256,
+      "truncated_examples": 13,
+      "collator": "CausalCollator",
+      "assistant_supervision": "labels=-100 before final assistant span"
+    },
+    "forward_backward_optimizer": {
+      "status": "PASS",
+      "global_step": 2,
+      "metrics": {
+        "train_runtime": 361.1709,
+        "train_samples_per_second": 0.006,
+        "train_steps_per_second": 0.006,
+        "total_flos": 11133569049600.0,
+        "train_loss": 1.1570686101913452,
+        "epoch": 0.125
+      },
+      "log_history_tail": [
+        {
+          "loss": 1.326799750328064,
+          "grad_norm": 1.3366950750350952,
+          "learning_rate": 0.0002,
+          "epoch": 0.0625,
+          "step": 1
+        },
+        {
+          "loss": 0.9873374700546265,
+          "grad_norm": 1.1088086366653442,
+          "learning_rate": 0.0001,
+          "epoch": 0.125,
+          "step": 2
+        },
+        {
+          "train_runtime": 361.1709,
+          "train_samples_per_second": 0.006,
+          "train_steps_per_second": 0.006,
+          "total_flos": 11133569049600.0,
+          "train_loss": 1.1570686101913452,
+          "epoch": 0.125,
+          "step": 2
+        }
+      ]
+    },
+    "adapter_save": {
+      "status": "PASS",
+      "output_dir": "D:\\VibeCoding\\project-zipangu\\.cache\\smoke-runs\\k-i-real-data-qlora",
+      "files": [
+        "adapter_config.json",
+        "adapter_model.safetensors"
+      ]
+    },
+    "adapter_reload_sample_inference": {
+      "status": "PASS",
+      "generated_text": "Here's a thinking process that leads to the solution:\n\n1.  **",
+      "max_new_tokens": 16
+    }
+  },
+  "warnings": [],
+  "environment": {
+    "cache_dir": "D:\\VibeCoding\\project-zipangu\\.cache\\huggingface-real-data-smoke",
+    "hf_home": "D:\\VibeCoding\\project-zipangu\\.cache\\huggingface-real-data-smoke",
+    "miopen_cache": "D:\\VibeCoding\\project-zipangu\\.cache\\huggingface-real-data-smoke\\miopen\\kernel",
+    "triton_cache": "D:\\VibeCoding\\project-zipangu\\.cache\\huggingface-real-data-smoke\\triton\\cache",
+    "torchinductor_cache": "D:\\VibeCoding\\project-zipangu\\.cache\\huggingface-real-data-smoke\\torchinductor",
+    "bnb_rocm_version_original": "unset",
+    "bnb_rocm_version_for_process": "unset",
+    "python": "3.13.5",
+    "torch": "2.11.0+rocm7.14.0",
+    "hip": "7.14.60850",
+    "cuda_available": true,
+    "device_count": 1,
+    "device_name": "AMD Radeon RX 7600",
+    "max_memory_allocated_bytes": 6924706304,
+    "max_memory_reserved_bytes": 6966738944
+  },
+  "duration_seconds": 438.53
+}

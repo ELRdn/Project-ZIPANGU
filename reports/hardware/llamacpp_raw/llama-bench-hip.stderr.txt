@@ -1,0 +1,2 @@
+ggml_cuda_init: found 1 ROCm devices (Total VRAM: 8176 MiB):
+  Device 0: AMD Radeon RX 7600, gfx1102 (0x1102), VMM: no, Wave Size: 32, VRAM: 8176 MiB

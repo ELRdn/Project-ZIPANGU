@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "scope": "quarantine_exact_only",
+  "input": {
+    "path": "D:\\VibeCoding\\project-zipangu\\data\\manifests\\contamination_results.parquet",
+    "sha256": "4ec7f0b97ac5186d59653503c328cae4958b1a95d0e4064bcf515dfb112f1b9a",
+    "parquet_rows": 4643875
+  },
+  "eval_registry": {
+    "path": "D:\\VibeCoding\\project-zipangu\\data\\manifests\\eval_registry.json",
+    "sha256": "79cc6ff5e249df35041258b32222c3b4a196a2491abcd1c0eafd4d309d64ae54",
+    "corpora": {
+      "japanese_mt_bench": {
+        "eval_corpus": "japanese_mt_bench",
+        "availability": "available",
+        "registry_rows": 430,
+        "fingerprint_rows": 430,
+        "empty_projection_rows": 430,
+        "unique_content_hashes": 1,
+        "fingerprint_path": "E:\\zipangu-eval\\_fingerprints\\japanese_mt_bench.jsonl",
+        "fingerprint_sha256": "b9965d882abc58ae80b12c52cd73c45e76d926d5dc1e2a091c2e560e34217909"
+      },
+      "llm_jp_instruction_eval": {
+        "eval_corpus": "llm_jp_instruction_eval",
+        "availability": "available",
+        "registry_rows": 400,
+        "fingerprint_rows": 400,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 400,
+        "fingerprint_path": "E:\\zipangu-eval\\_fingerprints\\llm_jp_instruction_eval.jsonl",
+        "fingerprint_sha256": "b6cc3ba743ac7c67454326183b6fe32366c6b8e87473d8224188f71d057b631f"
+      },
+      "answer_carefully": {
+        "eval_corpus": "answer_carefully",
+        "availability": "blocked_access_denied",
+        "registry_rows": 0,
+        "fingerprint_rows": 0,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 0,
+        "fingerprint_path": "",
+        "fingerprint_sha256": null
+      },
+      "zipangu_private_holdout": {
+        "eval_corpus": "zipangu_private_holdout",
+        "availability": "unavailable_not_provided",
+        "registry_rows": 0,
+        "fingerprint_rows": 0,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 0,
+        "fingerprint_path": "",
+        "fingerprint_sha256": null
+      },
+      "english_general_regression": {
+        "eval_corpus": "english_general_regression",
+        "availability": "unavailable_not_provided",
+        "registry_rows": 0,
+        "fingerprint_rows": 0,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 0,
+        "fingerprint_path": "",
+        "fingerprint_sha256": null
+      },
+      "japanese_math_holdout": {
+        "eval_corpus": "japanese_math_holdout",
+        "availability": "unavailable_not_provided",
+        "registry_rows": 0,
+        "fingerprint_rows": 0,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 0,
+        "fingerprint_path": "",
+        "fingerprint_sha256": null
+      },
+      "japanese_writing_holdout": {
+        "eval_corpus": "japanese_writing_holdout",
+        "availability": "unavailable_not_provided",
+        "registry_rows": 0,
+        "fingerprint_rows": 0,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 0,
+        "fingerprint_path": "",
+        "fingerprint_sha256": null
+      },
+      "code_reasoning_sanity": {
+        "eval_corpus": "code_reasoning_sanity",
+        "availability": "unavailable_not_provided",
+        "registry_rows": 0,
+        "fingerprint_rows": 0,
+        "empty_projection_rows": 0,
+        "unique_content_hashes": 0,
+        "fingerprint_path": "",
+        "fingerprint_sha256": null
+      }
+    }
+  },
+  "sample": {
+    "method": "source-family and content-hash-cluster stratified deterministic hash-priority sample",
+    "seed": 3407,
+    "requested_rows": 100,
+    "actual_rows": 100,
+    "allocation_by_stratum": {
+      "frontier_multi_teacher|data/canonical|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 8,
+      "frontier_multi_teacher|data/glm47_native|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 8,
+      "frontier_multi_teacher|data/prompt_completion_text|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 4,
+      "frontier_multi_teacher|data/rl_tool_prompts|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 1,
+      "frontier_multi_teacher|data/smoke|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 1,
+      "frontier_multi_teacher|data/token_stats|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 8,
+      "frontier_multi_teacher|metadata/context_buckets|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 62,
+      "frontier_multi_teacher|metadata/parent_ids|content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": 8
+    },
+    "allocation_by_source": {
+      "frontier_multi_teacher": 100
+    },
+    "allocation_by_source_family": {
+      "data/canonical": 8,
+      "data/glm47_native": 8,
+      "data/prompt_completion_text": 4,
+      "data/rl_tool_prompts": 1,
+      "data/smoke": 1,
+      "data/token_stats": 8,
+      "metadata/context_buckets": 62,
+      "metadata/parent_ids": 8
+    },
+    "contains_raw_text": false
+  },
+  "totals": {
+    "candidate_rows_scanned": 4643875,
+    "quarantine_exact_rows": 1393704,
+    "exact_clusters": 1,
+    "false_positive_candidate_rows": 1393704,
+    "false_positive_candidate_share_pct": 100.0,
+    "plausible_true_positive_rows": 0,
+    "unresolved_exact_rows": 0,
+    "decomposition_reconciles": true
+  },
+  "exact_reasons": {
+    "full_content_sha256": 1393704
+  },
+  "by_source": [
+    {
+      "source_dataset": "ace_reason_math_japanese",
+      "candidate_rows_scanned": 10000,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "claude_fable_code",
+      "candidate_rows_scanned": 63,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "extraction_wiki_ja",
+      "candidate_rows_scanned": 152719,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "fable_5_5_distillation",
+      "candidate_rows_scanned": 1981131,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "fable_5_premium",
+      "candidate_rows_scanned": 6365,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "frontier_multi_teacher",
+      "candidate_rows_scanned": 1976658,
+      "quarantine_exact_rows": 1393704,
+      "exact_rate_pct": 70.5081,
+      "exact_cluster_count": 1,
+      "primary_eval_corpora": "japanese_mt_bench",
+      "false_positive_candidate_rows": 1393704,
+      "false_positive_share_pct": 100.0,
+      "sample_allocation": 100
+    },
+    {
+      "source_dataset": "gpt_5_6_traces",
+      "candidate_rows_scanned": 6288,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "magpie_sft_v1",
+      "candidate_rows_scanned": 132476,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "math_japanese_8k",
+      "candidate_rows_scanned": 8094,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    },
+    {
+      "source_dataset": "nemotron_sft_multilingual_v2",
+      "candidate_rows_scanned": 370081,
+      "quarantine_exact_rows": 0,
+      "exact_rate_pct": 0.0,
+      "exact_cluster_count": 0,
+      "primary_eval_corpora": "",
+      "false_positive_candidate_rows": 0,
+      "false_positive_share_pct": 0.0,
+      "sample_allocation": 0
+    }
+  ],
+  "by_source_family": [
+    {
+      "source_family": "metadata/context_buckets",
+      "quarantine_exact_rows": 922866,
+      "exact_share_pct": 66.216786,
+      "source_file_count": 18,
+      "false_positive_candidate_rows": 922866,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 62,
+      "projection_finding": "metadata-only fields (id, split, token counts); should not enter text contamination scan"
+    },
+    {
+      "source_family": "data/canonical",
+      "quarantine_exact_rows": 104187,
+      "exact_share_pct": 7.475547,
+      "source_file_count": 13,
+      "false_positive_candidate_rows": 104187,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 8,
+      "projection_finding": "trainable text is stored in messages_json, which the current canonical extractor ignores"
+    },
+    {
+      "source_family": "data/glm47_native",
+      "quarantine_exact_rows": 104187,
+      "exact_share_pct": 7.475547,
+      "source_file_count": 44,
+      "false_positive_candidate_rows": 104187,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 8,
+      "projection_finding": "tokenized input_ids/labels derivative; no raw text field for the generic extractor"
+    },
+    {
+      "source_family": "data/token_stats",
+      "quarantine_exact_rows": 104187,
+      "exact_share_pct": 7.475547,
+      "source_file_count": 13,
+      "false_positive_candidate_rows": 104187,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 8,
+      "projection_finding": "token-statistics derivative; should not enter text contamination scan"
+    },
+    {
+      "source_family": "metadata/parent_ids",
+      "quarantine_exact_rows": 100084,
+      "exact_share_pct": 7.181152,
+      "source_file_count": 5,
+      "false_positive_candidate_rows": 100084,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 8,
+      "projection_finding": "metadata-only id/split rows; should not enter text contamination scan"
+    },
+    {
+      "source_family": "data/prompt_completion_text",
+      "quarantine_exact_rows": 52028,
+      "exact_share_pct": 3.733074,
+      "source_file_count": 7,
+      "false_positive_candidate_rows": 52028,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 4,
+      "projection_finding": "text is stored in prompt_text/completion_text, which the current extractor ignores"
+    },
+    {
+      "source_family": "data/rl_tool_prompts",
+      "quarantine_exact_rows": 5909,
+      "exact_share_pct": 0.423978,
+      "source_file_count": 3,
+      "false_positive_candidate_rows": 5909,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 1,
+      "projection_finding": "prompt is stored in prompt_messages_json, which the current extractor ignores"
+    },
+    {
+      "source_family": "data/smoke",
+      "quarantine_exact_rows": 256,
+      "exact_share_pct": 0.018368,
+      "source_file_count": 3,
+      "false_positive_candidate_rows": 256,
+      "false_positive_basis": "empty_candidate_and_eval_projection_collision",
+      "sample_allocation": 1,
+      "projection_finding": "trainable text is stored in messages_json, which the current canonical extractor ignores"
+    }
+  ],
+  "source_projection_findings": {
+    "metadata/context_buckets": "metadata-only fields (id, split, token counts); should not enter text contamination scan",
+    "data/canonical": "trainable text is stored in messages_json, which the current canonical extractor ignores",
+    "data/glm47_native": "tokenized input_ids/labels derivative; no raw text field for the generic extractor",
+    "data/token_stats": "token-statistics derivative; should not enter text contamination scan",
+    "metadata/parent_ids": "metadata-only id/split rows; should not enter text contamination scan",
+    "data/prompt_completion_text": "text is stored in prompt_text/completion_text, which the current extractor ignores",
+    "data/rl_tool_prompts": "prompt is stored in prompt_messages_json, which the current extractor ignores",
+    "data/smoke": "trainable text is stored in messages_json, which the current canonical extractor ignores"
+  },
+  "source_file_count_with_exact_hits": 106,
+  "by_primary_eval": [
+    {
+      "eval_corpus": "answer_carefully",
+      "fingerprint_rows": 0,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "code_reasoning_sanity",
+      "fingerprint_rows": 0,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "english_general_regression",
+      "fingerprint_rows": 0,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "japanese_math_holdout",
+      "fingerprint_rows": 0,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "japanese_mt_bench",
+      "fingerprint_rows": 430,
+      "empty_projection_rows": 430,
+      "matched_cluster_count": 1,
+      "primary_candidate_rows": 1393704,
+      "candidate_row_incidence": 1393704,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "japanese_writing_holdout",
+      "fingerprint_rows": 0,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "llm_jp_instruction_eval",
+      "fingerprint_rows": 400,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    },
+    {
+      "eval_corpus": "zipangu_private_holdout",
+      "fingerprint_rows": 0,
+      "empty_projection_rows": 0,
+      "matched_cluster_count": 0,
+      "primary_candidate_rows": 0,
+      "candidate_row_incidence": 0,
+      "note": "candidate rows reconcile on deterministic primary eval; incidence may overlap"
+    }
+  ],
+  "by_cluster": [
+    {
+      "cluster_id": "content_sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "candidate_rows": 1393704,
+      "candidate_share_pct": 100.0,
+      "source_count": 1,
+      "eval_corpora": "japanese_mt_bench",
+      "eval_fingerprint_rows": 430,
+      "candidate_projection_empty": true,
+      "all_eval_projections_empty": true,
+      "false_positive_classification": "high_confidence_false_positive_projection_collision",
+      "false_positive_basis": "candidate_and_eval_normalized_content_are_empty"
+    }
+  ],
+  "by_source_primary_eval": [
+    {
+      "source_dataset": "frontier_multi_teacher",
+      "primary_eval_corpus": "japanese_mt_bench",
+      "candidate_rows": 1393704
+    }
+  ],
+  "artifacts": {
+    "by_source_csv": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_exact_by_source.csv",
+    "by_source_family_csv": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_exact_by_source_family.csv",
+    "by_source_file_csv": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_exact_by_source_file.csv",
+    "by_eval_csv": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_exact_by_eval.csv",
+    "by_cluster_csv": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_exact_by_cluster.csv",
+    "sample_csv": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\contamination_stratified_evidence_sample.csv",
+    "report": "D:\\VibeCoding\\project-zipangu\\reports\\pretrain_finalization\\CONTAMINATION_EVIDENCE_AUDIT.md"
+  },
+  "safety": {
+    "training_allowed": false,
+    "automatic_clean_reclassification": false,
+    "recommended_disposition": "keep affected rows quarantined until extractor repair and full rescan"
+  }
+}

@@ -1,6 +1,7 @@
 schema_version: 1
 dataset_config: configs/datasets/c-i-v0-jp-heavy.yaml
 model_name_or_path: empero-ai/Qwen3.8-9B-Distill
+model_id: ZIPANGU-C-I-9B
 backend: reference_trl_peft
 method: qlora
 dtype: bfloat16
@@ -24,5 +25,6 @@ safety:
   require_dataset_registry_validation: true
   require_budget_preflight_on_runpod: true
   forbid_eval_only_sources: true
+  training_allowed: false
 run_name: c-i-pilot-1m
 target_tokens: 1000000

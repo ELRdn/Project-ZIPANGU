@@ -1,0 +1,59 @@
+schema_version: 1
+name: i-jp-heavy
+recipe_generation: I
+model: generation-i
+model_scope:
+  classes: [K, C, Z]
+  generation: I
+  tokenizer_policy: model_specific_revision
+objective: sft_reasoning_distillation
+sampling_mass:
+  general_japanese: 0.30
+  instruction_extraction: 0.15
+  japanese_math_reasoning: 0.20
+  japanese_stem_code: 0.10
+  frontier_reasoning: 0.15
+  agent_code_retention: 0.10
+buckets:
+  general_japanese:
+    candidates: [magpie_sft_v1]
+    target_weight: 0.30
+  instruction_extraction:
+    candidates: [extraction_wiki_ja]
+    target_weight: 0.15
+  japanese_math_reasoning:
+    candidates: [math_japanese_8k, ace_reason_math_japanese]
+    target_weight: 0.20
+  japanese_stem_code:
+    candidates: [nemotron_sft_multilingual_v2]
+    target_weight: 0.10
+  frontier_reasoning:
+    candidates: [frontier_multi_teacher, fable_5_5_distillation, gpt_5_6_traces]
+    target_weight: 0.15
+  agent_code_retention:
+    candidates: [claude_fable_code, fable_5_premium]
+    target_weight: 0.10
+english_trace_policy:
+  keep_original_subset: true
+  create_japanese_rewrite_subset: false
+  preserve_pair_provenance: true
+  allow: true
+  preserve_secondary_regression: true
+  require_provenance: true
+eval_only_forbidden:
+  - answer_carefully
+  - hakusho_bench
+  - japanese_mt_bench
+  - llm_jp_instruction_eval
+  - zipangu_private_holdout
+  - english_general_regression
+  - japanese_math_holdout
+  - japanese_writing_holdout
+  - code_reasoning_sanity
+provenance_policy:
+  require_repo_revision_split_row_identity: true
+  require_content_hash: true
+  unknown_provenance: BLOCKED
+execution_policy:
+  training_allowed: false
+  auto_approve: false

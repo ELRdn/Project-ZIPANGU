@@ -4,7 +4,7 @@ These rules apply to Codex and any other research/coding agent operating in this
 
 ## Mission
 
-Test whether low-cost Japanese post-training of `empero-ai/Qwen3.8-9B-Distill` can outperform `llm-jp/llm-jp-4-8b-thinking` on multiple clean Japanese evaluations without materially damaging general capability.
+Staged K→C→Z strategy: validate the low-cost Japanese adaptation recipe on `ZIPANGU-K-I-4B` (`empero-ai/Qwen3.8-4B-Distill`, immediate target), then scale the validated recipe to `ZIPANGU-C-I-9B` (`empero-ai/Qwen3.8-9B-Distill`, configured follow-up) to challenge `llm-jp/llm-jp-4-8b-thinking` on multiple clean Japanese evaluations without materially damaging general capability. `ZIPANGU-Z-I-26B-A4B` (`google/gemma-4-26B-A4B-it`) is future-only MoE/QAT research.
 
 ## Absolute rules
 

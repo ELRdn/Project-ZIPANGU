@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "label": "old_empty_extractor_scan",
+  "input_parquet": "E:\\zipangu-temp\\finalization\\contamination_results-old-empty-extractor.parquet",
+  "input_sha256": "4ec7f0b97ac5186d59653503c328cae4958b1a95d0e4064bcf515dfb112f1b9a",
+  "candidate_rows_scanned": 4643875,
+  "eval_rows_indexed": 830,
+  "counts": {
+    "not_checked_missing_eval_source": 3025828,
+    "quarantine_exact": 1393704,
+    "requires_manual_review": 224343
+  },
+  "known_invalid_exact_rows": 1393704,
+  "known_invalid_exact_reason": "empty_candidate_and_eval_projection_collision",
+  "missing_required_eval": true,
+  "training_allowed": false
+}

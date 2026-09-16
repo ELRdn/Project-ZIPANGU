@@ -1,0 +1,9 @@
+source_family,quarantine_exact_rows,exact_share_pct,source_file_count,false_positive_candidate_rows,false_positive_basis,sample_allocation,projection_finding
+metadata/context_buckets,922866,66.216786,18,922866,empty_candidate_and_eval_projection_collision,62,"metadata-only fields (id, split, token counts); should not enter text contamination scan"
+data/canonical,104187,7.475547,13,104187,empty_candidate_and_eval_projection_collision,8,"trainable text is stored in messages_json, which the current canonical extractor ignores"
+data/glm47_native,104187,7.475547,44,104187,empty_candidate_and_eval_projection_collision,8,tokenized input_ids/labels derivative; no raw text field for the generic extractor
+data/token_stats,104187,7.475547,13,104187,empty_candidate_and_eval_projection_collision,8,token-statistics derivative; should not enter text contamination scan
+metadata/parent_ids,100084,7.181152,5,100084,empty_candidate_and_eval_projection_collision,8,metadata-only id/split rows; should not enter text contamination scan
+data/prompt_completion_text,52028,3.733074,7,52028,empty_candidate_and_eval_projection_collision,4,"text is stored in prompt_text/completion_text, which the current extractor ignores"
+data/rl_tool_prompts,5909,0.423978,3,5909,empty_candidate_and_eval_projection_collision,1,"prompt is stored in prompt_messages_json, which the current extractor ignores"
+data/smoke,256,0.018368,3,256,empty_candidate_and_eval_projection_collision,1,"trainable text is stored in messages_json, which the current canonical extractor ignores"

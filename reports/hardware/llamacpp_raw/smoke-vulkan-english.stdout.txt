@@ -1,0 +1,35 @@
+
+
+Loading model... 
+
+▄▄ ▄▄
+██ ██
+██ ██  ▀▀█▄ ███▄███▄  ▀▀█▄    ▄████ ████▄ ████▄
+██ ██ ▄█▀██ ██ ██ ██ ▄█▀██    ██    ██ ██ ██ ██
+██ ██ ▀█▄██ ██ ██ ██ ▀█▄██ ██ ▀████ ████▀ ████▀
+                                    ██    ██
+                                    ▀▀    ▀▀
+
+build      : b1-e3fa55c
+model      : E:\zipangu-model-cache\ZIPANGU-K-I-4B-Q4_K_M\Qwen3.8-4B-Q4_K_M.gguf
+ftype      : Q4_K - Medium
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read <file>        add a text file
+  /glob <pattern>     add text files using globbing pattern
+
+
+
+> Explain the four seasons of Japan briefly, mentioning one characteristic of each season.
+Japan's four seasons are distinct and well-known, each with its own defining characteristic:
+
+- **Spring (March–May):** Known for the breathtaking **cherry blossom (sakura) blooms**, which turn the landscape pink and are celebrated
+
+[ Prompt: 25.6 t/s | Generation: 51.5 t/s ]
+
+
+Exiting...

@@ -1,0 +1,9 @@
+eval_corpus,fingerprint_rows,empty_projection_rows,matched_cluster_count,primary_candidate_rows,candidate_row_incidence,note
+answer_carefully,0,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap
+code_reasoning_sanity,0,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap
+english_general_regression,0,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap
+japanese_math_holdout,0,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap
+japanese_mt_bench,430,430,1,1393704,1393704,candidate rows reconcile on deterministic primary eval; incidence may overlap
+japanese_writing_holdout,0,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap
+llm_jp_instruction_eval,400,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap
+zipangu_private_holdout,0,0,0,0,0,candidate rows reconcile on deterministic primary eval; incidence may overlap

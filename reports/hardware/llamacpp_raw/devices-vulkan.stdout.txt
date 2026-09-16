@@ -1,0 +1,3 @@
+Available devices:
+  Vulkan0: AMD Radeon RX 7600 (8176 MiB, 7365 MiB free)
+  Vulkan1: AMD Radeon(TM) Graphics (79122 MiB, 75166 MiB free)

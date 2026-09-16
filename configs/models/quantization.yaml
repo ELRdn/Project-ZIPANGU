@@ -1,0 +1,28 @@
+schema_version: 1
+artifact_policy:
+  model_family_and_quantization_are_separate: true
+  q4_result_cannot_substitute_for_bf16_result: true
+quantizations:
+  - id: Q4_K_M
+    format: GGUF
+    applicable_classes: [K, C]
+  - id: Q5_K_M
+    format: GGUF
+    applicable_classes: [K, C]
+  - id: Q6_K
+    format: GGUF
+    applicable_classes: [K, C]
+  - id: Q4_0
+    format: GGUF
+    applicable_classes: [Z]
+qat_research:
+  status: future_only
+  candidate_checkpoint: google/gemma-4-26B-A4B-it-qat-q4_0-unquantized
+  routes:
+    A: bf16_base_then_zipangu_then_q4
+    B: qat_unquantized_base_then_zipangu_then_q4
+    C: gemma_then_zipangu_then_qat_aware_finalization_then_q4
+artifact_examples:
+  - ZIPANGU-K-I-4B-Q4_K_M
+  - ZIPANGU-C-I-9B-Q4_K_M
+  - ZIPANGU-Z-I-26B-A4B-Q4_0
